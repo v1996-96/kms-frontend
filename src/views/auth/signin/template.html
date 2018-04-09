@@ -1,0 +1,25 @@
+<v-card class="elevation-2">
+  <v-card-title class="d-flex justify-center pb-0">
+    <h1 class="display-1 text-xs-center">KMS</h1>
+  </v-card-title>
+  <v-card-text>
+    <p class="subheading text-sm-center">Sign in <small>or</small> <a href="#">Sign up</a></p>
+
+    <v-form>
+      <v-text-field v-model="email" prepend-icon="mail" name="email" label="Email" type="text"></v-text-field>
+      <v-text-field v-model="password" prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
+    </v-form>
+
+    <v-btn class="mr-0 ml-0" block color="primary" outline>Sign in</v-btn>
+
+    <div class="text-sm-center">
+      <v-btn flat small>Restore access</v-btn>
+      <v-btn flat small color="primary">Sign up</v-btn>
+    </div>
+  </v-card-text>
+  <v-card-actions class="justify-center">
+    <p class="grey--text text--darken-2 caption">
+      &copy; KMS, 2018. All right reserved.
+    </p>
+  </v-card-actions>
+</v-card>
