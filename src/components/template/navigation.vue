@@ -1,103 +1,66 @@
 <template>
-  <v-navigation-drawer
-    fixed
-    :clipped="$vuetify.breakpoint.lgAndUp"
-    app
-    v-model="drawer"
-    width="280">
+  <v-navigation-drawer app fixed :clipped="$vuetify.breakpoint.lgAndUp" :mini-variant="navigation" width="280">
     <v-list dense>
-      <template v-for="item in items">
-        <v-layout
-          row
-          v-if="item.heading"
-          align-center
-          :key="item.heading">
-          <v-flex xs6>
-            <v-subheader v-if="item.heading">
-              {{ item.heading }}
-            </v-subheader>
-          </v-flex>
-          <v-flex xs6 class="text-xs-center">
-            <a href="#!" class="body-2 black--text">EDIT</a>
-          </v-flex>
-        </v-layout>
-        <v-list-group
-          v-else-if="item.children"
-          v-model="item.model"
-          :key="item.text"
-          :prepend-icon="item.model ? item.icon : item['icon-alt']"
-          append-icon="">
-          <v-list-tile slot="activator">
-            <v-list-tile-content>
-              <v-list-tile-title>
-                {{ item.text }}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile
-            v-for="(child, i) in item.children"
-            :key="i">
-            <v-list-tile-action v-if="child.icon">
-              <v-icon>{{ child.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>
-                {{ child.text }}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list-group>
-        <v-list-tile v-else :key="item.text">
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>
-              {{ item.text }}
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </template>
+      <v-list-tile href="#">
+        <v-list-tile-action><v-icon>business_center</v-icon></v-list-tile-action>
+        <v-list-tile-content><v-list-tile-title>My work</v-list-tile-title></v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile href="#">
+        <v-list-tile-action><v-icon>link</v-icon></v-list-tile-action>
+        <v-list-tile-content><v-list-tile-title>Quick links</v-list-tile-title></v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile href="#">
+        <v-list-tile-action><v-icon>bookmark</v-icon></v-list-tile-action>
+        <v-list-tile-content><v-list-tile-title>Bookmarks</v-list-tile-title></v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile href="#">
+        <v-list-tile-action><v-icon>star</v-icon></v-list-tile-action>
+        <v-list-tile-content><v-list-tile-title>Following</v-list-tile-title></v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile href="#">
+        <v-list-tile-action><v-icon>settings</v-icon></v-list-tile-action>
+        <v-list-tile-content><v-list-tile-title>Settings</v-list-tile-title></v-list-tile-content>
+      </v-list-tile>
+    </v-list>
+
+    <v-list dense>
+      <v-subheader>
+        Projects
+        <v-spacer></v-spacer>
+        <v-btn class="mr-0" fab flat small>
+          <v-icon>add</v-icon>
+        </v-btn>
+      </v-subheader>
+
+      <v-list-tile href="#" avatar>
+        <v-list-tile-avatar color="grey">
+          <span class="white--text headline">J</span>
+        </v-list-tile-avatar>
+        <v-list-tile-content>
+          <v-list-tile-title>Jordan Kercher</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile href="#" avatar>
+        <v-list-tile-avatar color="grey">
+          <span class="white--text headline">J</span>
+        </v-list-tile-avatar>
+        <v-list-tile-content>
+          <v-list-tile-title>Jordan Kercher</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
     </v-list>
   </v-navigation-drawer>
 </template>
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'kms-template-navigation',
-  data: () => ({
-    drawer: null,
-    items: [
-      { icon: 'contacts', text: 'Contacts' },
-      { icon: 'history', text: 'Frequently contacted' },
-      { icon: 'content_copy', text: 'Duplicates' },
-      {
-        icon: 'keyboard_arrow_up',
-        'icon-alt': 'keyboard_arrow_down',
-        text: 'Labels',
-        model: true,
-        children: [
-          { icon: 'add', text: 'Create label' }
-        ]
-      },
-      {
-        icon: 'keyboard_arrow_up',
-        'icon-alt': 'keyboard_arrow_down',
-        text: 'More',
-        model: false,
-        children: [
-          { text: 'Import' },
-          { text: 'Export' },
-          { text: 'Print' },
-          { text: 'Undo changes' },
-          { text: 'Other contacts' }
-        ]
-      },
-      { icon: 'settings', text: 'Settings' },
-      { icon: 'chat_bubble', text: 'Send feedback' },
-      { icon: 'help', text: 'Help' },
-      { icon: 'phonelink', text: 'App downloads' },
-      { icon: 'keyboard', text: 'Go to the old version' }
-    ]
-  })
+  data: () => ({}),
+  computed: {
+    ...mapState({
+      'navigation': s => s.App.navigation
+    })
+  }
 }
 </script>
