@@ -1,5 +1,5 @@
 const createState = () => ({
-  navigationShowing: true
+  showing: false
 })
 
 const getters = {}
@@ -7,11 +7,11 @@ const getters = {}
 const actions = {}
 
 const mutations = {
-  setNavigationShowing (state, value) {
-    state.navigationShowing = !!value
+  setShowing (state, value) {
+    state.showing = !!value
   },
-  toggleNavigationShowing (state) {
-    state.navigationShowing = !state.navigationShowing
+  toggleShowing (state) {
+    state.showing = !state.showing
   }
 }
 

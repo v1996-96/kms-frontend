@@ -1,6 +1,6 @@
 <template>
-  <v-navigation-drawer app fixed :clipped="$vuetify.breakpoint.lgAndUp" :mini-variant="navigation" width="280">
-    <v-list dense>
+  <v-navigation-drawer app fixed :clipped="true" :value="navigationShowing" @input="setNavigationShowing($event)" width="280">
+    <v-list>
       <v-list-tile href="#">
         <v-list-tile-action><v-icon>business_center</v-icon></v-list-tile-action>
         <v-list-tile-content><v-list-tile-title>My work</v-list-tile-title></v-list-tile-content>
@@ -23,7 +23,7 @@
       </v-list-tile>
     </v-list>
 
-    <v-list dense>
+    <v-list>
       <v-subheader>
         Projects
         <v-spacer></v-spacer>
@@ -32,8 +32,12 @@
         </v-btn>
       </v-subheader>
 
+      <!-- <v-subheader class="mt-2 blue--text text--darken-3 justify-center">
+        Create new amazing project
+      </v-subheader> -->
+
       <v-list-tile href="#" avatar>
-        <v-list-tile-avatar color="grey">
+        <v-list-tile-avatar size="34" color="grey">
           <span class="white--text headline">J</span>
         </v-list-tile-avatar>
         <v-list-tile-content>
@@ -41,7 +45,7 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile href="#" avatar>
-        <v-list-tile-avatar color="grey">
+        <v-list-tile-avatar size="34" color="grey">
           <span class="white--text headline">J</span>
         </v-list-tile-avatar>
         <v-list-tile-content>
@@ -52,14 +56,19 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'kms-template-navigation',
   data: () => ({}),
   computed: {
     ...mapState({
-      'navigation': s => s.App.navigation
+      'navigationShowing': s => s.App.navigationShowing
+    })
+  },
+  methods: {
+    ...mapMutations({
+      'setNavigationShowing': 'App/setNavigationShowing'
     })
   }
 }

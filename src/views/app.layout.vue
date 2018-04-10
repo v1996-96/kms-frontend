@@ -2,6 +2,7 @@
   <v-app>
     <kms-template-navigation></kms-template-navigation>
     <kms-template-toolbar></kms-template-toolbar>
+    <kms-template-notifications></kms-template-notifications>
 
     <v-content>
       <router-view/>
