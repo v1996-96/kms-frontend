@@ -1,6 +1,9 @@
 <template src="./template.html"></template>
 <script>
 export default {
-  name: 'kms-app-dashboard-page'
+  name: 'kms-app-my-work-page',
+  data: () => ({
+    tabs: null
+  })
 }
 </script>

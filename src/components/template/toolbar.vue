@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="blue darken-3" dark app :clipped-left="$vuetify.breakpoint.lgAndUp" fixed class="elevation-1">
+  <v-toolbar color="blue darken-3" dark app :clipped-left="$vuetify.breakpoint.lgAndUp" fixed class="elevation-3">
     <v-toolbar-title :style="titleStyle" class="ml-0 pl-1">
       <v-toolbar-side-icon @click.stop="toggleNavigationShowing"></v-toolbar-side-icon>
       <span class="hidden-sm-and-down ml-2">KMS</span>
@@ -36,17 +36,14 @@
 
     <v-btn icon @click="toggleNotifications" class="mr-4">
       <v-badge color="red">
-        <span slot="badge">!</span>
+        <span slot="badge">9</span>
         <v-icon>notifications</v-icon>
       </v-badge>
     </v-btn>
     <v-toolbar-items>
-      <v-menu bottom offset-y>
+      <v-menu bottom offset-y left>
         <v-btn flat slot="activator">
-          <v-avatar color="grey" size="34" class="mr-2">
-            v
-          </v-avatar>
-          User
+          <v-avatar color="grey" size="40">v</v-avatar>
         </v-btn>
         <v-list>
           <v-list-tile><v-list-tile-title>Toggle theme</v-list-tile-title></v-list-tile>

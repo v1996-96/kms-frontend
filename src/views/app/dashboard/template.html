@@ -1,3 +1,97 @@
-<div>
-  dashboard
-</div>
+<v-container grid-list-lg fluid>
+  <v-layout row wrap>
+    <v-flex lg8>
+      <h1 class="headline">Recent activity</h1>
+      <h3 class="subheading mb-4">Most recent user actions</h3>
+
+      <div v-if="false" class="text-xs-center">
+        <p>
+          <img src="/static/spaceship.svg" width="100" />
+        </p>
+        <p class="subheading">
+          Start using KMS to speed up project workflow
+        </p>
+        <v-btn color="primary" large>Create project</v-btn>
+      </div>
+
+
+      <v-list v-if="true" two-line subheader class="elevation-1">
+        <v-subheader>
+          You have 1245 activity notifications
+          <v-spacer></v-spacer>
+          <v-btn small flat class="mr-0">Clear</v-btn>
+        </v-subheader>
+        <v-list-tile avatar href="#">
+          <v-list-tile-avatar color="grey lighten-2">J</v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>John Williams</v-list-tile-title>
+            <v-list-tile-sub-title>
+                <span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile avatar href="#">
+          <v-list-tile-avatar color="grey lighten-2">J</v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>John Williams</v-list-tile-title>
+            <v-list-tile-sub-title>
+                <span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile avatar href="#">
+          <v-list-tile-avatar color="grey lighten-2">J</v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>John Williams</v-list-tile-title>
+            <v-list-tile-sub-title>
+                <span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile avatar href="#">
+          <v-list-tile-avatar color="grey lighten-2">J</v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>John Williams</v-list-tile-title>
+            <v-list-tile-sub-title>
+                <span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile avatar href="#">
+          <v-list-tile-avatar color="grey lighten-2">J</v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>John Williams</v-list-tile-title>
+            <v-list-tile-sub-title>
+                <span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile avatar href="#">
+          <v-list-tile-avatar color="grey lighten-2">J</v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>John Williams</v-list-tile-title>
+            <v-list-tile-sub-title>
+                <span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <div class="text-xs-center">
+          <v-btn depressed>Load more</v-btn>
+        </div>
+      </v-list>
+    </v-flex>
+
+    <v-flex lg4>
+      <h1 class="headline">Welcome to KMS</h1>
+      <h3 class="subheading mb-4">The place for managing project knowledge</h3>
+
+      <p class="text-xs-center">
+        <img src="/static/knowledge.svg" width="100" />
+      </p>
+      <p class="text-xs-center">
+        There will be some motivation for work in form of the short text. I will write it later. <a href="#">Edit welcome message</a>
+      </p>
+    </v-flex>
+  </v-layout>
+</v-container>

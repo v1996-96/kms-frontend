@@ -1,0 +1,116 @@
+<div>
+  <v-container fluid class="grey lighten-4 elevation-2 pb-0">
+    <v-layout row wrap>
+      <v-flex lg12>
+        <h1 class="headline">My work</h1>
+        <h3 class="subheading mb-2">What you are working on</h3>
+      </v-flex>
+      <v-flex lg12>
+        <v-tabs centered v-model="tabs" color="transparent">
+          <v-tab>My entries</v-tab>
+          <v-tab>Bookmarks</v-tab>
+          <v-tab>Following</v-tab>
+          <v-tab>Last seen</v-tab>
+        </v-tabs>
+      </v-flex>
+    </v-layout>
+  </v-container>
+
+  <v-container fluid>
+    <v-tabs-items v-model="tabs">
+      <v-tab-item class="pa-1">
+        <v-layout row wrap>
+          <v-flex lg6 offset-lg3>
+            <div v-if="true" class="mt-4 text-xs-center">
+              <p>
+                <img src="/static/worker.svg" width="100" />
+              </p>
+              <p class="subheading">
+                There is the place for your recently created entries and comments
+              </p>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-tab-item>
+
+      <v-tab-item class="pa-1">
+        <v-layout row wrap>
+          <v-flex lg6 offset-lg3>
+            <div v-if="false" class="mt-4 text-xs-center">
+              <p>
+                <img src="/static/shapes.svg" width="100" />
+              </p>
+              <p class="subheading">
+                Bookmarks are the best way to point ou the most interesting content. You can create them by clicking the <v-icon>bookmark</v-icon> icon on the entries
+              </p>
+            </div>
+
+            <v-list v-if="true" two-line subheader class="elevation-1">
+              <v-subheader>
+                You have 123 bookmarks
+              </v-subheader>
+              <v-list-tile avatar href="#">
+                <v-list-tile-avatar color="grey lighten-2">P</v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title>Amazing entry name</v-list-tile-title>
+                  <v-list-tile-sub-title>
+                    <span class='text--primary'>Project name</span>
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-btn icon ripple>
+                    <v-icon color="red lighten-1">delete</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+              </v-list-tile>
+              <v-list-tile avatar href="#">
+                <v-list-tile-avatar color="grey lighten-2">P</v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title>Amazing entry name</v-list-tile-title>
+                  <v-list-tile-sub-title>
+                    <span class='text--primary'>Project name</span>
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-btn icon ripple>
+                    <v-icon color="red lighten-1">delete</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+          </v-flex>
+        </v-layout>
+      </v-tab-item>
+
+      <v-tab-item class="pa-1">
+        <v-layout row wrap>
+          <v-flex lg6 offset-lg3>
+            <div v-if="true" class="mt-4 text-xs-center">
+              <p>
+                <img src="/static/follow.svg" width="100" />
+              </p>
+              <p class="subheading">
+                You can track changes and comments on the entries by following them
+              </p>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-tab-item>
+
+      <v-tab-item class="pa-1">
+        <v-layout row wrap>
+          <v-flex lg6 offset-lg3>
+            <div v-if="true" class="mt-4 text-xs-center">
+              <p>
+                <img src="/static/history.svg" width="100" />
+              </p>
+              <p class="subheading">
+                There you will see your navigation history
+              </p>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-tab-item>
+    </v-tabs-items>
+  </v-container>
+</div>

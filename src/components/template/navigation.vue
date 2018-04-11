@@ -1,23 +1,19 @@
 <template>
   <v-navigation-drawer app fixed :clipped="true" :value="navigationShowing" @input="setNavigationShowing($event)" width="280">
     <v-list>
-      <v-list-tile href="#">
+      <v-list-tile :to="{ name: 'Dashboard' }" exact>
+        <v-list-tile-action><v-icon>dashboard</v-icon></v-list-tile-action>
+        <v-list-tile-content><v-list-tile-title>Dashboard</v-list-tile-title></v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile :to="{ name: 'My-work' }" exact>
         <v-list-tile-action><v-icon>business_center</v-icon></v-list-tile-action>
         <v-list-tile-content><v-list-tile-title>My work</v-list-tile-title></v-list-tile-content>
       </v-list-tile>
-      <v-list-tile href="#">
+      <v-list-tile :to="{ name: 'Quick-links' }" exact>
         <v-list-tile-action><v-icon>link</v-icon></v-list-tile-action>
         <v-list-tile-content><v-list-tile-title>Quick links</v-list-tile-title></v-list-tile-content>
       </v-list-tile>
-      <v-list-tile href="#">
-        <v-list-tile-action><v-icon>bookmark</v-icon></v-list-tile-action>
-        <v-list-tile-content><v-list-tile-title>Bookmarks</v-list-tile-title></v-list-tile-content>
-      </v-list-tile>
-      <v-list-tile href="#">
-        <v-list-tile-action><v-icon>star</v-icon></v-list-tile-action>
-        <v-list-tile-content><v-list-tile-title>Following</v-list-tile-title></v-list-tile-content>
-      </v-list-tile>
-      <v-list-tile href="#">
+      <v-list-tile :to="{ name: 'Settings' }" exact>
         <v-list-tile-action><v-icon>settings</v-icon></v-list-tile-action>
         <v-list-tile-content><v-list-tile-title>Settings</v-list-tile-title></v-list-tile-content>
       </v-list-tile>
@@ -37,7 +33,7 @@
       </v-subheader> -->
 
       <v-list-tile href="#" avatar>
-        <v-list-tile-avatar size="34" color="grey">
+        <v-list-tile-avatar size="38" color="grey">
           <span class="white--text headline">J</span>
         </v-list-tile-avatar>
         <v-list-tile-content>
@@ -45,7 +41,7 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile href="#" avatar>
-        <v-list-tile-avatar size="34" color="grey">
+        <v-list-tile-avatar size="38" color="grey">
           <span class="white--text headline">J</span>
         </v-list-tile-avatar>
         <v-list-tile-content>
