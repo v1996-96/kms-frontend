@@ -10,6 +10,8 @@ import MyWorkView from '@/views/app/my-work'
 import QuickLinksView from '@/views/app/quick-links'
 import SettingsView from '@/views/app/settings'
 
+import EditorView from '@/views/app/editor'
+
 Vue.use(Router)
 
 const routes = {
@@ -49,6 +51,11 @@ const routes = {
           path: 'settings',
           name: 'Settings',
           component: SettingsView
+        },
+        {
+          path: 'editor',
+          name: 'Editor',
+          component: EditorView
         }
       ]
     }

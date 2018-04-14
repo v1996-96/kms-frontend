@@ -18,3 +18,5 @@ export default {
   name: 'kms-app'
 }
 </script>
+<style src="quill/dist/quill.core.css"></style>
+<style src="quill/dist/quill.snow.css"></style>
