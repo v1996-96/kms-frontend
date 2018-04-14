@@ -1,5 +1,6 @@
 const createState = () => ({
-  navigationShowing: true
+  navigationShowing: true,
+  darkTheme: false
 })
 
 const getters = {}
@@ -12,6 +13,13 @@ const mutations = {
   },
   toggleNavigationShowing (state) {
     state.navigationShowing = !state.navigationShowing
+  },
+  setDarkTheme (state, value) {
+    state.darkTheme = !!value
+  },
+  toggleDarkTheme (state) {
+    console.log('toggled')
+    state.darkTheme = !state.darkTheme
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="blue darken-3" dark app :clipped-left="$vuetify.breakpoint.lgAndUp" fixed class="elevation-3">
+  <v-toolbar :color="toolbarColor" dark app :clipped-left="$vuetify.breakpoint.lgAndUp" fixed class="elevation-3">
     <v-toolbar-title :style="titleStyle" class="ml-0 pl-1">
       <v-toolbar-side-icon @click.stop="toggleNavigationShowing"></v-toolbar-side-icon>
       <span class="hidden-sm-and-down ml-2">KMS</span>
@@ -46,7 +46,7 @@
           <v-avatar color="grey" size="40">v</v-avatar>
         </v-btn>
         <v-list>
-          <v-list-tile><v-list-tile-title>Toggle theme</v-list-tile-title></v-list-tile>
+          <v-list-tile @click="toggleDarkTheme"><v-list-tile-title>Toggle theme</v-list-tile-title></v-list-tile>
           <v-list-tile><v-list-tile-title>Logout</v-list-tile-title></v-list-tile>
         </v-list>
       </v-menu>
@@ -64,8 +64,12 @@ export default {
 
   computed: {
     ...mapState({
+      'darkTheme': s => s.App.darkTheme,
       'navigationShowing': s => s.App.navigationShowing
     }),
+    toolbarColor () {
+      return this.darkTheme ? '' : 'blue darken-3'
+    },
     titleStyle () {
       return this.$vuetify.breakpoint.mdAndUp ? { width: '280px' } : {}
     }
@@ -73,6 +77,7 @@ export default {
 
   methods: {
     ...mapMutations({
+      'toggleDarkTheme': 'App/toggleDarkTheme',
       'toggleNavigationShowing': 'App/toggleNavigationShowing',
       'toggleNotifications': 'Notifications/toggleShowing'
     })
