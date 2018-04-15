@@ -17,7 +17,7 @@
         </v-list-tile-content>
         <v-list-tile-action>
           <v-btn icon ripple>
-            <v-icon color="error">delete</v-icon>
+            <v-icon color="grey">delete</v-icon>
           </v-btn>
         </v-list-tile-action>
       </v-list-tile>
@@ -25,37 +25,46 @@
 
     <v-list v-if="true" subheader three-line>
       <v-list-tile href="#" avatar>
-        <v-list-tile-avatar size="42" color="grey">
-          <span class="white--text headline">J</span>
-        </v-list-tile-avatar>
+          <v-list-tile-avatar size="42" color="grey">
+            <v-badge left color="blue darken-2">
+              <v-icon slot="badge" dark small>notifications</v-icon>
+              <span class="white--text headline">J</span>
+            </v-badge>
+          </v-list-tile-avatar>
         <v-list-tile-content>
           <v-list-tile-title>Jordan Kercher - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
           <v-list-tile-sub-title>
-            <small class="d-block">2 minutes ago</small>
+            <small class="d-block">Commented 2 minutes ago</small>
             Some awesome comment
           </v-list-tile-sub-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile href="#" avatar>
         <v-list-tile-avatar size="42" color="grey">
-          <span class="white--text headline">J</span>
+          <v-badge left color="yellow darken-3">
+            <v-icon slot="badge" dark small>chat_bubble</v-icon>
+            <span class="white--text headline">J</span>
+          </v-badge>
         </v-list-tile-avatar>
         <v-list-tile-content>
           <v-list-tile-title>Jordan Kercher - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
           <v-list-tile-sub-title>
-            <small class="d-block">2 minutes ago</small>
+            <small class="d-block">Commented 2 minutes ago</small>
             Some awesome comment
           </v-list-tile-sub-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile href="#" avatar>
         <v-list-tile-avatar size="42" color="grey">
-          <span class="white--text headline">J</span>
+          <v-badge left color="green">
+            <v-icon slot="badge" dark small>create</v-icon>
+            <span class="white--text headline">J</span>
+          </v-badge>
         </v-list-tile-avatar>
         <v-list-tile-content>
           <v-list-tile-title>Jordan Kercher - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
           <v-list-tile-sub-title>
-            <small class="d-block">2 minutes ago</small>
+            <small class="d-block">Commented 2 minutes ago</small>
             Some awesome comment
           </v-list-tile-sub-title>
         </v-list-tile-content>

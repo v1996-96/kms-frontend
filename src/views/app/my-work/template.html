@@ -30,7 +30,9 @@
               </p>
             </div>
 
-            <v-list v-if="true" two-line subheader class="elevation-1">
+            <v-text-field prepend-icon="search" class="mb-3" solo label="Type search request here..."></v-text-field>
+
+            <v-list v-if="true" two-line subheader class="elevation-1 mb-3">
               <v-subheader>
                 You have 123 entries created
               </v-subheader>
@@ -47,7 +49,10 @@
                     <v-btn icon slot="activator">
                       <v-icon>more_vert</v-icon>
                     </v-btn>
-                    <v-list>
+                    <v-list dense>
+                      <v-list-tile href="#">
+                        <v-list-tile-title>View</v-list-tile-title>
+                      </v-list-tile>
                       <v-list-tile href="#">
                         <v-list-tile-title>Edit</v-list-tile-title>
                       </v-list-tile>
@@ -71,7 +76,10 @@
                     <v-btn icon slot="activator">
                       <v-icon>more_vert</v-icon>
                     </v-btn>
-                    <v-list>
+                    <v-list dense>
+                      <v-list-tile href="#">
+                        <v-list-tile-title>View</v-list-tile-title>
+                      </v-list-tile>
                       <v-list-tile href="#">
                         <v-list-tile-title>Edit</v-list-tile-title>
                       </v-list-tile>
@@ -95,7 +103,10 @@
                     <v-btn icon slot="activator">
                       <v-icon>more_vert</v-icon>
                     </v-btn>
-                    <v-list>
+                    <v-list dense>
+                      <v-list-tile href="#">
+                        <v-list-tile-title>View</v-list-tile-title>
+                      </v-list-tile>
                       <v-list-tile href="#">
                         <v-list-tile-title>Edit</v-list-tile-title>
                       </v-list-tile>
@@ -107,6 +118,10 @@
                 </v-list-tile-action>
               </v-list-tile>
             </v-list>
+
+            <div class="text-xs-center">
+              <v-pagination :length="3" :value="1" total-visible="5" circle></v-pagination>
+            </div>
           </v-flex>
         </v-layout>
       </v-tab-item>
@@ -123,7 +138,9 @@
               </p>
             </div>
 
-            <v-list v-if="true" two-line subheader class="elevation-1">
+            <v-text-field prepend-icon="search" class="mb-3" solo label="Type search request here..."></v-text-field>
+
+            <v-list v-if="true" two-line subheader class="elevation-1 mb-3">
               <v-subheader>
                 You have 123 bookmarks
               </v-subheader>
@@ -198,6 +215,10 @@
                 </v-list-tile-action>
               </v-list-tile>
             </v-list>
+
+            <div class="text-xs-center">
+              <v-pagination :length="3" :value="1" total-visible="5" circle></v-pagination>
+            </div>
           </v-flex>
         </v-layout>
       </v-tab-item>
@@ -214,7 +235,9 @@
               </p>
             </div>
 
-            <v-list v-if="true" two-line subheader class="elevation-1">
+            <v-text-field prepend-icon="search" class="mb-3" solo label="Type search request here..."></v-text-field>
+
+            <v-list v-if="true" two-line subheader class="elevation-1 mb-3">
               <v-subheader>
                 You follow 123 entries
               </v-subheader>
@@ -289,6 +312,10 @@
                 </v-list-tile-action>
               </v-list-tile>
             </v-list>
+
+            <div class="text-xs-center">
+              <v-pagination :length="3" :value="1" total-visible="5" circle></v-pagination>
+            </div>
           </v-flex>
         </v-layout>
       </v-tab-item>
@@ -305,7 +332,9 @@
               </p>
             </div>
 
-            <v-list v-if="true" two-line subheader class="elevation-1">
+            <v-text-field prepend-icon="search" class="mb-3" solo label="Type search request here..."></v-text-field>
+
+            <v-list v-if="true" two-line subheader class="elevation-1 mb-3">
               <v-subheader>
                 You follow 123 entries
                 <v-spacer></v-spacer>
@@ -357,6 +386,10 @@
                 </v-list-tile-content>
               </v-list-tile>
             </v-list>
+
+            <div class="text-xs-center">
+              <v-pagination :length="3" :value="1" total-visible="5" circle></v-pagination>
+            </div>
           </v-flex>
         </v-layout>
       </v-tab-item>

@@ -1,0 +1,21 @@
+[contenteditable="true"].single-line {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+}
+[contenteditable="true"].single-line br {
+  display:none;
+
+}
+[contenteditable="true"].single-line * {
+  display:inline;
+  white-space:nowrap;
+}
+[contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  opacity: 0.6;
+}
+[contenteditable=true] {
+  cursor: text;
+}
