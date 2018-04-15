@@ -18,7 +18,6 @@ const mutations = {
     state.darkTheme = !!value
   },
   toggleDarkTheme (state) {
-    console.log('toggled')
     state.darkTheme = !state.darkTheme
   }
 }

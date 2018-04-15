@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar dense>
+  <v-toolbar dense :fixed="fixed" :style="toolbarStyle" :class="toolbarClass">
     <v-tooltip bottom :open-delay="TOOLTIP_DELAY">
       <div style="width: 150px" class="mr-3" slot="activator">
         <v-select dense flat solo :items="headerSizes" label="Select" single-line :value="header" @input="setValue('header', $event)"></v-select>
@@ -143,9 +143,12 @@
     </v-btn-toggle>
 
     <v-btn-toggle class="transparent elevation-0 mr-3">
-      <v-btn flat @click="clearFormat">
-        <v-icon>format_clear</v-icon>
-      </v-btn>
+      <v-tooltip bottom :open-delay="TOOLTIP_DELAY">
+        <v-btn slot="activator" flat @click="clearFormat">
+          <v-icon>format_clear</v-icon>
+        </v-btn>
+        <span>Clear format</span>
+      </v-tooltip>
     </v-btn-toggle>
 
     <slot></slot>
@@ -166,7 +169,9 @@ export default {
     'value': {
       type: Object,
       default: () => ({})
-    }
+    },
+    'fixed': Boolean,
+    'offset': [Number, String]
   },
   components: {
     'kms-color-picker': Compact
@@ -189,6 +194,13 @@ export default {
   }),
 
   computed: {
+    toolbarClass () {
+      return this.fixed ? ['elevation-1'] : []
+    },
+    toolbarStyle () {
+      return this.fixed ? { top: this.offset } : {}
+    },
+
     bold () {
       return _.has(this.value, 'bold') ? this.value.bold : DEFAULT
     },

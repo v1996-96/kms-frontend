@@ -1,8 +1,10 @@
 <template>
   <v-toolbar :color="toolbarColor" dark app :clipped-left="$vuetify.breakpoint.lgAndUp" fixed class="elevation-3">
-    <v-toolbar-title :style="titleStyle" class="ml-0 pl-1">
-      <v-toolbar-side-icon @click.stop="toggleNavigationShowing"></v-toolbar-side-icon>
-      <span class="hidden-sm-and-down ml-2">KMS</span>
+    <v-toolbar-side-icon @click.stop="toggleNavigationShowing"></v-toolbar-side-icon>
+    <v-toolbar-title :style="titleStyle" class="ml-2 pl-1">
+      <router-link style="text-decoration: none" class="hidden-sm-and-down ml-2 white--text" :to="{ name: 'Dashboard' }">
+        KMS
+      </router-link>
     </v-toolbar-title>
 
     <v-menu v-model="showFastSearching" offset-y min-width="500">
@@ -16,18 +18,59 @@
         class="hidden-sm-and-down"></v-text-field>
 
       <v-card>
-        <v-list>
-          <v-list-tile avatar>
+        <v-list class="pb-1">
+          <v-list-tile avatar href="#">
+            <v-list-tile-avatar color="grey"><span class="white--text headline">J</span></v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
-              <v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>
+              <v-list-tile-title>Tesla model 3 - <span class="grey--text">Project</span></v-list-tile-title>
+              <v-list-tile-sub-title>
+                Short description on here...
+              </v-list-tile-sub-title>
             </v-list-tile-content>
-            <v-list-tile-action>
-              <v-btn icon>
-                <v-icon>favorite</v-icon>
-              </v-btn>
-            </v-list-tile-action>
           </v-list-tile>
+
+          <v-list-tile avatar href="#">
+            <v-list-tile-avatar color="grey"><span class="white--text headline">J</span></v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Tesla model s - <span class="grey--text">Project</span></v-list-tile-title>
+              <v-list-tile-sub-title>
+                Another short description on here...
+              </v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile avatar href="#">
+            <v-list-tile-avatar color="grey"><span class="white--text headline">L</span></v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>John Leider - <span class="grey--text">People</span></v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile avatar href="#">
+            <v-list-tile-avatar color="grey"><span class="white--text headline">E</span></v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Entry title here - <span class="grey--text">Entry</span></v-list-tile-title>
+              <v-list-tile-sub-title>
+                Short passage from the article
+              </v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile avatar href="#">
+            <v-list-tile-avatar color="grey"><span class="white--text headline">E</span></v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Entry title here - <span class="grey--text">Entry</span></v-list-tile-title>
+              <v-list-tile-sub-title>
+                Short passage from the article
+              </v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-layout align-center class="pl-3">
+            <span>Found 12 entries</span>
+            <v-spacer></v-spacer>
+            <v-btn flat small>Advanced search</v-btn>
+          </v-layout>
         </v-list>
       </v-card>
     </v-menu>
@@ -71,7 +114,7 @@ export default {
       return this.darkTheme ? '' : 'blue darken-3'
     },
     titleStyle () {
-      return this.$vuetify.breakpoint.mdAndUp ? { width: '280px' } : {}
+      return this.$vuetify.breakpoint.mdAndUp ? { width: '220px' } : {}
     }
   },
 

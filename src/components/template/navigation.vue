@@ -51,7 +51,112 @@
     </template>
 
     <template v-if="false">
-      keklol
+      <v-list>
+        <v-list-tile href="#" two-line avatar>
+          <v-list-tile-avatar size="38" color="grey">
+            <span class="white--text headline">J</span>
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>Jordan Kercher</v-list-tile-title>
+            <v-list-tile-sub-title><small>23 members</small></v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-group>
+          <v-list-tile slot="activator">
+            <v-list-tile-avatar>
+              <v-icon>link</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Quick links</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile>
+            <v-list-tile-content>
+              <v-list-tile-title>Some awesome link</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-content>
+              <v-list-tile-title>Some awesome link</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile>
+            <v-list-tile-content>
+              <v-list-tile-title>Some awesome link</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list-group>
+
+        <v-list-tile href="#">
+          <v-list-tile-avatar>
+            <v-icon>settings</v-icon>
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>Settings</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+      <v-divider></v-divider>
+      <v-list dense>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <v-icon>chevron_left</v-icon>
+              Back
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#">
+          <v-list-tile-content>
+            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+      </v-list>
     </template>
   </v-navigation-drawer>
 </template>
@@ -60,18 +165,17 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'kms-template-navigation',
-  data: () => ({
-    temporary: false
-  }),
+  data: () => ({}),
   computed: {
     ...mapState({
       'navigationShowing': s => s.App.navigationShowing
-    })
+    }),
+    temporary () {
+      return this.$route.name === 'Editor'
+    }
   },
   watch: {
     '$route' (value, oldValue) {
-      this.temporary = value.name === 'Editor'
-
       if (oldValue.name === 'Editor') {
         this.setNavigationShowing(true)
       }
@@ -81,6 +185,11 @@ export default {
     ...mapMutations({
       'setNavigationShowing': 'App/setNavigationShowing'
     })
+  },
+  created () {
+    if (this.temporary) {
+      this.setNavigationShowing(false)
+    }
   }
 }
 </script>

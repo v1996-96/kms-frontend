@@ -35,7 +35,8 @@ export default {
       if (currentSelection) {
         this.editorInstance.removeFormat(currentSelection.index, currentSelection.length)
       }
-    }
+    },
+    onScroll (value) {}
   },
 
   mounted () {
