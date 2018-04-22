@@ -12,6 +12,8 @@ import ProjectsView from '@/views/app/projects'
 
 import ProjectEditorView from '@/views/app/project-views/editor'
 import ProjectCreateView from '@/views/app/project-views/create'
+import ProjectIntroView from '@/views/app/project-views/intro'
+import ProjectDocumentView from '@/views/app/project-views/document'
 
 Vue.use(Router)
 
@@ -62,6 +64,16 @@ const routes = {
           path: 'project/create',
           name: 'Project-create',
           component: ProjectCreateView
+        },
+        {
+          path: 'project/:projectslug',
+          name: 'Project-intro',
+          component: ProjectIntroView
+        },
+        {
+          path: 'project/:projectslug/:documentslug',
+          name: 'Project-document',
+          component: ProjectDocumentView
         }
       ]
     }

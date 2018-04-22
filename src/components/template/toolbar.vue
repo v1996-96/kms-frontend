@@ -49,7 +49,7 @@
           <v-list-tile avatar href="#">
             <v-list-tile-avatar color="grey"><span class="white--text headline">E</span></v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>Entry title here - <span class="grey--text">Entry</span></v-list-tile-title>
+              <v-list-tile-title>Document title here - <span class="grey--text">Document</span></v-list-tile-title>
               <v-list-tile-sub-title>
                 Short passage from the article
               </v-list-tile-sub-title>
@@ -59,7 +59,7 @@
           <v-list-tile avatar href="#">
             <v-list-tile-avatar color="grey"><span class="white--text headline">E</span></v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>Entry title here - <span class="grey--text">Entry</span></v-list-tile-title>
+              <v-list-tile-title>Document title here - <span class="grey--text">Document</span></v-list-tile-title>
               <v-list-tile-sub-title>
                 Short passage from the article
               </v-list-tile-sub-title>

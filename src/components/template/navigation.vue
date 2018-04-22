@@ -14,6 +14,10 @@
           <v-list-tile-action><v-icon>store</v-icon></v-list-tile-action>
           <v-list-tile-content><v-list-tile-title>Projects</v-list-tile-title></v-list-tile-content>
         </v-list-tile>
+        <v-list-tile exact>
+          <v-list-tile-action><v-icon>people</v-icon></v-list-tile-action>
+          <v-list-tile-content><v-list-tile-title>Users</v-list-tile-title></v-list-tile-content>
+        </v-list-tile>
         <v-list-tile :to="{ name: 'Settings' }" exact>
           <v-list-tile-action><v-icon>settings</v-icon></v-list-tile-action>
           <v-list-tile-content><v-list-tile-title>Settings</v-list-tile-title></v-list-tile-content>
@@ -112,47 +116,47 @@
 
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile href="#">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome entry name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 

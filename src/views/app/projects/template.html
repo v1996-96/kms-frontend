@@ -20,11 +20,22 @@
           class="elevation-1">
           <template slot="items" slot-scope="props">
             <td>{{ props.item.name }}</td>
-            <td>{{ props.item.calories }}</td>
-            <td>{{ props.item.fat }}</td>
-            <td>{{ props.item.carbs }}</td>
-            <td>{{ props.item.protein }}</td>
-            <td>{{ props.item.iron }}</td>
+            <td>{{ props.item.description }}</td>
+            <td>{{ props.item.start_date }}</td>
+            <td>
+              <v-tooltip v-for="person in props.item.team" :key="person.id" bottom>
+                <v-avatar slot="activator" size="35" class="mr-2">
+                  <img :src="person.avatar" />
+                </v-avatar>
+                {{ person.name }}
+              </v-tooltip>
+            </td>
+            <td>
+              <v-chip text-color="white" :color="props.item.status === 'Open' ? 'success' : 'warning'">{{ props.item.status }}</v-chip>
+            </td>
+            <td>
+              <v-btn color="primary" outline small>View</v-btn>
+            </td>
           </template>
         </v-data-table>
       </v-flex>
