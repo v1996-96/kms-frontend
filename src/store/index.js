@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import App from './modules/app'
 import Notifications from './modules/notifications'
 import Searching from './modules/searching'
+import Account from './modules/account'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   modules: {
     App,
     Notifications,
-    Searching
+    Searching,
+    Account
   }
 })

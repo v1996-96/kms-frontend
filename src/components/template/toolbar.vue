@@ -7,7 +7,7 @@
       </router-link>
     </v-toolbar-title>
 
-    <v-menu v-model="showFastSearching" offset-y min-width="500">
+    <v-menu v-model="showFastSearching" offset-y min-width="500" attach=".toolbar-search-input">
       <v-text-field
         flat
         solo-inverted
@@ -15,10 +15,10 @@
         prepend-icon="search"
         label="Search"
         style="min-width: 500px"
-        class="hidden-sm-and-down"></v-text-field>
+        class="hidden-sm-and-down toolbar-search-input"></v-text-field>
 
       <v-card>
-        <v-list class="pb-1">
+        <v-list class="pb-1" :light="!darkTheme">
           <v-list-tile avatar href="#">
             <v-list-tile-avatar color="grey"><span class="white--text headline">J</span></v-list-tile-avatar>
             <v-list-tile-content>
@@ -69,7 +69,7 @@
           <v-layout align-center class="pl-3">
             <span>Found 12 entries</span>
             <v-spacer></v-spacer>
-            <v-btn flat small>Advanced search</v-btn>
+            <v-btn flat small :light="!darkTheme">Advanced search</v-btn>
           </v-layout>
         </v-list>
       </v-card>
