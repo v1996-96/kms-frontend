@@ -79,7 +79,7 @@
 
     <v-btn icon @click="toggleNotifications" class="mr-4">
       <v-badge color="red">
-        <span slot="badge">9</span>
+        <span slot="badge" v-if="notificationsUnread > 0">{{ notificationsUnreadMsg }}</span>
         <v-icon>notifications</v-icon>
       </v-badge>
     </v-btn>
@@ -90,14 +90,14 @@
         </v-btn>
         <v-list>
           <v-list-tile @click="toggleDarkTheme"><v-list-tile-title>Toggle theme</v-list-tile-title></v-list-tile>
-          <v-list-tile><v-list-tile-title>Logout</v-list-tile-title></v-list-tile>
+          <v-list-tile @click="logout"><v-list-tile-title>Logout</v-list-tile-title></v-list-tile>
         </v-list>
       </v-menu>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'kms-template-toolbar',
@@ -107,8 +107,12 @@ export default {
 
   computed: {
     ...mapState({
+      'notificationsUnread': s => s.Notifications.countUnread,
       'darkTheme': s => s.App.darkTheme,
       'navigationShowing': s => s.App.navigationShowing
+    }),
+    ...mapGetters({
+      'notificationsUnreadMsg': 'Notifications/countUnread'
     }),
     toolbarColor () {
       return this.darkTheme ? '' : 'blue darken-3'
@@ -123,7 +127,18 @@ export default {
       'toggleDarkTheme': 'App/toggleDarkTheme',
       'toggleNavigationShowing': 'App/toggleNavigationShowing',
       'toggleNotifications': 'Notifications/toggleShowing'
-    })
+    }),
+    ...mapActions({
+      'logoutAction': 'Account/logout'
+    }),
+
+    logout () {
+      this.logoutAction().then(() => {
+        this.$router.push({ name: 'Signin' })
+      }).catch(() => {
+        this.$router.push({ name: 'Signin' })
+      })
+    }
   }
 }
 </script>

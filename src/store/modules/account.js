@@ -3,6 +3,7 @@ import Api from '@/api'
 import moment from 'moment'
 import { REFRESH_OFFSET } from '@/utils/auth'
 import AuthModel from '@/models/auth'
+import ProfileModel from '@/models/profile'
 
 const createState = () => ({
   access_token: null,
@@ -21,21 +22,32 @@ const getters = {
   shouldRefresh (state, getters) {
     var diff = moment.unix(getters.jwtExpires).utc().diff(moment.utc(), 's')
     return diff <= REFRESH_OFFSET && diff > 0
-  }
+  },
+  profileLoaded: (state) => state.profile !== null
 }
 
 const actions = {
-  signin (context, { email, password }) {
-    return Api.auth.signin({ email, password }).then((response) => {
+  async signin (context, { email, password }) {
+    await Api.auth.signin({ email, password }).then((response) => {
       context.commit('setAuthInfo', new AuthModel(response.data))
-      return true
     })
+
+    await context.dispatch('getProfile')
+
+    return true
   },
 
   logout (context) {
+    if (!context.state.refresh_token) {
+      return
+    }
+
     return Api.auth.revoke({ token: context.state.refresh_token }).then((reponse) => {
       context.commit('reset')
       return true
+    }).catch(info => {
+      context.commit('reset')
+      return info
     })
   },
 
@@ -47,17 +59,32 @@ const actions = {
   },
 
   getProfile (context) {
-    return true
+    return Api.profile.get().then((response) => {
+      context.commit('setProfile', new ProfileModel(response.data))
+      return true
+    })
   }
 }
 
 const mutations = {
   reset (state) {
     _.assign(state, createState())
+    Api.removeJWT()
+  },
+  syncAccessToken (state) {
+    if (state.access_token === null) {
+      Api.removeJWT()
+    } else {
+      Api.setJWT(state.access_token)
+    }
   },
   setAuthInfo (state, auth) {
     state.access_token = auth.access_token
     state.refresh_token = auth.refresh_token
+    Api.setJWT(auth.access_token)
+  },
+  setProfile (state, profile) {
+    state.profile = profile
   }
 }
 

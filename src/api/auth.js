@@ -1,13 +1,13 @@
 import { http } from './index'
 
 export default {
-  signin: ({ email, password }) => http.post('auth/signin', { email, password }),
+  signin: ({ email, password }) => http.post('auth/signin', { email, password }, { intercept: false }),
 
-  signup: (model) => http.post('auth/signup', model),
+  signup: (model) => http.post('auth/signup', model, { intercept: false }),
 
-  refresh: ({ token }) => http.post('auth/refresh/' + token),
+  refresh: ({ token }) => http.post('auth/refresh/' + token, null, { intercept: false }),
 
-  revoke: ({ token }) => http.post('auth/revoke/' + token),
+  revoke: ({ token }) => http.post('auth/revoke/' + token, null, { intercept: false }),
 
-  revokeAll: ({ token }) => http.post('auth/revokeall/' + token)
+  revokeAll: ({ token }) => http.post('auth/revokeall/' + token, null, { intercept: false })
 }

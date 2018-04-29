@@ -4,7 +4,11 @@
       <h1 class="headline">Recent activity</h1>
       <h3 class="subheading mb-4">Most recent user actions</h3>
 
-      <div v-if="false" class="text-xs-center">
+      <div v-if="!activityLoaded && activityLoading" class="text-xs-center">
+        <v-progress-circular indeterminate :size="50" color="primary"></v-progress-circular>
+      </div>
+
+      <div v-if="!activityLoaded && !activityLoading || activityLoaded && activityNotFound" class="text-xs-center">
         <p>
           <img src="/static/spaceship.svg" width="100" />
         </p>
@@ -14,106 +18,28 @@
         <v-btn color="primary" large>Create project</v-btn>
       </div>
 
-
-      <v-list v-if="true" two-line subheader class="elevation-1">
+      <v-list v-if="activityLoaded && !activityNotFound" two-line subheader class="elevation-1">
         <v-subheader>
-          You have 1245 activity notifications
+          You have {{ activityCount }} activity notifications
           <v-spacer></v-spacer>
           <v-btn small flat class="mr-0">Clear</v-btn>
         </v-subheader>
-        <v-list-tile avatar href="#">
+        <v-list-tile avatar href="#" v-for="item in activity" :key="item.activity_id">
           <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title>John Williams - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
+            <v-list-tile-title><span v-if="item.issuer">{{ item.issuer.name }} {{ item.issuer.surname }} - </span><span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
             <v-list-tile-sub-title class="text--primary">
               <small class="d-block">Commented 23 minutes ago</small>
-              There could be some other solutions for this problem
+              {{ item.content }}
             </v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
-            <v-btn icon ripple>
-              <v-icon color="grey lighten-1">chevron_right</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
-        <v-list-tile avatar href="#">
-          <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>John Williams - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
-            <v-list-tile-sub-title class="text--primary">
-              <small class="d-block">Commented 23 minutes ago</small>
-              There could be some other solutions for this problem
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-btn icon ripple>
-              <v-icon color="grey lighten-1">chevron_right</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
-        <v-list-tile avatar href="#">
-          <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>John Williams - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
-            <v-list-tile-sub-title class="text--primary">
-              <small class="d-block">Commented 23 minutes ago</small>
-              There could be some other solutions for this problem
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-btn icon ripple>
-              <v-icon color="grey lighten-1">chevron_right</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
-        <v-list-tile avatar href="#">
-          <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>John Williams - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
-            <v-list-tile-sub-title class="text--primary">
-              <small class="d-block">Commented 23 minutes ago</small>
-              There could be some other solutions for this problem
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-btn icon ripple>
-              <v-icon color="grey lighten-1">chevron_right</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
-        <v-list-tile avatar href="#">
-          <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>John Williams - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
-            <v-list-tile-sub-title class="text--primary">
-              <small class="d-block">Commented 23 minutes ago</small>
-              There could be some other solutions for this problem
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-btn icon ripple>
-              <v-icon color="grey lighten-1">chevron_right</v-icon>
-            </v-btn>
-          </v-list-tile-action>
-        </v-list-tile>
-        <v-list-tile avatar href="#">
-          <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>John Williams - <span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
-            <v-list-tile-sub-title class="text--primary">
-              <small class="d-block">Commented 23 minutes ago</small>
-              There could be some other solutions for this problem
-            </v-list-tile-sub-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
-            <v-btn icon ripple>
-              <v-icon color="grey lighten-1">chevron_right</v-icon>
-            </v-btn>
+            <v-icon color="grey lighten-1">chevron_right</v-icon>
           </v-list-tile-action>
         </v-list-tile>
 
         <div class="text-xs-center">
-          <v-btn depressed>Load more</v-btn>
+          <v-btn depressed @click="activityLoadMore" :loading="activityLoading">Load more</v-btn>
         </div>
       </v-list>
     </v-flex>

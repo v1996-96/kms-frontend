@@ -1,5 +1,8 @@
 import axios from 'axios'
 import auth from './auth'
+import notifications from './notifications'
+import activity from './activity'
+import profile from './profile'
 
 export const http = axios.create({
   baseURL: process.env.API_HOSTNAME
@@ -13,5 +16,8 @@ export default {
     delete http.defaults.headers.common['Authorization']
   },
 
-  auth
+  auth,
+  notifications,
+  activity,
+  profile
 }
