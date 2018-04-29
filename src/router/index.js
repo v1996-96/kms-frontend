@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import AuthLayout from '@/views/auth.layout'
-import SigninView from '@/views/auth/signin'
+import AccountLayout from '@/views/account.layout'
+import SigninView from '@/views/account/signin'
 
 import AppLayout from '@/views/app.layout'
 import DashboardView from '@/views/app/dashboard'
@@ -21,13 +21,14 @@ const routes = {
   mode: 'history',
   routes: [
     {
-      path: '/signin',
-      component: AuthLayout,
+      path: '/account',
+      component: AccountLayout,
       children: [
         {
-          path: '',
+          path: '/signin',
           name: 'Signin',
-          component: SigninView
+          component: SigninView,
+          meta: { whitelisted: true }
         }
       ]
     },
