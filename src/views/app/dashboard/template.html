@@ -22,19 +22,23 @@
         <v-subheader>
           You have {{ activityCount }} activity notifications
           <v-spacer></v-spacer>
-          <v-btn small flat class="mr-0">Clear</v-btn>
+          <v-btn small flat class="mr-0" fab @click="activityLoad" :loading="activityLoading">
+            <v-icon v-if="!activityLoading">refresh</v-icon>
+          </v-btn>
         </v-subheader>
         <v-list-tile avatar href="#" v-for="item in activity" :key="item.activity_id">
           <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title><span v-if="item.issuer">{{ item.issuer.name }} {{ item.issuer.surname }} - </span><span class="grey--text text--lighten-1">Some project</span></v-list-tile-title>
+            <v-list-tile-title><span v-if="item.issuer">{{ item.issuer.name }} {{ item.issuer.surname }} - </span><span class="grey--text text--lighten-1">{{ item.project_name }}</span></v-list-tile-title>
             <v-list-tile-sub-title class="text--primary">
-              <small class="d-block">Commented 23 minutes ago</small>
+              <small class="d-block">Commented {{ item.time_fired | timeAgoFilter }}</small>
               {{ item.content }}
             </v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
-            <v-icon color="grey lighten-1">chevron_right</v-icon>
+            <v-btn fab flat small>
+              <v-icon color="grey lighten-1">chevron_right</v-icon>
+            </v-btn>
           </v-list-tile-action>
         </v-list-tile>
 

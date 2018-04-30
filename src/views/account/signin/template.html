@@ -10,7 +10,10 @@
       <v-text-field v-model="password" prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
     </v-form>
 
-    <v-btn :loading="isSigningIn" class="mr-0 ml-0" block color="primary" outline @click="signin">Sign in</v-btn>
+    <v-btn :loading="isSigningIn" class="mr-0 ml-0" block color="primary" outline @click="signin">
+      Sign in
+      <span slot="loader">Processing...</span>
+    </v-btn>
 
     <div class="text-sm-center">
       <v-btn flat small>Restore access</v-btn>

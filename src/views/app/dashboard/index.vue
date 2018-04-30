@@ -1,9 +1,11 @@
 <template src="./template.html"></template>
 <script>
+import DateFilters from '@/mixins/filters/date'
 import { STATE, GETTERS, MUTATIONS, ACTIONS, DEFAULT_ACTIVITY_LIMIT } from './config'
 
 export default {
   name: 'kms-app-dashboard-page',
+  mixins: [DateFilters],
   computed: {
     ...STATE,
     ...GETTERS,
