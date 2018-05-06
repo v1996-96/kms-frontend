@@ -3,6 +3,15 @@ import auth from './auth'
 import notifications from './notifications'
 import activity from './activity'
 import profile from './profile'
+import bookmarks from './bookmarks'
+import competences from './competences'
+import documents from './documents'
+import following from './following'
+import lastseen from './lastseen'
+import projects from './projects'
+import settings from './settings'
+import templates from './templates'
+import users from './users'
 
 export const http = axios.create({
   baseURL: process.env.API_HOSTNAME
@@ -19,5 +28,14 @@ export default {
   auth,
   notifications,
   activity,
-  profile
+  profile,
+  bookmarks,
+  competences,
+  documents,
+  following,
+  lastseen,
+  projects,
+  settings,
+  templates,
+  users
 }

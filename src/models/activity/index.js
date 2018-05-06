@@ -1,5 +1,5 @@
 import State from 'ampersand-state'
-import ProfileShortModel from '@/models/profile/short'
+import UserShortModel from '@/models/user/short'
 
 export default State.extend({
   props: {
@@ -12,6 +12,6 @@ export default State.extend({
     'project_id': 'any'
   },
   children: {
-    'issuer': ProfileShortModel
+    'issuer': UserShortModel
   }
 })
