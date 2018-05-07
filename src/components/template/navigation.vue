@@ -29,26 +29,21 @@
           My projects
         </v-subheader>
 
-        <p v-if="false" class="text-xs-center mt-2">
-          <v-btn outline color="primary">Create new project</v-btn>
+        <p v-if="myProjectsNotFound" class="text-xs-center mt-2">
+          <v-btn outline color="primary" :to="{ name: 'Project-create' }">Create new project</v-btn>
         </p>
 
-        <v-list-tile href="#" two-line avatar>
+        <div v-if="!myProjectsLoaded && myProjectsLoading" class="text-xs-center">
+          <v-progress-circular indeterminate :size="30" color="primary"></v-progress-circular>
+        </div>
+
+        <v-list-tile v-if="myProjectsLoaded" href="#" two-line avatar v-for="project in myProjects" :key="project.project_id">
           <v-list-tile-avatar size="38" color="grey">
-            <span class="white--text headline">J</span>
+            <span class="white--text headline">{{ project.name | firstLetterFilter }}</span>
           </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title>Jordan Kercher</v-list-tile-title>
-            <v-list-tile-sub-title><small>23 members</small></v-list-tile-sub-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile href="#" avatar>
-          <v-list-tile-avatar size="38" color="grey">
-            <span class="white--text headline">J</span>
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <v-list-tile-title>Jordan Kercher</v-list-tile-title>
-            <v-list-tile-sub-title><small>23 members</small></v-list-tile-sub-title>
+            <v-list-tile-title>{{ project.name }}</v-list-tile-title>
+            <v-list-tile-sub-title><small>{{ project.members_count }} members</small></v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -165,14 +160,23 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+import TextFilters from '@/mixins/filters/text'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'kms-template-navigation',
+  mixins: [TextFilters],
   data: () => ({}),
   computed: {
     ...mapState({
-      'navigationShowing': s => s.App.navigationShowing
+      'navigationShowing': s => s.App.navigationShowing,
+
+      'myProjectsLoading': s => s.MyProjects.List.loading,
+      'myProjectsLoaded': s => s.MyProjects.List.loaded,
+      'myProjects': s => s.MyProjects.List.results
+    }),
+    ...mapGetters({
+      'myProjectsNotFound': 'MyProjects/List/notFound'
     }),
     temporary () {
       return this.$route.name === 'Editor'
@@ -188,6 +192,9 @@ export default {
   methods: {
     ...mapMutations({
       'setNavigationShowing': 'App/setNavigationShowing'
+    }),
+    ...mapActions({
+      'myProjectsLoadMore': 'MyProjects/List/loadMore'
     })
   },
   created () {

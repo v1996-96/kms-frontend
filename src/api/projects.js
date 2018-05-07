@@ -3,7 +3,7 @@ import { http } from './index'
 export default {
   // CRUD
   //
-  getList: ({ limit, offset, query }) => http.get('projects', { params: { limit, offset, query } }),
+  getList: ({ limit, offset, query, my }) => http.get('projects', { params: { limit, offset, query, my } }),
   getSingle: ({ id }) => http.get('projects/' + id),
   create: (model) => http.post('projects', model),
   update: ({ id, model }) => http.put('projects/' + id, model),

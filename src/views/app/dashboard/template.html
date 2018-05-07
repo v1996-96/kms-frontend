@@ -15,7 +15,7 @@
         <p class="subheading">
           Start using KMS to speed up project workflow
         </p>
-        <v-btn color="primary" large>Create project</v-btn>
+        <v-btn color="primary" large :to="{ name: 'Project-create' }">Create project</v-btn>
       </div>
 
       <v-list v-if="activityLoaded && !activityNotFound" two-line subheader class="elevation-1">
@@ -49,15 +49,25 @@
     </v-flex>
 
     <v-flex lg4>
-      <h1 class="headline">Welcome to KMS</h1>
-      <h3 class="subheading mb-4">The place for managing project knowledge</h3>
+      <div v-if="!introTemplateLoaded && introTemplateLoading" class="text-xs-center">
+        <v-progress-circular indeterminate :size="50" color="primary"></v-progress-circular>
+      </div>
 
-      <p class="text-xs-center">
-        <img src="/static/knowledge.svg" width="100" />
-      </p>
-      <p class="text-xs-center">
-        There will be some motivation for work in form of the short text. I will write it later. <a href="#">Edit welcome message</a>
-      </p>
+      <div v-if="introTemplateLoaded && !introTemplateNotFound">
+        <!-- <h1 class="headline">Welcome to KMS</h1>
+        <h3 class="subheading mb-4">The place for managing project knowledge</h3>
+
+        <p class="text-xs-center">
+          <img src="/static/knowledge.svg" width="100" />
+        </p>
+        <p class="text-xs-center">
+          There will be some motivation for work in form of the short text. I will write it later. <a href="#">Edit welcome message</a>
+        </p> -->
+        <h1 class="headline">{{ introTemplate.title }}</h1>
+        <h3 class="subheading mb-4">{{ introTemplate.description }}</h3>
+
+        <div v-html="introTemplate.content"></div>
+      </div>
     </v-flex>
   </v-layout>
 </v-container>

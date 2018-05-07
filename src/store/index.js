@@ -9,6 +9,7 @@ import Notifications from './modules/notifications'
 import Searching from './modules/searching'
 import Account from './modules/account'
 import Activity from './modules/activity'
+import MyProjects from './modules/my-projects'
 
 Vue.use(Vuex)
 
@@ -37,6 +38,7 @@ export default new Vuex.Store({
     Notifications,
     Searching,
     Account,
-    Activity
+    Activity,
+    MyProjects
   }
 })

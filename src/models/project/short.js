@@ -10,6 +10,7 @@ export default State.extend({
     'date_start': 'string',
     'date_end': 'string',
     'avatar': 'string',
+    'members_count': 'number',
     'is_open': 'boolean',
     'is_active': 'boolean'
   }

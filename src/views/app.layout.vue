@@ -25,7 +25,8 @@ export default {
   methods: {
     ...mapActions({
       'setupNotificationsWatcher': 'Notifications/setupAsyncLoop',
-      'getProfile': 'Account/getProfile'
+      'getProfile': 'Account/getProfile',
+      'getMyProjects': 'MyProjects/List/search'
     }),
     ...mapMutations({
       'staratNotificationsWatcher': 'Notifications/startLoop',
@@ -35,6 +36,7 @@ export default {
     init () {
       this.setupNotificationsWatcher()
       this.staratNotificationsWatcher()
+      this.getMyProjects()
 
       if (!this.profileLoaded) {
         this.getProfile()
