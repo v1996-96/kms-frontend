@@ -1,9 +1,5 @@
 <div>
-  <div v-if="isProjectLoading" class="text-xs-center">
-    <v-progress-circular indeterminate :size="50" color="primary"></v-progress-circular>
-  </div>
-
-  <v-container v-if="!isProjectLoading && project" fluid class="pb-0">
+  <v-container fluid class="pb-0">
     <v-layout row wrap>
       <v-flex lg8>
         <v-breadcrumbs class="pa-0 mb-2" divider="/">
@@ -21,7 +17,7 @@
     </v-layout>
   </v-container>
 
-  <v-container v-if="!isProjectLoading && project" fluid grid-list-lg>
+  <v-container fluid grid-list-lg>
     <v-layout row wrap>
       <v-flex lg8>
         <v-tabs v-model="tabs" color="transparent">

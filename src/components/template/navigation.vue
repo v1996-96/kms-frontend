@@ -37,7 +37,10 @@
           <v-progress-circular indeterminate :size="30" color="primary"></v-progress-circular>
         </div>
 
-        <v-list-tile v-if="myProjectsLoaded" href="#" two-line avatar v-for="project in myProjects" :key="project.project_id">
+        <v-list-tile
+          v-if="myProjectsLoaded" two-line avatar
+          v-for="project in myProjects" :key="project.project_id"
+          :to="{ name: 'Project-intro', params: { projectslug: project.slug } }">
           <v-list-tile-avatar size="38" color="grey">
             <span class="white--text headline">{{ project.name | firstLetterFilter }}</span>
           </v-list-tile-avatar>
@@ -62,7 +65,7 @@
       </v-list>
 
       <v-list v-if="selectedProject" class="pt-0">
-        <v-list-tile href="#" two-line avatar>
+        <v-list-tile two-line avatar :to="{ name: 'Project-intro' }" exact>
           <v-list-tile-avatar size="38" color="grey">
             <img v-if="selectedProject.avatar" :src="selectedProject.avatar" />
             <span v-else class="white--text headline">{{ selectedProject.name | firstLetterFilter }}</span>
@@ -73,7 +76,18 @@
           </v-list-tile-content>
         </v-list-tile>
 
-        <v-list-group>
+        <v-list v-if="selectedProject.quick_links && selectedProject.quick_links.length == 0">
+          <v-list-tile href="#">
+            <v-list-tile-avatar>
+              <v-icon>add</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Create quick link</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+
+        <v-list-group v-if="selectedProject.quick_links && selectedProject.quick_links.length > 0">
           <v-list-tile slot="activator">
             <v-list-tile-avatar>
               <v-icon>link</v-icon>
@@ -90,7 +104,7 @@
           </v-list-tile>
         </v-list-group>
 
-        <v-list-tile href="#">
+        <v-list-tile :to="{ name: 'Project-settings', params: { projectslug: selectedProject.slug } }" exact>
           <v-list-tile-avatar>
             <v-icon>settings</v-icon>
           </v-list-tile-avatar>
@@ -161,6 +175,11 @@ export default {
       if (oldValue.name === 'Editor') {
         this.setNavigationShowing(true)
       }
+    },
+    navigationType (value) {
+      if (value === 'common') {
+        this.getMyProjects()
+      }
     }
   },
   methods: {
@@ -168,6 +187,7 @@ export default {
       'setNavigationShowing': 'App/setNavigationShowing'
     }),
     ...mapActions({
+      'getMyProjects': 'MyProjects/List/search',
       'myProjectsLoadMore': 'MyProjects/List/loadMore'
     })
   },

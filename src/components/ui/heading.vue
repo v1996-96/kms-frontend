@@ -2,6 +2,8 @@
   <v-container fluid class="elevation-2 pb-0" :class="headingClass">
     <v-layout row wrap>
       <v-flex lg12>
+        <slot name="breadcrumbs"></slot>
+
         <slot name="headers">
           <h1 class="headline">{{ heading }}</h1>
           <h3 class="subheading mb-2">{{ subheading }}</h3>

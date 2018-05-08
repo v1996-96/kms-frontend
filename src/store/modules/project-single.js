@@ -5,6 +5,7 @@ import ProjectModel from '@/models/project'
 const createState = () => ({
   isProjectLoading: false,
   project: null,
+  projectCache: null,
   team: []
 })
 
@@ -23,10 +24,6 @@ const actions = {
       context.commit('setProjectLoading', false)
       return info
     })
-  },
-
-  getTeam (context) {
-
   }
 }
 
@@ -36,6 +33,7 @@ const mutations = {
   },
   setProject (state, project) {
     state.project = project
+    state.projectCache = JSON.parse(JSON.stringify(project))
   },
   setProjectLoading (state, value) {
     state.isProjectLoading = value

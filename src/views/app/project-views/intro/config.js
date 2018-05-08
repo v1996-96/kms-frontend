@@ -8,7 +8,6 @@ export const TEAM_TABLE_HEADERS = [
 ]
 
 export const STATE = mapState({
-  'isProjectLoading': s => s.isProjectLoading,
   'project': s => s.project
 })
 
@@ -19,5 +18,4 @@ export const MUTATIONS = mapMutations({
 })
 
 export const ACTIONS = mapActions({
-  'fetch': 'fetch'
 })
