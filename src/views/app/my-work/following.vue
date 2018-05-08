@@ -26,7 +26,7 @@
             Found {{ followingCount }} following
           </v-subheader>
 
-          <v-list-tile avatar href="#" v-for="following in followingResults" :key="following.following_id">
+          <v-list-tile avatar v-for="following in followingResults" :key="following.following_id" :to="{ name: 'Project-intro', params: { projectslug: following.project_slug } }">
             <v-list-tile-avatar :color="following.avatar ? '' : 'grey'">
               <img v-if="following.avatar" :src="following.avatar" />
               <span v-else class="white--text headline">{{ following.project_name | firstLetterFilter }}</span>

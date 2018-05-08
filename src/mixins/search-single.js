@@ -5,7 +5,7 @@ export default ({
   model,
   endpoint,
   options = {},
-  errorHandler = () => {}
+  onError = () => {}
 }) => {
   var ns = field => _.trim(namespace) + field
   var Model = model
@@ -65,7 +65,7 @@ export default ({
           return data
         }).catch((info) => {
           this[DATA_LOADING] = false
-          errorHandler.call(this, info)
+          onError.call(this, info)
           return info
         })
       }

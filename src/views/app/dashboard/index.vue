@@ -1,6 +1,7 @@
 <template src="./template.html"></template>
 <script>
 import Api from '@/api'
+import Vue from 'vue'
 import DateFilters from '@/mixins/filters/date'
 import SearchSingleMixin from '@/mixins/search-single'
 import TemplateModel from '@/models/template'
@@ -15,7 +16,7 @@ export default {
       model: TemplateModel,
       endpoint: Api.templates.getSingleByType,
       options: { type: 'a1' },
-      errorHandler: console.log
+      onError: info => Vue.notify.error('Error occured while loading template')
     })
   ],
   computed: {

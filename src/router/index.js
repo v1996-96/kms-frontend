@@ -8,6 +8,7 @@ import AppLayout from '@/views/app.layout'
 import DashboardView from '@/views/app/dashboard'
 import MyWorkView from '@/views/app/my-work'
 import SettingsView from '@/views/app/settings'
+import UsersView from '@/views/app/users'
 
 import ProjectsSearchView from '@/views/app/project-search'
 import ProjectCreateView from '@/views/app/project-create'
@@ -54,6 +55,12 @@ const routes = {
           path: 'settings',
           name: 'Settings',
           component: SettingsView,
+          meta: { navigation: 'common' }
+        },
+        {
+          path: 'users',
+          name: 'Users',
+          component: UsersView,
           meta: { navigation: 'common' }
         },
         {

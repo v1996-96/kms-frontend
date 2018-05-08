@@ -5,9 +5,7 @@ export const LOADATA_DIRECTION = {
 }
 export const LIMIT_DEFAULT = 30
 export const DEBOUNCE_TIME = 300
-export const DEBOUNCE_OPTIONS = {
-  maxWait: 300
-}
+export const DEBOUNCE_OPTIONS = { maxWait: 300 }
 
 export default ({
   namespace = 'model',

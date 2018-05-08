@@ -14,7 +14,7 @@
           <v-list-tile-action><v-icon>store</v-icon></v-list-tile-action>
           <v-list-tile-content><v-list-tile-title>Projects</v-list-tile-title></v-list-tile-content>
         </v-list-tile>
-        <v-list-tile exact>
+        <v-list-tile :to="{ name: 'Users' }" exact>
           <v-list-tile-action><v-icon>people</v-icon></v-list-tile-action>
           <v-list-tile-content><v-list-tile-title>Users</v-list-tile-title></v-list-tile-content>
         </v-list-tile>
@@ -41,8 +41,9 @@
           v-if="myProjectsLoaded" two-line avatar
           v-for="project in myProjects" :key="project.project_id"
           :to="{ name: 'Project-intro', params: { projectslug: project.slug } }">
-          <v-list-tile-avatar size="38" color="grey">
-            <span class="white--text headline">{{ project.name | firstLetterFilter }}</span>
+          <v-list-tile-avatar size="38" :color="project.avatar ? '' : 'grey'">
+            <img v-if="project.avatar" :src="project.avatar" />
+            <span v-else class="white--text headline">{{ project.name | firstLetterFilter }}</span>
           </v-list-tile-avatar>
           <v-list-tile-content>
             <v-list-tile-title>{{ project.name }}</v-list-tile-title>
@@ -66,7 +67,7 @@
 
       <v-list v-if="selectedProject" class="pt-0">
         <v-list-tile two-line avatar :to="{ name: 'Project-intro' }" exact>
-          <v-list-tile-avatar size="38" color="grey">
+          <v-list-tile-avatar size="38" :color="selectedProject.avatar ? '' : 'grey'">
             <img v-if="selectedProject.avatar" :src="selectedProject.avatar" />
             <span v-else class="white--text headline">{{ selectedProject.name | firstLetterFilter }}</span>
           </v-list-tile-avatar>
