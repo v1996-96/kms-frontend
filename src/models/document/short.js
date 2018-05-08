@@ -12,6 +12,8 @@ export default State.extend({
     'content': 'string',
     'date_created': 'string',
     'is_draft': 'boolean',
-    'likes_count': 'number'
+    'likes_count': 'number',
+    'project_name': 'string',
+    'project_slug': 'string'
   }
 })

@@ -4,7 +4,7 @@ export const LOADATA_DIRECTION = {
   BACKWARD: 'backward'
 }
 export const LIMIT_DEFAULT = 30
-export const DEBOUNCE_TIME = 100
+export const DEBOUNCE_TIME = 300
 export const DEBOUNCE_OPTIONS = {
   maxWait: 300
 }
@@ -30,7 +30,7 @@ export default ({
   const COMPUTED_SHOWING = ns('Showing')
   const COMPUTED_OFFSET = ns('Offset')
   const COMPUTED_TOTAL_PAGES = ns('TotalPages')
-  const COMPUTED_IS_NOT_FOUND = ns('IsNotFound')
+  const COMPUTED_NOT_FOUND = ns('NotFound')
   const COMPUTED_FORWARDATA_AVAILABLE = ns('ForwardAvailable')
   const COMPUTED_BACKWARDATA_AVAILABLE = ns('BackwardAvailable')
 
@@ -64,8 +64,8 @@ export default ({
       [COMPUTED_TOTAL_PAGES] () {
         return Math.ceil(this[DATA_COUNT] / this[DATA_LIMIT])
       },
-      [COMPUTED_IS_NOT_FOUND] () {
-        return this[DATA_LOADED] && this[DATA_COUNT] === 0
+      [COMPUTED_NOT_FOUND] () {
+        return !this[DATA_LOADED] || (this[DATA_LOADED] && this[DATA_COUNT] === 0)
       },
       [COMPUTED_FORWARDATA_AVAILABLE] () {
         return this[DATA_PAGE] < this[COMPUTED_TOTAL_PAGES]
@@ -85,12 +85,9 @@ export default ({
     methods: {
       [METHOD_RESET] () {
         this[DATA_FILTERS] = {}
-        this[DATA_LIMIT] = LIMIT_DEFAULT
         this[DATA_PAGE] = 1
         this[DATA_COUNT] = 0
         this[DATA_RESULTS] = []
-        this[DATA_LOADED] = false
-        this[DATA_LOADING] = false
       },
       [METHOD_CLEAR_FILTERS] () {
         this[DATA_FILTERS] = {}
@@ -109,12 +106,7 @@ export default ({
         this[DATA_LIMIT] = _.toNumber(limit)
       },
       async [METHOD_SEARCH_ACTION] ({ filters = {}, direction = null, page = null } = {}) {
-        this[DATA_RESULTS] = []
-
-        if (!_.isEqual(this[DATA_FILTERS], filters)) {
-          this[METHOD_RESET]
-          this[DATA_FILTERS] = filters
-        }
+        this[DATA_FILTERS] = filters
 
         if (page !== null && _.isNumber(page)) {
           this[DATA_PAGE] = page

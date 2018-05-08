@@ -9,108 +9,154 @@
   <v-layout row wrap>
     <v-flex lg8 offset-lg2>
 
-      <v-card class="mb-3">
-        <v-card-text>
-          <v-form>
-            <v-text-field label="Project name" :counter="100" required></v-text-field>
-            <v-text-field label="Description" multi-line rows="3" :counter="1000" required></v-text-field>
-            <v-text-field label="Main goal" :counter="100"></v-text-field>
+        <v-tabs v-model="tabs" color="transparent">
+          <v-tab>Project info</v-tab>
+          <v-tab>Team</v-tab>
+        </v-tabs>
 
-            <v-container fluid grid-list-lg class="pa-0">
-              <v-layout row wrap>
-                <v-flex lg6>
-                  <v-menu
-                    ref="startDateMenu"
-                    lazy
-                    :close-on-content-click="false"
-                    v-model="startDateMenu"
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    min-width="290px"
-                    :return-value.sync="startDate">
-                    <v-text-field
-                      slot="activator"
-                      label="Start date"
-                      v-model="startDate"
-                      readonly></v-text-field>
-                    <v-date-picker v-model="startDate" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="$refs.startDateMenu.save(startDate)">OK</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                </v-flex>
-                <v-flex lg6>
-                  <v-menu
-                    ref="endDateMenu"
-                    lazy
-                    :close-on-content-click="false"
-                    v-model="endDateMenu"
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    min-width="290px"
-                    :return-value.sync="endDate">
-                    <v-text-field
-                      slot="activator"
-                      label="Finish date"
-                      v-model="endDate"
-                      readonly></v-text-field>
-                    <v-date-picker v-model="endDate" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="$refs.endDateMenu.save(endDate)">OK</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                </v-flex>
-              </v-layout>
-            </v-container>
+        <v-tabs-items v-model="tabs" class="elevation-1">
+          <v-tab-item>
+            <v-card>
+              <v-card-text>
+                <v-form>
+                  <v-text-field :error-messages="nameErrors" @input="$v.name.$touch()" @blur="$v.name.$touch()" v-model="name" label="Project name" :counter="$v.name.$params.maxLength.max" required></v-text-field>
+                  <v-text-field :error-messages="descriptionErrors" @input="$v.description.$touch()" @blur="$v.description.$touch()" v-model="description" label="Description" multi-line rows="3" :counter="$v.description.$params.maxLength.max"></v-text-field>
+                  <v-text-field :error-messages="goalErrors" @input="$v.goal.$touch()" @blur="$v.goal.$touch()" v-model="goal" label="Main goal" :counter="$v.goal.$params.maxLength.max"></v-text-field>
 
-            <v-text-field label="A place for project avatar" :counter="100" required></v-text-field>
+                  <!-- Dates -->
+                  <v-container fluid grid-list-lg class="pa-0">
+                    <v-layout row wrap>
+                      <v-flex lg6>
+                        <v-menu
+                          ref="startDateMenu"
+                          lazy
+                          :close-on-content-click="false"
+                          v-model="startDateMenu"
+                          transition="scale-transition"
+                          offset-y
+                          full-width
+                          min-width="290px"
+                          :return-value.sync="startDate">
+                          <v-text-field
+                            slot="activator"
+                            label="Start date"
+                            v-model="startDate"
+                            @input="$v.startDate.$touch()"
+                            @blur="$v.startDate.$touch()"
+                            :error-messages="startDateErrors"
+                            clearable
+                            readonly></v-text-field>
+                          <v-date-picker v-model="startDate" no-title scrollable>
+                            <v-spacer></v-spacer>
+                            <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                            <v-btn flat color="primary" @click="$refs.startDateMenu.save(startDate)">OK</v-btn>
+                          </v-date-picker>
+                        </v-menu>
+                      </v-flex>
+                      <v-flex lg6>
+                        <v-menu
+                          ref="endDateMenu"
+                          lazy
+                          :close-on-content-click="false"
+                          v-model="endDateMenu"
+                          transition="scale-transition"
+                          offset-y
+                          full-width
+                          min-width="290px"
+                          :return-value.sync="endDate">
+                          <v-text-field
+                            slot="activator"
+                            label="Finish date"
+                            v-model="endDate"
+                            @input="$v.endDate.$touch()"
+                            @blur="$v.endDate.$touch()"
+                            :error-messages="endDateErrors"
+                            clearable
+                            readonly></v-text-field>
+                          <v-date-picker v-model="endDate" no-title scrollable>
+                            <v-spacer></v-spacer>
+                            <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                            <v-btn flat color="primary" @click="$refs.endDateMenu.save(endDate)">OK</v-btn>
+                          </v-date-picker>
+                        </v-menu>
+                      </v-flex>
+                    </v-layout>
+                  </v-container>
 
-            <v-select
-              label="Team"
-              :items="users"
-              v-model="projectTeam"
-              item-text="name"
-              item-value="name"
-              multiple
-              chips
-              max-height="auto"
-              required
-              autocomplete>
-              <template slot="selection" slot-scope="data">
-                <v-chip
-                  close
-                  class="chip--select-multi">
-                  <v-avatar color="green lighten-2">K</v-avatar>
-                  {{ data.item.name }}
-                </v-chip>
-              </template>
-              <!-- <template slot="item" slot-scope="data">
-                <template v-if="typeof data.item !== 'object'">
-                  <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                  <v-text-field v-model="avatar" label="A place for project avatar"></v-text-field>
+                </v-form>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-btn depressed :to="{ name: 'Projects' }">Cancel</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" depressed :disabled="$v.$error" @click="create">Create project</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-tab-item>
+
+          <v-tab-item>
+            <v-card>
+              <v-card-title class="pt-2">
+                <h4>Project team</h4>
+                <v-spacer></v-spacer>
+                <v-btn class="primary mr-0" depressed @click="addTeamMember">Add member</v-btn>
+              </v-card-title>
+
+              <v-card-text v-if="team.length == 0">
+                <h4 class="subheading text-xs-center mb-3">There are no team members yet</h4>
+              </v-card-text>
+
+              <v-data-table
+                v-if="team.length > 0"
+                :headers="TEAM_TABLE_HEADERS"
+                :items="team"
+                hide-actions>
+                <template slot="items" slot-scope="props">
+                  <td>
+                    <v-edit-dialog :return-value.sync="props.item.user" lazy>
+                      <span v-if="props.item.user">{{ props.item.user.name }} {{ props.item.user.surname }}</span>
+                      <span v-else>Click here to select user</span>
+                      <v-text-field
+                        slot="input"
+                        v-model="props.item.user"
+                        label="User"
+                        single-line
+                        autofocus></v-text-field>
+                    </v-edit-dialog>
+                  </td>
+                  <td>
+                    <v-edit-dialog :return-value.sync="props.item.role" lazy>
+                      <span v-if="props.item.role">{{ props.item.role.name }}</span>
+                      <span v-else>Click here to select role</span>
+                      <v-text-field
+                        slot="input"
+                        v-model="props.item.role"
+                        label="Project access role"
+                        single-line
+                        autofocus></v-text-field>
+                    </v-edit-dialog>
+                  </td>
+                  <td>
+                    <v-edit-dialog :return-value.sync="props.item.position" lazy>
+                      <span v-if="props.item.position !== ''">{{ props.item.position }}</span>
+                      <span v-else>Click here to enter position</span>
+                      <v-text-field
+                        slot="input"
+                        v-model="props.item.position"
+                        label="Position"
+                        single-line
+                        autofocus></v-text-field>
+                    </v-edit-dialog>
+                  </td>
+                  <td>
+                    <v-btn flat color="error" small @click="removeTeamMember(props.item)">Remove</v-btn>
+                  </td>
                 </template>
-                <template v-else>
-                  <v-list-tile-avatar>
-                    <img :src="data.item.avatar">
-                  </v-list-tile-avatar>
-                  <v-list-tile-content>
-                    <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
-                  </v-list-tile-content>
-                </template>
-              </template> -->
-            </v-select>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn depressed>Cancel</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" depressed>Create project</v-btn>
-        </v-card-actions>
-      </v-card>
+              </v-data-table>
+            </v-card>
+          </v-tab-item>
+        </v-tabs-items>
 
     </v-flex>
   </v-layout>

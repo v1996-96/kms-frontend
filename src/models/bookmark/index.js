@@ -7,6 +7,6 @@ export default State.extend({
     'time_created': 'string',
     'document_id': 'any',
     'document_title': 'string',
-    'document_slug': 'string',
+    'document_slug': 'string'
   }
 })

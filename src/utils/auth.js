@@ -2,7 +2,7 @@ import _ from 'lodash'
 import async from 'async'
 import { http } from '@/api'
 
-export const REFRESH_OFFSET = 120 // seconds
+export const REFRESH_OFFSET = 240 // seconds
 export const AUTH_CHECK_INTERVAL = 5000 // milliseconds
 const REFRESCH_FAILURES_LIMIT = 4
 var REFRESH_ATTEMPTS = 0

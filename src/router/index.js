@@ -8,7 +8,7 @@ import AppLayout from '@/views/app.layout'
 import DashboardView from '@/views/app/dashboard'
 import MyWorkView from '@/views/app/my-work'
 import SettingsView from '@/views/app/settings'
-import ProjectsView from '@/views/app/projects'
+import ProjectsView from '@/views/app/project-views/search'
 
 import ProjectEditorView from '@/views/app/project-views/editor'
 import ProjectCreateView from '@/views/app/project-views/create'
@@ -39,42 +39,70 @@ const routes = {
         {
           path: '',
           name: 'Dashboard',
-          component: DashboardView
+          component: DashboardView,
+          meta: {
+            navigation: 'common'
+          }
         },
         {
           path: 'my-work',
           name: 'My-work',
-          component: MyWorkView
+          component: MyWorkView,
+          meta: {
+            navigation: 'common'
+          }
         },
         {
           path: 'settings',
           name: 'Settings',
-          component: SettingsView
-        },
-        {
-          path: 'projects',
-          name: 'Projects',
-          component: ProjectsView
+          component: SettingsView,
+          meta: {
+            navigation: 'common'
+          }
         },
         {
           path: 'editor',
           name: 'Editor',
-          component: ProjectEditorView
+          component: ProjectEditorView,
+          meta: {
+            navigation: 'common'
+          }
+        },
+
+        {
+          path: 'projects',
+          name: 'Projects',
+          component: ProjectsView,
+          meta: {
+            navigation: 'common'
+          }
         },
         {
           path: 'project/create',
           name: 'Project-create',
-          component: ProjectCreateView
+          component: ProjectCreateView,
+          meta: {
+            navigation: 'common'
+          }
         },
+
         {
           path: 'project/:projectslug',
           name: 'Project-intro',
-          component: ProjectIntroView
+          props: true,
+          component: ProjectIntroView,
+          meta: {
+            navigation: 'project'
+          }
         },
         {
           path: 'project/:projectslug/:documentslug',
           name: 'Project-document',
-          component: ProjectDocumentView
+          props: true,
+          component: ProjectDocumentView,
+          meta: {
+            navigation: 'project'
+          }
         }
       ]
     }

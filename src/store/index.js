@@ -6,10 +6,12 @@ import * as Cookies from 'js-cookie'
 
 import App from './modules/app'
 import Notifications from './modules/notifications'
+import Notifier from './modules/notifier'
 import Searching from './modules/searching'
 import Account from './modules/account'
 import Activity from './modules/activity'
 import MyProjects from './modules/my-projects'
+import ProjectSingle from './modules/project-single'
 
 Vue.use(Vuex)
 
@@ -35,10 +37,12 @@ export default new Vuex.Store({
 
   modules: {
     App,
+    Notifier,
     Notifications,
     Searching,
     Account,
     Activity,
-    MyProjects
+    MyProjects,
+    ProjectSingle
   }
 })

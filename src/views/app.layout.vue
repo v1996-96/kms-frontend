@@ -7,6 +7,8 @@
     <v-content>
       <router-view/>
     </v-content>
+
+    <kms-template-notifier></kms-template-notifier>
   </v-app>
 </template>
 <script>

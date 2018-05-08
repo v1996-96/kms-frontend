@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer app fixed :temporary="temporary" :clipped="true" :value="navigationShowing" @input="setNavigationShowing($event)" width="280">
-    <template v-if="true">
+    <template v-if="navigationType === 'common'">
       <v-list>
         <v-list-tile :to="{ name: 'Dashboard' }" exact>
           <v-list-tile-action><v-icon>dashboard</v-icon></v-list-tile-action>
@@ -30,7 +30,7 @@
         </v-subheader>
 
         <p v-if="myProjectsNotFound" class="text-xs-center mt-2">
-          <v-btn outline color="primary" :to="{ name: 'Project-create' }">Create new project</v-btn>
+          <v-btn outline color="primary" :to="{ name: 'Project-create' }" :active-class="''">Create project</v-btn>
         </p>
 
         <div v-if="!myProjectsLoaded && myProjectsLoading" class="text-xs-center">
@@ -49,15 +49,27 @@
       </v-list>
     </template>
 
-    <template v-if="false">
-      <v-list>
-        <v-list-tile href="#" two-line avatar>
-          <v-list-tile-avatar size="38" color="grey">
-            <span class="white--text headline">J</span>
+    <template v-if="navigationType === 'project'">
+      <v-list dense>
+        <v-list-tile class="pt-0 grey--text" :to="{ name: 'Projects' }">
+          <v-list-tile-avatar>
+            <v-icon>chevron_left</v-icon>
           </v-list-tile-avatar>
           <v-list-tile-content>
-            <v-list-tile-title>Jordan Kercher</v-list-tile-title>
-            <v-list-tile-sub-title><small>23 members</small></v-list-tile-sub-title>
+            <v-list-tile-title>Back to projects</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+      <v-list v-if="selectedProject" class="pt-0">
+        <v-list-tile href="#" two-line avatar>
+          <v-list-tile-avatar size="38" color="grey">
+            <img v-if="selectedProject.avatar" :src="selectedProject.avatar" />
+            <span v-else class="white--text headline">{{ selectedProject.name | firstLetterFilter }}</span>
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ selectedProject.name }}</v-list-tile-title>
+            <v-list-tile-sub-title><small>{{ selectedProject.members_count }} members</small></v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
 
@@ -71,19 +83,9 @@
             </v-list-tile-content>
           </v-list-tile>
 
-          <v-list-tile>
+          <v-list-tile v-for="link in selectedProject.quick_links" :key="link.quick_link_id">
             <v-list-tile-content>
-              <v-list-tile-title>Some awesome link</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-content>
-              <v-list-tile-title>Some awesome link</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-content>
-              <v-list-tile-title>Some awesome link</v-list-tile-title>
+              <v-list-tile-title>{{ link.name }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list-group>
@@ -99,6 +101,7 @@
       </v-list>
 
       <v-divider></v-divider>
+
       <v-list dense>
         <v-list-tile href="#">
           <v-list-tile-content>
@@ -119,47 +122,13 @@
             <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
 
       </v-list>
     </template>
   </v-navigation-drawer>
 </template>
 <script>
+import _ from 'lodash'
 import TextFilters from '@/mixins/filters/text'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -173,13 +142,18 @@ export default {
 
       'myProjectsLoading': s => s.MyProjects.List.loading,
       'myProjectsLoaded': s => s.MyProjects.List.loaded,
-      'myProjects': s => s.MyProjects.List.results
+      'myProjects': s => s.MyProjects.List.results,
+
+      'selectedProject': s => s.ProjectSingle.project
     }),
     ...mapGetters({
       'myProjectsNotFound': 'MyProjects/List/notFound'
     }),
     temporary () {
       return this.$route.name === 'Editor'
+    },
+    navigationType () {
+      return _.defaultTo(this.$route.meta.navigation, 'common')
     }
   },
   watch: {

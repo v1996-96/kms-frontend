@@ -5,5 +5,5 @@ export default {
 
   create: (model) => http.post('following', model),
 
-  remove: ({ id }) => http.delete('following', { params: { id } })
+  remove: ({ id }) => http.delete('following/' + id)
 }

@@ -5,14 +5,22 @@
 </template>
 <script>
 import Vue from 'vue'
-
+import Vuelidate from 'vuelidate'
+import Notifier from '@/utils/notifier'
 import Navigation from '@/components/template/navigation'
 import Toolbar from '@/components/template/toolbar'
 import Notifications from '@/components/template/notifications'
+import NotifierComponent from '@/components/template/notifier'
+import HeadingComponent from '@/components/ui/heading'
+
+Vue.use(Notifier)
+Vue.use(Vuelidate)
 
 Vue.component(Navigation.name, Navigation)
 Vue.component(Toolbar.name, Toolbar)
 Vue.component(Notifications.name, Notifications)
+Vue.component(NotifierComponent.name, NotifierComponent)
+Vue.component(HeadingComponent.name, HeadingComponent)
 
 export default {
   name: 'kms-app'

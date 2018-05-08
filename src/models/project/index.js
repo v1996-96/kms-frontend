@@ -1,4 +1,5 @@
 import State from 'ampersand-state'
+import Collection from 'ampersand-collection'
 import QuickLinkShortModel from '../quick-link/short'
 
 export default State.extend({
@@ -15,7 +16,9 @@ export default State.extend({
     'is_open': 'boolean',
     'is_active': 'boolean'
   },
-  children: {
-    'quick_links': QuickLinkShortModel
+  collections: {
+    'quick_links': Collection.extend({
+      model: QuickLinkShortModel
+    })
   }
 })

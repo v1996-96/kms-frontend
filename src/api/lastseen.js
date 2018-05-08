@@ -5,5 +5,5 @@ export default {
 
   create: (model) => http.post('lastseen', model),
 
-  remove: ({ id }) => http.delete('lastseen/' + id)
+  clear: () => http.delete('lastseen')
 }

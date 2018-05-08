@@ -6,7 +6,8 @@ export default State.extend({
     'user_id': 'any',
     'name': 'string',
     'surname': 'string',
-    'avatar': 'strinig',
+    'email': 'string',
+    'avatar': 'string',
     'date_joined': 'string',
     'position': 'string'
   },

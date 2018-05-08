@@ -1,30 +1,32 @@
 <div>
-  <v-container fluid class="pb-0">
+  <div v-if="isProjectLoading" class="text-xs-center">
+    <v-progress-circular indeterminate :size="50" color="primary"></v-progress-circular>
+  </div>
+
+  <v-container v-if="!isProjectLoading && project" fluid class="pb-0">
     <v-layout row wrap>
       <v-flex lg8>
         <v-breadcrumbs class="pa-0 mb-2" divider="/">
-          <v-breadcrumbs-item>Dashboard</v-breadcrumbs-item>
-          <v-breadcrumbs-item disabled>Project name</v-breadcrumbs-item>
+          <v-breadcrumbs-item :to="{ name: 'Dashboard' }" exact>Dashboard</v-breadcrumbs-item>
+          <v-breadcrumbs-item disabled>{{ project.name }}</v-breadcrumbs-item>
         </v-breadcrumbs>
 
-        <h1 class="headline">Awesome project title</h1>
-        <h3 class="subheading">Project goal</h3>
-        <p class="caption">Project description</p>
+        <h1 class="headline">{{ project.name }}</h1>
+        <h3 class="subheading">{{ project.goal }}</h3>
+        <p class="caption">{{ project.description | textLimitFilter(100) }}</p>
       </v-flex>
       <v-flex lg4 class="text-lg-right">
         <v-btn color="info">Follow</v-btn>
-        <v-btn>Settings</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
 
-  <v-container fluid grid-list-lg>
+  <v-container v-if="!isProjectLoading && project" fluid grid-list-lg>
     <v-layout row wrap>
       <v-flex lg8>
         <v-tabs v-model="tabs" color="transparent">
-          <v-tab>Intro</v-tab>
+          <v-tab>Introduction</v-tab>
           <v-tab>Team</v-tab>
-          <v-tab>Entries</v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tabs" class="elevation-1">
@@ -41,20 +43,13 @@
             </v-card>
           </v-tab-item>
           <v-tab-item>
-            <v-card flat>
-              <v-card-text>Table of teammates</v-card-text>
-            </v-card>
-          </v-tab-item>
-          <v-tab-item>
-            <v-card flat>
-              <v-card-text>Tree of entries</v-card-text>
-            </v-card>
+            <kms-project-team-tab :projectId="project.project_id"></kms-project-team-tab>
           </v-tab-item>
         </v-tabs-items>
       </v-flex>
 
       <v-flex lg4>
-        <h1 class="headline mb-3">Activity</h1>
+        <h3 class="headline mb-3">Activity</h3>
         <v-list v-if="true" two-line subheader class="elevation-1">
           <v-list-tile avatar href="#">
             <v-list-tile-avatar color="grey">J</v-list-tile-avatar>
