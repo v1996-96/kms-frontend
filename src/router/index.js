@@ -95,17 +95,17 @@ const routes = {
               meta: { navigation: 'project' }
             },
             {
+              path: 'editor',
+              name: 'Editor',
+              component: ProjectEditorView,
+              meta: { navigation: 'common' }
+            },
+            {
               path: ':documentslug',
               name: 'Project-document',
               props: true,
               component: ProjectDocumentView,
               meta: { navigation: 'project' }
-            },
-            {
-              path: 'editor',
-              name: 'Editor',
-              component: ProjectEditorView,
-              meta: { navigation: 'common' }
             }
           ]
         }

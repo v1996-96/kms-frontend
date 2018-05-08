@@ -12,7 +12,8 @@
         <p class="caption">{{ project.description | textLimitFilter(100) }}</p>
       </v-flex>
       <v-flex lg4 class="text-lg-right">
-        <v-btn color="info">Follow</v-btn>
+        <kms-project-follow :project-id="project.project_id"></kms-project-follow>
+        <v-btn color="info" :to="{ name: 'Editor' }">Create document</v-btn>
       </v-flex>
     </v-layout>
   </v-container>

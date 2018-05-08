@@ -118,6 +118,14 @@
       <v-divider></v-divider>
 
       <v-list dense>
+        <v-subheader class="pr-0">
+          Documents
+          <v-spacer></v-spacer>
+          <v-btn fab flat small class="mr-2">
+            <v-icon>add</v-icon>
+          </v-btn>
+        </v-subheader>
+
         <v-list-tile href="#">
           <v-list-tile-content>
             <v-list-tile-title>
