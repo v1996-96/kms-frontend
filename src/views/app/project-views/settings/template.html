@@ -2,17 +2,18 @@
   <kms-heading heading="Project settings" subheading="" :dark="darkTheme">
     <v-breadcrumbs class="pa-0 mb-2" slot="breadcrumbs" divider="/">
       <v-breadcrumbs-item :to="{ name: 'Dashboard' }" exact>Dashboard</v-breadcrumbs-item>
-      <v-breadcrumbs-item :to="{ name: 'Project-intro' }" exact>{{ project.name }}</v-breadcrumbs-item>
+      <v-breadcrumbs-item :to="{ name: 'Project-intro' }" exact>{{ project.name | textLimitFilter(25) }}</v-breadcrumbs-item>
       <v-breadcrumbs-item disabled>Settings</v-breadcrumbs-item>
     </v-breadcrumbs>
     <v-tabs centered v-model="tabs" color="transparent">
       <v-tab>Project info</v-tab>
       <v-tab>Documents</v-tab>
       <v-tab>Team</v-tab>
+      <v-tab>Advanced</v-tab>
     </v-tabs>
   </kms-heading>
 
-  <v-container fluid>
+  <v-container fluid v-if="project">
     <v-layout row wrap>
       <v-flex lg8 offset-lg2>
 
@@ -22,55 +23,15 @@
           </v-tab-item>
 
           <v-tab-item>
-            <v-card>
-              <v-card-title class="pt-2">
-                <h4>Project team</h4>
-                <v-spacer></v-spacer>
-                <v-btn class="primary mr-0" depressed>Add member</v-btn>
-              </v-card-title>
-
-              <!-- <v-data-table
-                v-if="team.length > 0"
-                :headers="TEAM_TABLE_HEADERS"
-                :items="team"
-                hide-actions>
-                <template slot="items" slot-scope="props">
-                  <td>
-                    <v-edit-dialog lazy>
-                      <span v-if="props.item.user">{{ props.item.user.name }} {{ props.item.user.surname }}</span>
-                      <span v-else>Click here to select user</span>
-                      <kms-users-search slot="input" v-model="props.item.user"></kms-users-search>
-                    </v-edit-dialog>
-                  </td>
-                  <td>
-                    <v-edit-dialog lazy>
-                      <span v-if="props.item.role">{{ props.item.role.name }}</span>
-                      <span v-else>Click here to select role</span>
-                      <kms-project-roles-search slot="input" v-model="props.item.role"></kms-project-roles-search>
-                    </v-edit-dialog>
-                  </td>
-                  <td>
-                    <v-edit-dialog lazy>
-                      <span v-if="props.item.position !== ''">{{ props.item.position }}</span>
-                      <span v-else>Click here to enter position</span>
-                      <v-text-field
-                        slot="input"
-                        v-model="props.item.position"
-                        label="Position"
-                        single-line
-                        autofocus></v-text-field>
-                    </v-edit-dialog>
-                  </td>
-                  <td>
-                    <v-btn flat color="error" small @click="removeTeamMember(props.item)">Remove</v-btn>
-                  </td>
-                </template>
-              </v-data-table> -->
-            </v-card>
+            <kms-documents-tab></kms-documents-tab>
           </v-tab-item>
 
           <v-tab-item>
-            kek
+            <kms-team-tab :projectId="project.project_id"></kms-team-tab>
+          </v-tab-item>
+
+          <v-tab-item>
+            <kms-advanced-tab></kms-advanced-tab>
           </v-tab-item>
         </v-tabs-items>
 

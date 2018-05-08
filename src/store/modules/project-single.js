@@ -8,8 +8,7 @@ const createState = () => ({
   isProjectSaving: false,
 
   project: null,
-  projectCache: null,
-  team: []
+  projectCache: null
 })
 
 const getters = {

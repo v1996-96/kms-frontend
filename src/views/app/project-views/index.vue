@@ -8,6 +8,7 @@
   </div>
 </template>
 <script>
+import _ from 'lodash'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -24,6 +25,12 @@ export default {
   watch: {
     projectslug () {
       this.fetch(this.projectslug)
+    },
+    'project.slug' (value) {
+      this.$router.replace({
+        name: this.$route.name,
+        params: _.assign({}, this.$route.params, { projectslug: value })
+      })
     }
   },
   methods: {
