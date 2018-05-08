@@ -7,9 +7,15 @@ import uuid from 'uuid'
 import ProjectModel from '@/models/project'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 import { TEAM_TABLE_HEADERS } from './config'
+import UsersSearch from '@/components/active/users-search'
+import ProjectRolesSearch from '@/components/active/project-roles-search'
 
 export default {
   name: 'kms-app-project-create-page',
+  components: {
+    'kms-users-search': UsersSearch,
+    'kms-project-roles-search': ProjectRolesSearch
+  },
   data: () => ({
     TEAM_TABLE_HEADERS,
     isProjectCreating: false,
@@ -116,7 +122,11 @@ export default {
         'avatar': this.avatar,
         'is_open': this.is_open,
         'is_active': this.is_active,
-        'team': this.team
+        'team': _.compact(_.map(this.team, (member) => member.user && member.role ? {
+          user_id: member.user.user_id,
+          position: member.position,
+          project_role: member.role
+        } : null))
       }).then((response) => {
         this.isProjectCreating = false
         var data = new ProjectModel(response.data)

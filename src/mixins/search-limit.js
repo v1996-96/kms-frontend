@@ -24,7 +24,6 @@ export default ({
   const METHOD_RESET = ns('Reset')
   const METHOD_SEARCH_ACTION = ns('SearchAction')
   const METHOD_SEARCH = ns('Search')
-  const METHOD_LOADATA_MORE = ns('LoadMore')
 
   return {
     data: () => ({

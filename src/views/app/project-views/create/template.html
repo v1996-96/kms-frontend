@@ -114,31 +114,21 @@
                 hide-actions>
                 <template slot="items" slot-scope="props">
                   <td>
-                    <v-edit-dialog :return-value.sync="props.item.user" lazy>
+                    <v-edit-dialog lazy>
                       <span v-if="props.item.user">{{ props.item.user.name }} {{ props.item.user.surname }}</span>
                       <span v-else>Click here to select user</span>
-                      <v-text-field
-                        slot="input"
-                        v-model="props.item.user"
-                        label="User"
-                        single-line
-                        autofocus></v-text-field>
+                      <kms-users-search slot="input" v-model="props.item.user"></kms-users-search>
                     </v-edit-dialog>
                   </td>
                   <td>
-                    <v-edit-dialog :return-value.sync="props.item.role" lazy>
+                    <v-edit-dialog lazy>
                       <span v-if="props.item.role">{{ props.item.role.name }}</span>
                       <span v-else>Click here to select role</span>
-                      <v-text-field
-                        slot="input"
-                        v-model="props.item.role"
-                        label="Project access role"
-                        single-line
-                        autofocus></v-text-field>
+                      <kms-project-roles-search slot="input" v-model="props.item.role"></kms-project-roles-search>
                     </v-edit-dialog>
                   </td>
                   <td>
-                    <v-edit-dialog :return-value.sync="props.item.position" lazy>
+                    <v-edit-dialog lazy>
                       <span v-if="props.item.position !== ''">{{ props.item.position }}</span>
                       <span v-else>Click here to enter position</span>
                       <v-text-field
