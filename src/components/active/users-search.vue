@@ -13,6 +13,8 @@
     :items="usersResults"
     :search-input.sync="query"
     :value="value"
+    :required="required"
+    :error-messages="errorMessages"
     @input="valueChanged">
       <template slot="selection" slot-scope="scope">
         {{ scope.item.name }} {{ scope.item.surname }}
@@ -40,6 +42,8 @@ export default {
   ],
   props: {
     'value': [Object, Array],
+    'required': Boolean,
+    'errorMessages': Array,
     'multiple': {
       type: Boolean,
       default: false

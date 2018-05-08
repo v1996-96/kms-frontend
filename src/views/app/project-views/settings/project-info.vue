@@ -54,6 +54,7 @@
                   @input="update('date_start', $event)"
                   v-on:input="$v.project.date_start.$touch()"
                   @blur="$v.project.date_start.$touch()"
+                  :error-messages="startDateErrors"
                   clearable
                   readonly></v-text-field>
                 <v-date-picker :value="project.date_start" @input="update('date_start', $event)" no-title scrollable>
@@ -82,6 +83,7 @@
                   @input="update('date_end', $event)"
                   v-on:input="$v.project.date_end.$touch()"
                   @blur="$v.project.date_end.$touch()"
+                  :error-messages="endDateErrors"
                   clearable
                   readonly></v-text-field>
                 <v-date-picker :value="project.date_end" @input="update('date_end', $event)" no-title scrollable>
@@ -100,7 +102,7 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn depressed @click="discardChanges">Discard changes</v-btn>
+      <v-btn depressed :disabled="!projectEdited" @click="discardChanges">Discard changes</v-btn>
       <v-btn color="primary" :disabled="!projectEdited" @click="saveChanges" :loading="isProjectSaving" depressed>Save changes</v-btn>
     </v-card-actions>
   </v-card>
@@ -134,7 +136,7 @@ export default {
       if (!this.$v.project.name.$dirty) return errors
       !this.$v.project.name.required && errors.push('You must specify project name')
       !this.$v.project.name.maxLength && errors.push('Project name is too long')
-      !this.$v.project.name.minLength && errors.push('Project name must be at least 5 characters')
+      !this.$v.project.name.minLength && errors.push('Project name must be at least 3 characters')
       return errors
     },
     descriptionErrors () {
@@ -154,16 +156,16 @@ export default {
     startDateErrors () {
       const errors = []
       if (!this.project || !this.$v.project) return errors
-      if (!this.$v.project.startDate.$dirty) return errors
-      !this.$v.project.startDate.valid && errors.push('Start date is invalid')
+      if (!this.$v.project.date_start.$dirty) return errors
+      !this.$v.project.date_start.valid && errors.push('Start date is invalid')
       return errors
     },
     endDateErrors () {
       const errors = []
       if (!this.project || !this.$v.project) return errors
-      if (!this.$v.project.endDate.$dirty) return errors
-      !this.$v.project.endDate.valid && errors.push('End date is invalid')
-      !this.$v.project.endDate.sameOrAfter && errors.push('End date can`t be before start date')
+      if (!this.$v.project.date_end.$dirty) return errors
+      !this.$v.project.date_end.valid && errors.push('End date is invalid')
+      !this.$v.project.date_end.sameOrAfter && errors.push('End date can`t be before start date')
       return errors
     }
   },
@@ -171,7 +173,7 @@ export default {
   validations () {
     return _.has(this.project, 'project_id') ? {
       project: {
-        name: { required, maxLength: maxLength(100), minLength: minLength(5) },
+        name: { required, maxLength: maxLength(100), minLength: minLength(3) },
         description: { maxLength: maxLength(1000) },
         goal: { maxLength: maxLength(100) },
         date_start: {

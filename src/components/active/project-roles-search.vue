@@ -6,13 +6,16 @@
     item-text="name"
     item-value="project_role_id"
     return-object
-    clearable
+    :clearable="clearable"
     label="Roles"
     :multiple="multiple"
     :loading="rolesLoading"
     :items="rolesResults"
     :search-input.sync="query"
     :value="value"
+    :required="required"
+    :error-messages="errorMessages"
+    @blur="onBlur"
     @input="valueChanged"></v-select>
 </template>
 <script>
@@ -33,9 +36,15 @@ export default {
   ],
   props: {
     'value': [Object, Array],
+    'required': Boolean,
+    'errorMessages': Array,
     'multiple': {
       type: Boolean,
       default: false
+    },
+    'clearable': {
+      type: Boolean,
+      default: true
     }
   },
   data: () => ({
@@ -45,6 +54,9 @@ export default {
   methods: {
     valueChanged (value) {
       this.$emit('input', value)
+    },
+    onBlur () {
+      this.$emit('blur')
     }
   },
   watch: {
