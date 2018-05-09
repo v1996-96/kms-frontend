@@ -7,9 +7,11 @@ export default {
       return moment.duration(diff).humanize(extended)
     },
     dateTimeFilter (value) {
+      if (!value) return
       return moment(value).format('YYYY-MM-DD HH:mm:ss')
     },
     dateFilter (value) {
+      if (!value) return
       return moment(value).format('YYYY-MM-DD')
     }
   }

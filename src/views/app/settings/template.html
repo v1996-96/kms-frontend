@@ -1,9 +1,41 @@
-<v-container grid-list-lg fluid>
-  <v-layout row wrap>
-    <v-flex lg12>
-      <h1 class="headline">Settings</h1>
-      <h3 class="subheading mb-4">Configure the system for your needs</h3>
+<div>
+  <kms-heading heading="Settings" subheading="Configure the system for your needs" :dark="darkTheme">
+    <v-tabs centered v-model="tabs" color="transparent">
+      <v-tab>Projects</v-tab>
+      <v-tab>Users</v-tab>
+      <v-tab>Competences</v-tab>
+      <v-tab>Templates</v-tab>
+      <v-tab>Access</v-tab>
+    </v-tabs>
+  </kms-heading>
 
-    </v-flex>
-  </v-layout>
-</v-container>
+  <v-container fluid>
+    <v-layout row wrap>
+      <v-flex lg8 offset-lg2>
+
+        <v-tabs-items v-model="tabs" class="elevation-1">
+          <v-tab-item>
+            <kms-projects></kms-projects>
+          </v-tab-item>
+
+          <v-tab-item>
+            <kms-users></kms-users>
+          </v-tab-item>
+
+          <v-tab-item>
+            <kms-competences></kms-competences>
+          </v-tab-item>
+
+          <v-tab-item>
+            kek
+          </v-tab-item>
+
+          <v-tab-item>
+            kek
+          </v-tab-item>
+        </v-tabs-items>
+
+      </v-flex>
+    </v-layout>
+  </v-container>
+</div>
