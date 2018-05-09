@@ -71,9 +71,7 @@ export default {
   ],
   data: () => ({
     isBookmarkRemoving: false,
-
-    bookmarksQuery: '',
-    displayOnlyDrafts: null
+    bookmarksQuery: ''
   }),
 
   computed: {

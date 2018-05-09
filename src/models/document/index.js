@@ -5,6 +5,7 @@ export default State.extend({
   props: {
     'document_id': 'any',
     'parent_document_id': 'any',
+    'parent_document_slug': 'string',
     'project_id': 'any',
     'creator_id': 'any',
     'slug': 'string',

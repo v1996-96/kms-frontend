@@ -126,29 +126,50 @@
           </v-btn>
         </v-subheader>
 
-        <h4 v-if="selectedDocument == null && documentsNotFound" class="subheading text-xs-center grey--text mt-3">No documents for project</h4>
+        <h4 v-if="documentsLoading" class="subheading text-xs-center grey--text mt-3">Loading...</h4>
 
-        <v-list-tile v-if="selectedDocument != null">
-          <v-list-tile-content>
-            <v-list-tile-title>
+        <div v-if="!documentsLoading">
+          <h4 v-if="selectedDocument == null && documentsNotFound" class="subheading text-xs-center grey--text mt-3">No documents for project</h4>
+
+          <v-list-tile
+            v-if="selectedDocument != null"
+            :to="{ name: 'Document', params: { documentslug: selectedDocument.slug } }">
+            <v-list-tile-avatar>
+              <v-icon>insert_drive_file</v-icon>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                {{ selectedDocument.title }}
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-divider inset v-if="selectedDocument != null"></v-divider>
+
+          <v-list-tile v-if="selectedDocument != null" @click="documentsGoBack">
+            <v-list-tile-avatar>
               <v-icon>chevron_left</v-icon>
-              Back
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                Back
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
 
-        <v-list-tile
-          v-for="document in documents"
-          :key="document.document_id"
-          :to="{ name: 'Document', params: { documentslug: document.slug } }">
-          <v-list-tile-content>
-            <v-list-tile-title>{{ document.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+          <v-list-tile
+            v-for="document in documents"
+            :key="document.document_id"
+            :to="{ name: 'Document', params: { documentslug: document.slug } }">
+            <v-list-tile-content>
+              <v-list-tile-title>{{ document.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
 
-        <p class="text-xs-center">
-          <v-btn v-if="documentsCanLoadMore" @click="documentsLoadMore" :loading="documentsLoading" :disabled="documentsLoading" depressed>Load more</v-btn>
-        </p>
+          <p class="text-xs-center">
+            <v-btn v-if="documentsCanLoadMore" @click="documentsLoadMore" :loading="documentsLoading" :disabled="documentsLoading" depressed>Load more</v-btn>
+          </p>
+        </div>
 
       </v-list>
     </template>
@@ -207,7 +228,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      'setNavigationShowing': 'App/setNavigationShowing'
+      'setNavigationShowing': 'App/setNavigationShowing',
+      'setDocument': 'DocumentSingle/setDocument'
     }),
     ...mapActions({
       'getMyProjects': 'MyProjects/List/search',
@@ -215,7 +237,19 @@ export default {
 
       'getDocuments': 'DocumentSingle/loadChildren',
       'documentsLoadMore': 'DocumentSingle/Children/loadMore'
-    })
+    }),
+
+    documentsGoBack () {
+      var parent = this.selectedDocument !== null ? this.selectedDocument.parent_document_slug : null
+
+      if (parent) {
+        this.$router.push({ name: 'Document', params: { documentslug: parent } })
+      } else {
+        this.$router.push({ name: 'Project-intro', params: { projectslug: this.selectedProject.slug } })
+        this.setDocument(null)
+        this.getDocuments(this.selectedProject.project_id)
+      }
+    }
   },
   created () {
     this.setNavigationShowing(!this.temporary)

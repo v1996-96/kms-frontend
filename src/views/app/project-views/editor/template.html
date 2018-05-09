@@ -6,7 +6,11 @@
           <v-breadcrumbs-item :to="{ name: 'Dashboard' }" exact>Dashboard</v-breadcrumbs-item>
           <v-breadcrumbs-item :to="{ name: 'Project-intro' }" exact>{{ project.name | textLimitFilter(25) }}</v-breadcrumbs-item>
           <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.CREATE" disabled>New document</v-breadcrumbs-item>
-          <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.EDIT && document" disabled>{{ document.title | textLimitFilter(25) }}</v-breadcrumbs-item>
+          <v-breadcrumbs-item
+            v-if="editorMode == EDITOR_MODE.EDIT && document"
+            :to="{ name: 'Document', params: { documentslug } }"
+            exact>{{ document.title | textLimitFilter(25) }}</v-breadcrumbs-item>
+          <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.EDIT && document" disabled>Edit</v-breadcrumbs-item>
         </v-breadcrumbs>
 
         <v-text-field

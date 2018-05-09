@@ -43,6 +43,8 @@ export default {
     isDocumentSaving: false,
     lastSaveTime: null,
 
+    keysEventListener: null,
+
     document: null,
     documentCache: _.assign({}, EMPTY_DOCUMENT)
   }),
@@ -246,10 +248,25 @@ export default {
   },
 
   mounted () {
+    var vm = this
+
     this.initEditor()
     if (this.editorMode === EDITOR_MODE.EDIT) {
       this.fetch()
     }
+
+    this.keysEventListener = function (e) {
+      if ((window.navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey) && e.keyCode === 83) {
+        e.preventDefault()
+        vm.save()
+      }
+    }
+
+    document.addEventListener('keydown', this.keysEventListener, false)
+  },
+
+  beforeDestroy () {
+    document.removeEventListener('keydown', this.keysEventListener)
   }
 }
 </script>

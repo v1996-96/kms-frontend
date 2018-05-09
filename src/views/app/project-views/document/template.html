@@ -1,4 +1,47 @@
 <div>
-  Document
+  <v-container fluid v-if="document">
+    <v-layout row wrap>
+      <v-flex lg8>
+        <v-breadcrumbs class="pa-0 mb-2" divider="/">
+          <v-breadcrumbs-item :to="{ name: 'Dashboard' }" exact>Dashboard</v-breadcrumbs-item>
+          <v-breadcrumbs-item :to="{ name: 'Project-intro' }" exact>{{ document.project_name | textLimitFilter(25) }}</v-breadcrumbs-item>
+          <v-breadcrumbs-item disabled>{{ document.title | textLimitFilter(25) }}</v-breadcrumbs-item>
+        </v-breadcrumbs>
+
+        <h1 class="headline">{{ document.title }}</h1>
+        <h3 class="subheading">{{ document.subtitle }}</h3>
+      </v-flex>
+
+      <v-flex lg4 class="text-lg-right">
+        <v-chip v-if="document.creator">
+          <v-avatar class="grey">
+            <img v-if="document.creator.avatar" :src="document.creator.avatar" />
+            <span>{{ document.creator.name | firstLetterFilter }}</span>
+          </v-avatar>
+          {{ document.creator.name }} {{ document.creator.surname }}
+        </v-chip>
+        <div>
+          <v-btn icon ripple flat>
+            <v-icon>favorite_border</v-icon>
+          </v-btn>
+          <v-btn icon ripple flat>
+            <v-icon>bookmark_border</v-icon>
+          </v-btn>
+          <v-btn icon ripple flat color="primary" class="mr-0" :to="{ name: 'Document-edit', params: { documentslug } }">
+            <v-icon>edit</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
+
+  <v-container v-if="document">
+    <v-card v-if="document.content">
+      <v-card-text v-html="document.content" style="min-height: 400px"></v-card-text>
+    </v-card>
+
+    <h3 v-if="!document.content" class="headline grey--text text-xs-center">Document is empty</h3>
+  </v-container>
+
+  <kms-coomments v-if="document" :document-id="document.document_id"></kms-coomments>
 </div>
- 

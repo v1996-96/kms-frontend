@@ -14,18 +14,18 @@ export default {
 
   // Comments
   //
-  getComments: ({ id, limit, offset }) => http.get('projects/' + id + '/comments', { params: { limit, offset } }),
-  addComment: ({ id, model }) => http.post('projects/' + id + '/comments', model),
-  updateComment: ({ id, commentId, model }) => http.put('projects/' + id + '/comments/' + commentId, model),
-  removeComment: ({ id, commentId }) => http.delete('projects/' + id + '/comments/' + commentId),
-  removeCommentsMultiple: ({ id, ids }) => http.delete('projects/' + id + '/comments', { params: { ids } }),
-  likeComment: ({ id, commentId }) => http.post('projects/' + id + '/comments/' + commentId),
+  getComments: ({ id, limit, offset }) => http.get('documents/' + id + '/comments', { params: { limit, offset } }),
+  addComment: ({ id, model }) => http.post('documents/' + id + '/comments', model),
+  updateComment: ({ id, commentId, model }) => http.put('documents/' + id + '/comments/' + commentId, model),
+  removeComment: ({ id, commentId }) => http.delete('documents/' + id + '/comments/' + commentId),
+  removeCommentsMultiple: ({ id, ids }) => http.delete('documents/' + id + '/comments', { params: { ids } }),
+  likeComment: ({ id, commentId }) => http.post('documents/' + id + '/comments/' + commentId),
 
   // Attachments
   //
-  getAttachments: ({ id, limit, offset }) => http.get('projects/' + id + '/attachments', { params: { limit, offset } }),
-  addAttachment: ({ id, model }) => http.post('projects/' + id + '/attachments', model),
-  updateAttachment: ({ id, attachmentId, model }) => http.put('projects/' + id + '/attachments/' + attachmentId, model),
-  removeAttachment: ({ id, attachmentId }) => http.delete('projects/' + id + '/attachments/' + attachmentId),
-  removeAttachmentsMultiple: ({ id, ids }) => http.delete('projects/' + id + '/attachments', { params: { ids } })
+  getAttachments: ({ id, limit, offset }) => http.get('documents/' + id + '/attachments', { params: { limit, offset } }),
+  addAttachment: ({ id, model }) => http.post('documents/' + id + '/attachments', model),
+  updateAttachment: ({ id, attachmentId, model }) => http.put('documents/' + id + '/attachments/' + attachmentId, model),
+  removeAttachment: ({ id, attachmentId }) => http.delete('documents/' + id + '/attachments/' + attachmentId),
+  removeAttachmentsMultiple: ({ id, ids }) => http.delete('documents/' + id + '/attachments', { params: { ids } })
 }

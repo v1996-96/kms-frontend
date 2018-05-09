@@ -14,7 +14,7 @@ const createState = () => ({
 const getters = {}
 
 const actions = {
-  async fetch (context, { idOrSlug, projectId }) {
+  async fetch (context, idOrSlug) {
     if (!idOrSlug) {
       context.commit('setDocument', null)
       return
@@ -31,7 +31,9 @@ const actions = {
       return info
     })
 
-    await context.dispatch('loadChildren', projectId)
+    if (data) {
+      await context.dispatch('loadChildren', data.project_id)
+    }
 
     return data
   },
