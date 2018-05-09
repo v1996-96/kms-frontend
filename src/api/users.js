@@ -1,7 +1,7 @@
 import { http } from './index'
 
 export default {
-  invite: ({ email }) => http.post('users', { email }),
+  invite: ({ email }) => http.post('users/invite', { email }),
 
   getList: ({ limit, offset, query }) => http.get('users', { params: { limit, offset, query } }),
 

@@ -3,15 +3,17 @@
     <v-card-title class="pt-2">
       <v-text-field hide-details prepend-icon="search" class="mb-3" clearable label="Type search request here..." v-model="searchQuery"></v-text-field>
       <v-spacer></v-spacer>
-      <v-dialog v-model="creationDialog" max-width="290">
+      <v-dialog v-model="creationDialog" max-width="310">
         <v-btn slot="activator" color="primary" class="mr-0">Create competence</v-btn>
         <v-card>
-          <v-card-title class="headline">Use Google's location service?</v-card-title>
-          <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+          <v-card-title class="headline">Create new competence</v-card-title>
+          <v-card-text>
+            <v-text-field required v-model="competenceText" :error-messages="competenceTextErrors" @input="$v.competenceText.$touch()" @blur="$v.competenceText.$touch()" label="Competence"></v-text-field>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click.native="creationDialog = false">Disagree</v-btn>
-            <v-btn color="green darken-1" flat @click.native="creationDialog = false">Agree</v-btn>
+            <v-btn flat @click.native="creationDialog = false">Cancel</v-btn>
+            <v-btn color="primary" flat @click="create" :disabled="isCompetenceCreating || $v.$invalid" :loading="isCompetenceCreating">Create</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -72,6 +74,7 @@ import TextFiltersMixin from '@/mixins/filters/text'
 import DateFiltersMixin from '@/mixins/filters/date'
 import CompetenceListModel from '@/models/competence/list'
 import { COMPETENCES_TABLE_HEADERS } from './config'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'kms-competence-settings-competences-tab',
@@ -91,10 +94,21 @@ export default {
     deletingCompetence: null,
     creationDialog: null,
     isCompetenceDeleting: false,
+    isCompetenceCreating: false,
+    competenceText: '',
     searchQuery: '',
     rowsPerPageItems: [5, 10, 30, 50, 100],
     pagination: { rowsPerPage: 50 }
   }),
+
+  computed: {
+    competenceTextErrors () {
+      const errors = []
+      if (!this.$v.competenceText.$dirty) return errors
+      !this.$v.competenceText.required && errors.push('You must enter competence name')
+      return errors
+    }
+  },
 
   watch: {
     searchQuery () {
@@ -109,6 +123,10 @@ export default {
     }
   },
 
+  validations: {
+    competenceText: { required }
+  },
+
   methods: {
     competencesSearchHandler: _.debounce(function (page = null, direction = null) {
       return this.competencesSearch({
@@ -119,6 +137,24 @@ export default {
         }
       })
     }, 300),
+
+    create () {
+      this.$v.$touch()
+      if (this.$v.$error) {
+        return
+      }
+
+      this.isCompetenceCreating = true
+      Api.competences.create({ name: this.competenceText }).then((response) => {
+        this.isCompetenceCreating = false
+        this.creationDialog = false
+        this.$notify.success('Competence was created successfully')
+        this.competencesSearchHandler()
+      }).catch((info) => {
+        this.isCompetenceCreating = false
+        this.$notify.error('Error occured while creating competence: ' + info.toString())
+      })
+    },
 
     updateCompetence (competence) {
       Api.competences.update({

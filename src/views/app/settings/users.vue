@@ -3,15 +3,17 @@
     <v-card-title class="pt-2">
       <v-text-field hide-details prepend-icon="search" class="mb-3" clearable label="Type search request here..." v-model="searchQuery"></v-text-field>
       <v-spacer></v-spacer>
-      <v-dialog v-model="creationDialog" max-width="290">
+      <v-dialog v-model="inviteDialog" max-width="290">
         <v-btn slot="activator" color="primary" class="mr-0">Invite</v-btn>
         <v-card>
-          <v-card-title class="headline">Use Google's location service?</v-card-title>
-          <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+          <v-card-title class="headline">Invite new user</v-card-title>
+          <v-card-text>
+            <v-text-field required v-model="inviteEmail" :error-messages="inviteEmailErrors" @input="$v.inviteEmail.$touch()" @blur="$v.inviteEmail.$touch()" label="Email"></v-text-field>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" flat @click.native="creationDialog = false">Disagree</v-btn>
-            <v-btn color="green darken-1" flat @click.native="creationDialog = false">Agree</v-btn>
+            <v-btn flat @click.native="inviteDialog = false">Cancel</v-btn>
+            <v-btn color="primary" flat @click="invite" :disabled="isUserInviting || $v.$invalid" :loading="isUserInviting">Invite</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -68,6 +70,7 @@ import TextFiltersMixin from '@/mixins/filters/text'
 import DateFiltersMixin from '@/mixins/filters/date'
 import UserListModel from '@/models/user/list'
 import { USERS_TABLE_HEADERS } from './config'
+import { required, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'kms-user-settings-users-tab',
@@ -85,12 +88,24 @@ export default {
     USERS_TABLE_HEADERS,
     showDeletionPrompt: false,
     deletingUser: null,
-    creationDialog: null,
+    inviteDialog: null,
     isUserDeleting: false,
+    isUserInviting: false,
+    inviteEmail: '',
     searchQuery: '',
     rowsPerPageItems: [5, 10, 30, 50, 100],
     pagination: { rowsPerPage: 50 }
   }),
+
+  computed: {
+    inviteEmailErrors () {
+      const errors = []
+      if (!this.$v.inviteEmail.$dirty) return errors
+      !this.$v.inviteEmail.required && errors.push('You must specify email')
+      !this.$v.inviteEmail.email && errors.push('Email is not valid')
+      return errors
+    }
+  },
 
   watch: {
     searchQuery () {
@@ -103,6 +118,10 @@ export default {
 
       this.usersSearchHandler(value.page)
     }
+  },
+
+  validations: {
+    inviteEmail: { required, email }
   },
 
   methods: {
@@ -122,6 +141,23 @@ export default {
         model: user
       }).catch(info => {
         this.$notify.error('Error occured while updating user: ' + info.toString())
+      })
+    },
+
+    invite () {
+      this.$v.$touch()
+      if (this.$v.$error) {
+        return
+      }
+
+      this.isUserInviting = true
+      Api.users.invite({ email: this.inviteEmail }).then((response) => {
+        this.isUserInviting = false
+        this.inviteDialog = false
+        this.$notify.success('Invitation was sent to specified email')
+      }).catch((info) => {
+        this.isUserInviting = false
+        this.$notify.error('Error occured while inviting user: ' + info.toString())
       })
     },
 
