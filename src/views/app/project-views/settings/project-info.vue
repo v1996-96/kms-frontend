@@ -63,6 +63,8 @@
                   <v-btn flat color="primary" @click="$refs.startDateMenu.save(project.date_start)">OK</v-btn>
                 </v-date-picker>
               </v-menu>
+
+              <v-switch label="Project is active" :inputValue="project.is_active" @change="update('is_active', $event)"></v-switch>
             </v-flex>
             <v-flex lg6>
               <v-menu
@@ -92,6 +94,8 @@
                   <v-btn flat color="primary" @click="$refs.endDateMenu.save(project.date_end)">OK</v-btn>
                 </v-date-picker>
               </v-menu>
+
+              <v-switch label="Open project" :inputValue="project.is_open" @change="update('is_open', $event)"></v-switch>
             </v-flex>
           </v-layout>
         </v-container>

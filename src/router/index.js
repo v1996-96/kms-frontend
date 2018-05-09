@@ -13,10 +13,11 @@ import UsersView from '@/views/app/users'
 import ProjectsSearchView from '@/views/app/project-search'
 import ProjectCreateView from '@/views/app/project-create'
 import ProjectBaseView from '@/views/app/project-views'
-import ProjectEditorView from '@/views/app/project-views/editor'
 import ProjectIntroView from '@/views/app/project-views/intro'
-import ProjectDocumentView from '@/views/app/project-views/document'
 import ProjectSettingsView from '@/views/app/project-views/settings'
+
+import DocumentEditor from '@/views/app/project-views/editor'
+import DocumentView from '@/views/app/project-views/document'
 
 Vue.use(Router)
 
@@ -95,17 +96,24 @@ const routes = {
               meta: { navigation: 'project' }
             },
             {
-              path: 'editor',
-              name: 'Editor',
-              component: ProjectEditorView,
-              meta: { navigation: 'common' }
+              path: 'new-document',
+              name: 'Document-create',
+              component: DocumentEditor,
+              meta: { navigation: 'project', navigationHidden: true, editorMode: 'create' }
             },
             {
               path: ':documentslug',
-              name: 'Project-document',
+              name: 'Document',
               props: true,
-              component: ProjectDocumentView,
+              component: DocumentView,
               meta: { navigation: 'project' }
+            },
+            {
+              path: ':documentslug/edit',
+              name: 'Document-edit',
+              props: true,
+              component: DocumentEditor,
+              meta: { navigation: 'project', navigationHidden: true, editorMode: 'edit' }
             }
           ]
         }

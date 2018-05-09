@@ -14,7 +14,6 @@
           :error-messages="roleErrors"
           v-model="role"></kms-roles-search>
         <v-text-field
-          required
           @input="$v.position.$touch()"
           :error-messages="positionErrors"
           v-model="position"
@@ -66,8 +65,7 @@ export default {
     positionErrors () {
       const errors = []
       if (!this.$v.position.$dirty) return errors
-      !this.$v.position.required && errors.push('You must select position')
-      !this.$v.position.maxLength && errors.push('Project name is too long')
+      !this.$v.position.maxLength && errors.push('Position is too long')
       return errors
     }
   },
@@ -83,7 +81,7 @@ export default {
   validations: {
     user: { required },
     role: { required },
-    position: { required, maxLength: maxLength(100) }
+    position: { maxLength: maxLength(100) }
   },
 
   methods: {

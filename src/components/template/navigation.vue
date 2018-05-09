@@ -151,7 +151,6 @@
   </v-navigation-drawer>
 </template>
 <script>
-import _ from 'lodash'
 import TextFilters from '@/mixins/filters/text'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -173,17 +172,15 @@ export default {
       'myProjectsNotFound': 'MyProjects/List/notFound'
     }),
     temporary () {
-      return this.$route.name === 'Editor'
+      return this.$route.meta && this.$route.meta.navigationHidden
     },
     navigationType () {
-      return _.defaultTo(this.$route.meta.navigation, 'common')
+      return (this.$route && this.$route.meta && this.$route.meta.navigation) || 'common'
     }
   },
   watch: {
     '$route' (value, oldValue) {
-      if (oldValue.name === 'Editor') {
-        this.setNavigationShowing(true)
-      }
+      this.setNavigationShowing(!this.temporary)
     },
     navigationType (value) {
       if (value === 'common') {
@@ -201,9 +198,7 @@ export default {
     })
   },
   created () {
-    if (this.temporary) {
-      this.setNavigationShowing(false)
-    }
+    this.setNavigationShowing(!this.temporary)
   }
 }
 </script>

@@ -6,6 +6,7 @@ import immutable from 'object-path-immutable'
 const createState = () => ({
   isProjectLoading: false,
   isProjectSaving: false,
+  isProjectDeleting: false,
 
   project: null,
   projectCache: null
@@ -45,6 +46,19 @@ const actions = {
       context.commit('setProjectSaving', false)
       return info
     })
+  },
+
+  deleteProject (context) {
+    context.commit('setProjectDeleting', true)
+    return Api.projects.remove({
+      id: context.state.projectCache.project_id
+    }).then((response) => {
+      context.commit('setProjectDeleting', false)
+      return true
+    }).catch(info => {
+      context.commit('setProjectDeleting', false)
+      return info
+    })
   }
 }
 
@@ -61,6 +75,9 @@ const mutations = {
   },
   setProjectSaving (state, value) {
     state.isProjectSaving = value
+  },
+  setProjectDeleting (state, value) {
+    state.isProjectDeleting = value
   },
 
   updateProjectCache (state, { field, value }) {
