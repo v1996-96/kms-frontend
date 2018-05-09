@@ -12,6 +12,7 @@ import Account from './modules/account'
 import Activity from './modules/activity'
 import MyProjects from './modules/my-projects'
 import ProjectSingle from './modules/project-single'
+import DocumentSingle from './modules/document-single'
 
 Vue.use(Vuex)
 
@@ -43,6 +44,7 @@ export default new Vuex.Store({
     Account,
     Activity,
     MyProjects,
-    ProjectSingle
+    ProjectSingle,
+    DocumentSingle
   }
 })

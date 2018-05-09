@@ -126,7 +126,9 @@
           </v-btn>
         </v-subheader>
 
-        <v-list-tile href="#">
+        <h4 v-if="selectedDocument == null && documentsNotFound" class="subheading text-xs-center grey--text mt-3">No documents for project</h4>
+
+        <v-list-tile v-if="selectedDocument != null">
           <v-list-tile-content>
             <v-list-tile-title>
               <v-icon>chevron_left</v-icon>
@@ -135,22 +137,25 @@
           </v-list-tile-content>
         </v-list-tile>
 
-        <v-list-tile href="#">
+        <v-list-tile
+          v-for="document in documents"
+          :key="document.document_id"
+          :to="{ name: 'Document', params: { documentslug: document.slug } }">
           <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
+            <v-list-tile-title>{{ document.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile href="#">
-          <v-list-tile-content>
-            <v-list-tile-title>Awesome document name that will blow your minds</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+
+        <p class="text-xs-center">
+          <v-btn v-if="documentsCanLoadMore" @click="documentsLoadMore" :loading="documentsLoading" :disabled="documentsLoading" depressed>Load more</v-btn>
+        </p>
 
       </v-list>
     </template>
   </v-navigation-drawer>
 </template>
 <script>
+import _ from 'lodash'
 import TextFilters from '@/mixins/filters/text'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -166,10 +171,17 @@ export default {
       'myProjectsLoaded': s => s.MyProjects.List.loaded,
       'myProjects': s => s.MyProjects.List.results,
 
-      'selectedProject': s => s.ProjectSingle.project
+      'selectedProject': s => s.ProjectSingle.project,
+      'selectedDocument': s => s.DocumentSingle.document,
+
+      'documentsLoading': s => s.DocumentSingle.Children.loading,
+      'documentsLoaded': s => s.DocumentSingle.Children.loaded,
+      'documents': s => s.DocumentSingle.Children.results
     }),
     ...mapGetters({
-      'myProjectsNotFound': 'MyProjects/List/notFound'
+      'myProjectsNotFound': 'MyProjects/List/notFound',
+      'documentsNotFound': 'DocumentSingle/Children/notFound',
+      'documentsCanLoadMore': 'DocumentSingle/Children/canLoadMore'
     }),
     temporary () {
       return this.$route.meta && this.$route.meta.navigationHidden
@@ -186,6 +198,11 @@ export default {
       if (value === 'common') {
         this.getMyProjects()
       }
+    },
+    selectedProject (value, oldValue) {
+      if (_.has(value, 'project_id')) {
+        this.getDocuments(value.project_id)
+      }
     }
   },
   methods: {
@@ -194,7 +211,10 @@ export default {
     }),
     ...mapActions({
       'getMyProjects': 'MyProjects/List/search',
-      'myProjectsLoadMore': 'MyProjects/List/loadMore'
+      'myProjectsLoadMore': 'MyProjects/List/loadMore',
+
+      'getDocuments': 'DocumentSingle/loadChildren',
+      'documentsLoadMore': 'DocumentSingle/Children/loadMore'
     })
   },
   created () {

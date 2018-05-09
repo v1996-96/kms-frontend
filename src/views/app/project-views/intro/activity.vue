@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!activityLoaded && !activityLoading || activityLoaded && activityNotFound" class="text-xs-center">
-      <h3 class="title mt-2">There is no activity yet</h3>
+      <h3 class="subheading mt-2 grey--text">There is no activity yet</h3>
     </div>
 
     <v-list two-line subheader class="elevation-1" v-if="activityLoaded && !activityNotFound">

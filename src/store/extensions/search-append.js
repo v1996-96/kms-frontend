@@ -26,6 +26,9 @@ export default ({
     },
     notFound (state) {
       return !state.loading && state.loaded && state.count === 0
+    },
+    canLoadMore (state) {
+      return state.loaded && state.results.length < state.count
     }
   },
 
