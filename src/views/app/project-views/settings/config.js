@@ -5,3 +5,9 @@ export const TEAM_TABLE_HEADERS = [
   { text: 'Role', value: 'project_role', sortable: false, width: 120 },
   { text: 'Actions', value: 'actions', sortable: false }
 ]
+
+export const DOCUMENTS_TABLE_HEADERS = [
+  { text: 'Title', value: 'title', sortable: false },
+  { text: 'Parent', value: 'parent', sortable: false },
+  { text: 'Actions', value: 'actions', sortable: false, width: 180 }
+]

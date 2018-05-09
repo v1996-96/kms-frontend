@@ -3,7 +3,37 @@
     <v-flex lg12>
       <h1 class="headline">Users</h1>
       <h3 class="subheading mb-4">Find colleague with required competences</h3>
+    </v-flex>
+  </v-layout>
 
+  <v-layout>
+    <v-flex xs12>
+      <v-text-field prepend-icon="search" class="mb-3 elevation-1" solo clearable label="Type search request here..." v-model="usersQuery"></v-text-field>
+
+      <v-data-table
+        search=""
+        :headers="headers"
+        :items="usersResults"
+        :loading="usersLoading"
+        :pagination.sync="pagination"
+        :total-items="usersCount"
+        :rows-per-page-items="rowsPerPageItems"
+        class="elevation-1">
+        <template slot="items" slot-scope="props">
+          <td>
+            <v-avatar class="mr-2" size="35" :color="props.item.avatar ? '' : 'grey'">
+              <img v-if="props.item.avatar" :src="props.item.avatar" />
+              <span v-else class="white--text headline">{{ props.item.name | firstLetterFilter }}</span>
+            </v-avatar>
+            {{ props.item.name }} {{ props.item.surname }}
+          </td>
+          <td>{{ props.item.email }}</td>
+          <td>{{ props.item.date_registered | dateFilter }}</td>
+          <td>
+            <v-btn color="primary" outline small>View</v-btn>
+          </td>
+        </template>
+      </v-data-table>
     </v-flex>
   </v-layout>
 </v-container>

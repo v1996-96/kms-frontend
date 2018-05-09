@@ -5,6 +5,7 @@ export default State.extend({
     'document_id': 'any',
     'parent_document_id': 'any',
     'parent_document_slug': 'string',
+    'parent_document_title': 'string',
     'project_id': 'any',
     'creator_id': 'any',
     'slug': 'string',

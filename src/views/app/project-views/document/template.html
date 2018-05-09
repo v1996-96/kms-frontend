@@ -43,5 +43,5 @@
     <h3 v-if="!document.content" class="headline grey--text text-xs-center">Document is empty</h3>
   </v-container>
 
-  <kms-coomments v-if="document" :document-id="document.document_id"></kms-coomments>
+  <kms-coomments v-if="document && document.content" :document-id="document.document_id"></kms-coomments>
 </div>
