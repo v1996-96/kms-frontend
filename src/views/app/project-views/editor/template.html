@@ -6,10 +6,30 @@
           <v-breadcrumbs-item :to="{ name: 'Dashboard' }" exact>Dashboard</v-breadcrumbs-item>
           <v-breadcrumbs-item :to="{ name: 'Project-intro' }" exact>{{ project.name | textLimitFilter(25) }}</v-breadcrumbs-item>
           <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.CREATE" disabled>New document</v-breadcrumbs-item>
+          <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.EDIT && document" disabled>{{ document.title | textLimitFilter(25) }}</v-breadcrumbs-item>
         </v-breadcrumbs>
 
-        <v-text-field v-model="documentCache.title" label="Awesome document title here" single-line full-width hide-details class="pa-0 title-input"></v-text-field>
-        <v-text-field v-model="documentCache.subtitle" label="Short descriptive subtitle" single-line full-width hide-details class="pa-0 subtitle-input"></v-text-field>
+        <v-text-field
+          v-model="documentCache.title"
+          label="Awesome document title here"
+          :error-messages="titleErrors"
+          @input="$v.documentCache.title.$touch()"
+          @blur="$v.documentCache.title.$touch()"
+          single-line
+          full-width
+          :hide-details="titleErrors.length == 0"
+          class="pa-0 title-input"></v-text-field>
+
+        <v-text-field
+          v-model="documentCache.subtitle"
+          label="Short descriptive subtitle"
+          :error-messages="subtitleErrors"
+          @input="$v.documentCache.subtitle.$touch()"
+          @blur="$v.documentCache.subtitle.$touch()"
+          single-line
+          full-width
+          :hide-details="subtitleErrors.length == 0"
+          class="pa-0 subtitle-input"></v-text-field>
       </v-flex>
 
       <v-flex class="text-md-right">
@@ -17,7 +37,7 @@
           color="primary"
           :flat="!documentChanged"
           class="mr-0"
-          :disabled="isDocumentSaving"
+          :disabled="isDocumentSaving || $v.$invalid"
           :loading="isDocumentSaving"
           @click="save">Save</v-btn>
       </v-flex>
@@ -27,7 +47,8 @@
       <v-flex xs12>
         <kms-quill-toolbar class="elevation-0" :value="selectionFormats" @input="setFormat" @clearFormat="clearFormat">
           <v-spacer></v-spacer>
-          <small class="grey--text" v-if="lastSaveTime">Updated {{ lastSaveTime | timeAgoFilter }}</small>
+          <small class="grey--text" v-if="lastSaveTime && !documentChanged">Saved {{ lastSaveTime | timeAgoFilter }}</small>
+          <small class="grey--text" v-if="documentChanged">Document was changed</small>
         </kms-quill-toolbar>
       </v-flex>
     </v-layout>

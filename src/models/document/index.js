@@ -11,6 +11,7 @@ export default State.extend({
     'title': 'string',
     'subtitle': 'string',
     'content': 'string',
+    'quill_delta': 'string',
     'date_created': 'string',
     'is_draft': 'boolean',
     'likes_count': 'number',

@@ -121,7 +121,7 @@
         <v-subheader class="pr-0">
           Documents
           <v-spacer></v-spacer>
-          <v-btn fab flat small class="mr-2">
+          <v-btn fab flat small class="mr-2" :to="{ name: 'Document-create' }">
             <v-icon>add</v-icon>
           </v-btn>
         </v-subheader>

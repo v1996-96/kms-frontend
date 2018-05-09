@@ -8,6 +8,7 @@ import DateFiltersMixin from '@/mixins/filters/date'
 import ToolbarComponent from './toolbar'
 import Quill from 'quill'
 import DocumentModel from '@/models/document'
+import { required, maxLength, minLength } from 'vuelidate/lib/validators'
 
 const EDITOR_MODE = {
   CREATE: 'create',
@@ -17,11 +18,11 @@ const EMPTY_DOCUMENT = {
   title: '',
   subtitle: '',
   content: '',
-  quill_delta: '',
+  quill_delta: {},
   is_draft: false
 }
 const FIELDS_TO_TRACK = ['title', 'subtitle', 'content', 'is_draft']
-const DEBOUNCE_TIME = 30000 // Save changes after 30 seconds of typing
+const DEBOUNCE_TIME = 10000 // Save changes after 10 seconds of typing
 const DEBOUNCE_OPTIONS = { maxWait: 120000 } // Ensure that saving is being performed every 2 minutes
 
 export default {
@@ -59,6 +60,34 @@ export default {
     documentChanged () {
       var compareWith = this.document || EMPTY_DOCUMENT
       return _.some(FIELDS_TO_TRACK, (field) => !_.isEqual(this.documentCache[field], compareWith[field]))
+    },
+
+    titleErrors () {
+      const errors = []
+      if (!this.$v.documentCache.title.$dirty) return errors
+      !this.$v.documentCache.title.required && errors.push('You must specify title')
+      !this.$v.documentCache.title.maxLength && errors.push('Title is too long')
+      !this.$v.documentCache.title.minLength && errors.push('Title must be at least 3 characters')
+      return errors
+    },
+    subtitleErrors () {
+      const errors = []
+      if (!this.$v.documentCache.subtitle.$dirty) return errors
+      !this.$v.documentCache.subtitle.maxLength && errors.push('Subtitle is too long')
+      return errors
+    }
+  },
+
+  validations: {
+    documentCache: {
+      title: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(255)
+      },
+      subtitle: {
+        maxLength: maxLength(255)
+      }
     }
   },
 
@@ -72,9 +101,12 @@ export default {
         this.resetDocument()
       }
     },
-    documentCache () {
-      if (this.documentChanged) {
-        this.autoSave()
+    documentCache: {
+      deep: true,
+      handler: function () {
+        if (this.documentChanged) {
+          this.autoSave()
+        }
       }
     }
   },
@@ -93,6 +125,11 @@ export default {
         if (event === 'selection-change' && args[0]) {
           this.selectionFormats = this.editorInstance.getFormat(args[0])
         }
+      })
+
+      this.editorInstance.on('text-change', (delta) => {
+        this.documentCache.quill_delta = this.editorInstance.getContents()
+        this.documentCache.content = this.editorInstance.root.innerHTML
       })
     },
     setFormat ({ format, value }) {
@@ -115,10 +152,16 @@ export default {
     },
     fetch () {
       this.isDocumentLoading = true
-      Api.documents.getSingle({ id: this.documentslug }).then((response) => {
+      Api.documents.getSingle({ id: this.documentslug, quill: true }).then((response) => {
         this.isDocumentLoading = false
         this.document = (new DocumentModel(response.data)).toJSON()
         this.documentCache = _.assign({}, this.documentCache, this.document)
+
+        try {
+          this.editorInstance.setContents(JSON.parse(this.document.quill_delta))
+        } catch (error) {
+          throw new Error('Error parsing server response')
+        }
       }).catch(info => {
         this.isDocumentLoading = false
         this.$notify.error('Error occured while loading document: ' + info.toString())
@@ -126,6 +169,11 @@ export default {
     },
 
     async save () {
+      this.$v.$touch()
+      if (this.$v.$error) {
+        return
+      }
+
       if (this.editorMode === EDITOR_MODE.CREATE) {
         await this.createDocument()
       } else if (this.editorMode === EDITOR_MODE.EDIT) {
@@ -136,12 +184,21 @@ export default {
     },
     createDocument () {
       this.isDocumentSaving = true
-      return Api.documents.create(_.assign({}, this.documentCache, {
+
+      var model = _.assign({}, this.documentCache, {
         project_id: this.project.project_id
-      })).then((response) => {
+      })
+      if (_.has(model, 'quill_delta')) {
+        model.quill_delta = JSON.stringify(model.quill_delta)
+      }
+
+      return Api.documents.create(model).then((response) => {
         this.isDocumentSaving = false
         this.document = (new DocumentModel(response.data)).toJSON()
-        this.$router.replace({ name: 'Document-edit', params: { documentslug: document.slug } })
+        this.$router.replace({
+          name: 'Document-edit',
+          params: _.assign({}, this.$route.params, { documentslug: this.document.slug })
+        })
       }).catch(info => {
         this.isDocumentSaving = false
         this.$notify.error('Error creating document: ' + info.toString())
@@ -156,7 +213,7 @@ export default {
             id: this.document.document_id,
             model: {
               content: this.documentCache.content,
-              quill_delta: this.documentCache.quill_delta
+              quill_delta: JSON.stringify(this.documentCache.quill_delta)
             }
           })
         }
@@ -167,6 +224,12 @@ export default {
         })
 
         this.document = (new DocumentModel(response.data)).toJSON()
+        if (this.documentslug !== this.document.slug) {
+          this.$router.replace({
+            name: 'Document-edit',
+            params: _.assign({}, this.$route.params, { documentslug: this.document.slug })
+          })
+        }
       } catch (info) {
         this.$notify.error('Error occured while saving changes: ' + info.toString())
       }
@@ -176,12 +239,17 @@ export default {
 
     // Automatically track and save changes
     autoSave: _.debounce(function () {
-      this.save()
+      if (this.documentChanged) {
+        this.save()
+      }
     }, DEBOUNCE_TIME, DEBOUNCE_OPTIONS)
   },
 
   mounted () {
     this.initEditor()
+    if (this.editorMode === EDITOR_MODE.EDIT) {
+      this.fetch()
+    }
   }
 }
 </script>

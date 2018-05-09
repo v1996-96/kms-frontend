@@ -4,7 +4,7 @@ export default {
   // CRUD
   //
   getList: ({ limit, offset, query, isDraft }) => http.get('documents', { params: { limit, offset, query, isDraft } }),
-  getSingle: ({ id }) => http.get('documents/' + id),
+  getSingle: ({ id, quill }) => http.get('documents/' + id, { params: { quill } }),
   create: (model) => http.post('documents', model),
   update: ({ id, model }) => http.put('documents/' + id, model),
   remove: ({ id }) => http.delete('documents/' + id),
