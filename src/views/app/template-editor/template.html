@@ -32,6 +32,14 @@
           full-width
           :hide-details="descriptionErrors.length == 0"
           class="pa-0 subtitle-input"></v-text-field>
+
+        <v-layout row wrap>
+          <v-flex md6>
+            <kms-template-type-search
+              v-model="templateCache.template_type"
+              :porjectId="templateCache.project_id"></kms-template-type-search>
+          </v-flex>
+        </v-layout>
       </v-flex>
 
       <v-flex class="text-md-right">

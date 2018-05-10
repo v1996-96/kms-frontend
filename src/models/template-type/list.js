@@ -1,9 +1,3 @@
-import Collection from 'ampersand-collection'
-import State from 'ampersand-state'
-import PermissionModel from './index'
-
-export default State.extend({
-  collections: {
-    permissions: Collection.extend({ model: PermissionModel })
-  }
-})
+import SearchResults from '@/models/helpers/search-results'
+import Model from './index'
+export default SearchResults(Model)

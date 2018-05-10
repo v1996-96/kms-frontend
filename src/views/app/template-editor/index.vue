@@ -9,6 +9,7 @@ import ToolbarComponent from './toolbar'
 import Quill from 'quill'
 import TemplateModel from '@/models/template'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
+import TemplateTypeSearch from '@/components/active/template-type-search'
 
 const EDITOR_MODE = {
   CREATE: 'create',
@@ -19,9 +20,9 @@ const EMPTY_DOCUMENT = {
   description: '',
   content: '',
   quill_delta: {},
-  is_draft: false
+  template_type: null
 }
-const FIELDS_TO_TRACK = ['title', 'description', 'content']
+const FIELDS_TO_TRACK = ['title', 'description', 'content', 'template_type']
 const DEBOUNCE_TIME = 10000 // Save changes after 10 seconds of typing
 const DEBOUNCE_OPTIONS = { maxWait: 120000 } // Ensure that saving is being performed every 2 minutes
 
@@ -33,7 +34,8 @@ export default {
   },
   mixins: [TextFiltersMixin, DateFiltersMixin],
   components: {
-    'kms-quill-toolbar': ToolbarComponent
+    'kms-quill-toolbar': ToolbarComponent,
+    'kms-template-type-search': TemplateTypeSearch
   },
   data: () => ({
     EDITOR_MODE,
@@ -90,6 +92,9 @@ export default {
       },
       description: {
         maxLength: maxLength(255)
+      },
+      template_type: {
+        required
       }
     }
   },

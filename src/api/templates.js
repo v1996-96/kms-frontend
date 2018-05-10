@@ -1,7 +1,7 @@
 import { http } from './index'
 
 export default {
-  getTypes: () => http.get('templates/types'),
+  getTypes: ({ limit, offset, query, project }) => http.get('templates/types', { params: { limit, offset, query, project } }),
 
   getList: ({ limit, offset, query, type, project }) => http.get('templates', { params: { limit, offset, query, type, project } }),
 
