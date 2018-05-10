@@ -4,11 +4,14 @@ import moment from 'moment'
 import { REFRESH_OFFSET } from '@/utils/auth'
 import AuthModel from '@/models/auth'
 import ProfileModel from '@/models/profile'
+import InviteModel from '@/models/invite'
 
 const createState = () => ({
   access_token: null,
   refresh_token: null,
-  profile: null
+  profile: null,
+
+  invitation: null
 })
 
 const getters = {
@@ -23,7 +26,8 @@ const getters = {
     var diff = moment.unix(getters.jwtExpires).utc().diff(moment.utc(), 's')
     return diff <= REFRESH_OFFSET && diff > 0
   },
-  profileLoaded: (state) => state.profile !== null
+  profileLoaded: (state) => state.profile !== null,
+  canSignUp: (state) => state.invitation !== null
 }
 
 const actions = {
@@ -35,6 +39,24 @@ const actions = {
     await context.dispatch('getProfile')
 
     return true
+  },
+
+  async signup (context, { name, surname, password, invitetoken }) {
+    await Api.auth.signup({ token: invitetoken, model: { name, surname, password } }).then(response => {
+      context.commit('setAuthInfo', new AuthModel(response.data))
+    })
+
+    await context.dispatch('getProfile')
+
+    return true
+  },
+
+  checkInvite (context, token) {
+    return Api.auth.checkInvite({ token }).then((response) => {
+      var data = (new InviteModel(response.data)).toJSON()
+      context.commit('setInvitation', data)
+      return data
+    })
   },
 
   logout (context) {
@@ -85,6 +107,9 @@ const mutations = {
   },
   setProfile (state, profile) {
     state.profile = profile
+  },
+  setInvitation (state, data) {
+    state.invitation = data
   }
 }
 

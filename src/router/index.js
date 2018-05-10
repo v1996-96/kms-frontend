@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import AccountLayout from '@/views/account.layout'
 import SigninView from '@/views/account/signin'
+import SignupView from '@/views/account/signup'
 
 import AppLayout from '@/views/app.layout'
 import DashboardView from '@/views/app/dashboard'
@@ -35,6 +36,13 @@ const routes = {
           path: '/signin',
           name: 'Signin',
           component: SigninView,
+          meta: { whitelisted: true }
+        },
+        {
+          path: '/signup/:invitetoken',
+          name: 'Signup',
+          props: true,
+          component: SignupView,
           meta: { whitelisted: true }
         }
       ]
