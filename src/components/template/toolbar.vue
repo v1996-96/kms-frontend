@@ -89,6 +89,7 @@
           <v-avatar color="grey" size="40">v</v-avatar>
         </v-btn>
         <v-list>
+          <v-list-tile :to="{ name: 'My-profile' }" exact><v-list-tile-title>Profile</v-list-tile-title></v-list-tile>
           <v-list-tile @click="toggleDarkTheme"><v-list-tile-title>Toggle theme</v-list-tile-title></v-list-tile>
           <v-list-tile @click="logout"><v-list-tile-title>Logout</v-list-tile-title></v-list-tile>
         </v-list>

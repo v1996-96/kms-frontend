@@ -34,6 +34,8 @@
           full-width
           :hide-details="subtitleErrors.length == 0"
           class="pa-0 subtitle-input"></v-text-field>
+
+        <v-switch label="Is draft" v-model="documentCache.is_draft" hide-details></v-switch>
       </v-flex>
 
       <v-flex class="text-md-right">

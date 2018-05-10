@@ -30,7 +30,7 @@
           <td>{{ props.item.email }}</td>
           <td>{{ props.item.date_registered | dateFilter }}</td>
           <td>
-            <v-btn color="primary" outline small>View</v-btn>
+            <v-btn color="primary" outline small :to="{ name: 'Profile', params: { userId: props.item.user_id } }">View</v-btn>
           </td>
         </template>
       </v-data-table>

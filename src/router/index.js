@@ -9,6 +9,7 @@ import DashboardView from '@/views/app/dashboard'
 import MyWorkView from '@/views/app/my-work'
 import SettingsView from '@/views/app/settings'
 import UsersView from '@/views/app/users'
+import ProfileView from '@/views/app/profile'
 
 import ProjectsSearchView from '@/views/app/project-search'
 import ProjectCreateView from '@/views/app/project-create'
@@ -64,6 +65,19 @@ const routes = {
           path: 'users',
           name: 'Users',
           component: UsersView,
+          meta: { navigation: 'common' }
+        },
+        {
+          path: 'profile',
+          name: 'My-profile',
+          component: ProfileView,
+          meta: { navigation: 'common' }
+        },
+        {
+          path: 'profile/:userId',
+          props: true,
+          name: 'Profile',
+          component: ProfileView,
           meta: { navigation: 'common' }
         },
         {

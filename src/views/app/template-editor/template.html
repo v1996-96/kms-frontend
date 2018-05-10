@@ -2,14 +2,29 @@
   <v-container :class="containerClass" class="mb-2 pa-0 elevation-2" fluid>
     <v-layout row wrap class="pa-3">
       <v-flex md8>
-        <v-breadcrumbs class="pa-0 mb-2" divider="/">
+        <v-breadcrumbs class="pa-0 mb-2" divider="/" >
           <v-breadcrumbs-item :to="{ name: 'Dashboard' }" exact>Dashboard</v-breadcrumbs-item>
-          <!-- <v-breadcrumbs-item :to="{ name: 'Project-intro' }" exact>{{ project.name | textLimitFilter(25) }}</v-breadcrumbs-item> -->
+          <v-breadcrumbs-item v-if="template && template.project_name" :to="{ name: 'Project-intro', params: { projectslug: template.project_slug } }" exact>{{ template.project_name | textLimitFilter(25) }}</v-breadcrumbs-item>
           <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.CREATE" disabled>New template</v-breadcrumbs-item>
           <v-breadcrumbs-item
             v-if="editorMode == EDITOR_MODE.EDIT && template"
             disabled>{{ template.title | textLimitFilter(25) }}</v-breadcrumbs-item>
         </v-breadcrumbs>
+
+        <v-layout row wrap class="mb-3" v-if="editorMode == EDITOR_MODE.CREATE">
+          <v-flex md6>
+            <kms-template-type-search
+              v-model="templateCache.template_type"
+              :error-messages="templateTypeErrors"
+              @input="$v.templateCache.template_type.$touch()"
+              @blur="$v.templateCache.template_type.$touch()"
+              :porjectId="templateCache.project_id"></kms-template-type-search>
+          </v-flex>
+        </v-layout>
+
+        <span v-if="editorMode == EDITOR_MODE.EDIT">
+          {{ templateCache.template_type }}
+        </span>
 
         <v-text-field
           v-model="templateCache.title"
@@ -32,14 +47,6 @@
           full-width
           :hide-details="descriptionErrors.length == 0"
           class="pa-0 subtitle-input"></v-text-field>
-
-        <v-layout row wrap>
-          <v-flex md6>
-            <kms-template-type-search
-              v-model="templateCache.template_type"
-              :porjectId="templateCache.project_id"></kms-template-type-search>
-          </v-flex>
-        </v-layout>
       </v-flex>
 
       <v-flex class="text-md-right">

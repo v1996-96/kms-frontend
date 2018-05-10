@@ -29,7 +29,6 @@ const DEBOUNCE_OPTIONS = { maxWait: 120000 } // Ensure that saving is being perf
 export default {
   name: 'kms-app-template-editor-page',
   props: {
-    'projectslug': String,
     'templateslug': String
   },
   mixins: [TextFiltersMixin, DateFiltersMixin],
@@ -80,6 +79,16 @@ export default {
       if (!this.$v.templateCache.description.$dirty) return errors
       !this.$v.templateCache.description.maxLength && errors.push('Description is too long')
       return errors
+    },
+    templateTypeErrors () {
+      const errors = []
+      if (!this.$v.templateCache.template_type.$dirty) return errors
+      !this.$v.templateCache.template_type.required && errors.push('You must specify template type')
+      return errors
+    },
+
+    projectId () {
+      return this.$route.query && this.$route.query.projectId
     }
   },
 
@@ -194,10 +203,13 @@ export default {
       this.isTemplateSaving = true
 
       var model = _.assign({}, this.templateCache)
-      if (this.projectslug) {
+      if (this.projectId) {
         _.assign(model, {
-          project_id: this.project.project_id
+          project_id: this.projectId
         })
+      }
+      if (model.template_type) {
+        model.template_type = model.template_type.template_type_slug
       }
       if (_.has(model, 'quill_delta')) {
         model.quill_delta = JSON.stringify(model.quill_delta)
@@ -207,7 +219,7 @@ export default {
         this.isTemplateSaving = false
         this.template = (new TemplateModel(response.data)).toJSON()
         this.$router.replace({
-          name: this.projectslug ? 'Project-template-edit' : 'Template-edit',
+          name: 'Template-edit',
           params: _.assign({}, this.$route.params, { templateslug: this.template.slug })
         })
       }).catch(info => {
@@ -237,7 +249,7 @@ export default {
         this.template = (new TemplateModel(response.data)).toJSON()
         if (this.templateslug !== this.template.slug) {
           this.$router.replace({
-            name: this.projectslug ? 'Project-template-edit' : 'Template-edit',
+            name: 'Template-edit',
             params: _.assign({}, this.$route.params, { templateslug: this.template.slug })
           })
         }

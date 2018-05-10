@@ -3,7 +3,7 @@
     <v-card-title class="pt-2">
       <v-text-field hide-details prepend-icon="search" class="mb-3" clearable label="Type search request here..." v-model="searchQuery"></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" class="mr-0" :to="{ name: 'Template-create' }">Create template</v-btn>
+      <v-btn color="primary" class="mr-0" :to="{ name: 'Template-create', query: { projectId: projectId } }">Create template</v-btn>
     </v-card-title>
 
     <v-data-table

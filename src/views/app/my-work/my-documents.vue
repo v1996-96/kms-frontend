@@ -35,7 +35,7 @@
             </v-menu>
           </v-subheader>
 
-          <v-list-tile avatar href="#" v-for="document in documentsResults" :key="document.document_id">
+          <v-list-tile avatar v-for="document in documentsResults" :key="document.document_id" :to="{ name: 'Document', params: { projectslug: document.project_slug, documentslug: document.slug } }">
             <v-list-tile-content>
               <v-list-tile-title>{{ document.title }} - <span class="grey--text text--lighten-1">{{ document.project_name }}</span></v-list-tile-title>
               <v-list-tile-sub-title>
