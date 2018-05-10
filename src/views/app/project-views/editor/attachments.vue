@@ -1,6 +1,18 @@
 <template>
   <div>
-    <div ref="uploader" class="clearfix"></div>
+    <v-tabs v-model="tabs" color="transparent">
+      <v-tab>Uploader</v-tab>
+      <v-tab>Attachments</v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tabs">
+      <v-tab-item>
+        <div ref="uploader" class="clearfix"></div>
+      </v-tab-item>
+      <v-tab-item>
+        <kms-attachments :documentId="documentId"></kms-attachments>
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 <script>
@@ -8,13 +20,18 @@ import Api from '@/api'
 import Uppy from 'uppy/lib/core'
 import Dashboard from 'uppy/lib/plugins/Dashboard'
 import XHRUpload from 'uppy/lib/plugins/XHRUpload'
+import AttachmentsTab from './attachments-tab'
 
 export default {
   name: 'kms-document-attachments',
   props: {
     'documentId': [Number, String]
   },
+  components: {
+    'kms-attachments': AttachmentsTab
+  },
   data: () => ({
+    tabs: null,
     uploaderInstance: null
   }),
 

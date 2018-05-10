@@ -25,7 +25,7 @@ export default {
 
   // Attachments
   //
-  getAttachments: ({ id, limit, offset }) => http.get('documents/' + id + '/attachments', { params: { limit, offset } }),
+  getAttachments: ({ id, limit, offset, query }) => http.get('documents/' + id + '/attachments', { params: { limit, offset, query } }),
   addAttachment: ({ id, model }) => http.post('documents/' + id + '/attachments', model),
   updateAttachment: ({ id, attachmentId, model }) => http.put('documents/' + id + '/attachments/' + attachmentId, model),
   removeAttachment: ({ id, attachmentId }) => http.delete('documents/' + id + '/attachments/' + attachmentId),
