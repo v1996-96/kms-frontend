@@ -4,4 +4,3 @@ export default {
   name: 'kms-profile-page'
 }
 </script>
-

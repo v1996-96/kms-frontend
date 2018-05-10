@@ -12,6 +12,7 @@ import projects from './projects'
 import settings from './settings'
 import templates from './templates'
 import users from './users'
+import search from './search'
 
 export const http = axios.create({
   baseURL: process.env.API_HOSTNAME
@@ -37,5 +38,6 @@ export default {
   projects,
   settings,
   templates,
-  users
+  users,
+  search
 }

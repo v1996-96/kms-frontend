@@ -9,6 +9,8 @@
 
     <v-menu v-model="showFastSearching" offset-y min-width="500" attach=".toolbar-search-input">
       <v-text-field
+        :value="searchQuery"
+        @input="setQuery"
         flat
         solo-inverted
         slot="activator"
@@ -19,57 +21,37 @@
 
       <v-card>
         <v-list class="pb-1" :light="!darkTheme">
-          <v-list-tile avatar href="#">
-            <v-list-tile-avatar color="grey"><span class="white--text headline">J</span></v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Tesla model 3 - <span class="grey--text">Project</span></v-list-tile-title>
-              <v-list-tile-sub-title>
-                Short description on here...
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <div v-if="!searchNotFound && !searchLoading">
+            <v-list-tile avatar v-for="result in limitFive(searchResults)" :key="result.id">
+              <v-list-tile-avatar class="mr-2" size="35" :color="result.avatar ? '' : 'grey'">
+                <img v-if="result.avatar" :src="result.avatar" />
+                <span v-else class="white--text headline">{{ result.name | firstLetterFilter }}</span>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>Tesla model 3 - <span class="grey--text">Project</span></v-list-tile-title>
+                <v-list-tile-sub-title>
+                  Short description on here...
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </div>
 
-          <v-list-tile avatar href="#">
-            <v-list-tile-avatar color="grey"><span class="white--text headline">J</span></v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Tesla model s - <span class="grey--text">Project</span></v-list-tile-title>
-              <v-list-tile-sub-title>
-                Another short description on here...
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <div v-if="searchNotFound && !searchLoading" class="text-xs-center">
+            <h3 class="subheading mt-3 mb-3">Nothing found</h3>
+          </div>
 
-          <v-list-tile avatar href="#">
-            <v-list-tile-avatar color="grey"><span class="white--text headline">L</span></v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>John Leider - <span class="grey--text">People</span></v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <div v-if="!searchLoading && !searchLoaded" class="text-xs-center">
+            <h3 class="subheading mt-3 mb-3">Enter search query to find what you need</h3>
+          </div>
 
-          <v-list-tile avatar href="#">
-            <v-list-tile-avatar color="grey"><span class="white--text headline">E</span></v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Document title here - <span class="grey--text">Document</span></v-list-tile-title>
-              <v-list-tile-sub-title>
-                Short passage from the article
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-
-          <v-list-tile avatar href="#">
-            <v-list-tile-avatar color="grey"><span class="white--text headline">E</span></v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Document title here - <span class="grey--text">Document</span></v-list-tile-title>
-              <v-list-tile-sub-title>
-                Short passage from the article
-              </v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <div v-if="searchLoading" class="text-xs-center mt-4">
+            <v-progress-circular indeterminate :size="40" color="primary"></v-progress-circular>
+          </div>
 
           <v-layout align-center class="pl-3">
-            <span>Found 12 entries</span>
+            <span v-if="searchLoaded">Found {{ searchCount }} entries</span>
             <v-spacer></v-spacer>
-            <v-btn flat small :light="!darkTheme">Advanced search</v-btn>
+            <v-btn flat small :light="!darkTheme" @click="setAdvansedSearching(true)">Advanced search</v-btn>
           </v-layout>
         </v-list>
       </v-card>
@@ -95,25 +77,113 @@
         </v-list>
       </v-menu>
     </v-toolbar-items>
+
+    <v-dialog
+      :value="isSearchingAdvanced"
+      @input="setAdvansedSearching($event)"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+      scrollable>
+      <v-card tile class="grey lighten-4">
+        <v-toolbar card dark color="primary">
+          <v-btn icon dark @click="setAdvansedSearching(false)">
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Advanced search</v-toolbar-title>
+        </v-toolbar>
+
+        <v-container>
+          <v-layout row wrap>
+            <v-flex lg8 offset-lg2>
+              <v-text-field
+                prepend-icon="search"
+                class="mb-3 elevation-1"
+                solo
+                clearable
+                label="Type search request here..."
+                :value="searchQuery"
+                @input="setQuery"></v-text-field>
+
+              <v-data-table
+                search=""
+                :headers="headers"
+                :items="searchResults"
+                :loading="searchLoading"
+                :pagination.sync="pagination"
+                :total-items="searchCount"
+                :rows-per-page-items="rowsPerPageItems"
+                class="elevation-1">
+                <template slot="items" slot-scope="props">
+                  <td>
+                    <v-avatar class="mr-2" size="35" :color="props.item.avatar ? '' : 'grey'">
+                      <img v-if="props.item.avatar" :src="props.item.avatar" />
+                      <span v-else class="white--text headline">{{ props.item.name | firstLetterFilter }}</span>
+                    </v-avatar>
+                    <router-link @click.native="setAdvansedSearching(false)" v-if="props.item.type == RESULT_TYPE.DOCUMENT" :to="{ name: 'Document', params: { projectslug: props.item.parent_slug, documentslug: props.item.slug } }">{{ props.item.name }}</router-link>
+                    <router-link @click.native="setAdvansedSearching(false)" v-if="props.item.type == RESULT_TYPE.PROJECT" :to="{ name: 'Project-intro', params: { projectslug: props.item.slug } }">{{ props.item.name }}</router-link>
+                    <router-link @click.native="setAdvansedSearching(false)" v-if="props.item.type == RESULT_TYPE.USER" :to="{ name: 'Profile', params: { userId: props.item.id } }">{{ props.item.name }}</router-link>
+                  </td>
+                  <td>
+                    <v-btn active-class="" flat small color="primary" @click.native="setAdvansedSearching(false)" v-if="props.item.type == RESULT_TYPE.DOCUMENT" :to="{ name: 'Document', params: { projectslug: props.item.parent_slug, documentslug: props.item.slug } }">View</v-btn>
+                    <v-btn active-class="" flat small color="primary" @click.native="setAdvansedSearching(false)" v-if="props.item.type == RESULT_TYPE.PROJECT" :to="{ name: 'Project-intro', params: { projectslug: props.item.slug } }">View</v-btn>
+                    <v-btn active-class="" flat small color="primary" @click.native="setAdvansedSearching(false)" v-if="props.item.type == RESULT_TYPE.USER" :to="{ name: 'Profile', params: { userId: props.item.id } }">View</v-btn>
+                  </td>
+                </template>
+              </v-data-table>
+            </v-flex>
+          </v-layout>
+        </v-container>
+
+        <div style="flex: 1 1 auto;"></div>
+      </v-card>
+    </v-dialog>
   </v-toolbar>
 </template>
 <script>
+import _ from 'lodash'
+import TextFiltersMixin from '@/mixins/filters/text'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+
+const RESULT_TYPE = {
+  DOCUMENT: 'document',
+  PROJECT: 'project',
+  USER: 'user'
+}
 
 export default {
   name: 'kms-template-toolbar',
+  mixins: [TextFiltersMixin],
   data: () => ({
-    showFastSearching: false
+    RESULT_TYPE,
+    headers: [
+      { text: 'Name', value: 'name', sortable: false },
+      { text: 'Actions', value: 'actions', sortable: false, width: 200 }
+    ],
+    showFastSearching: false,
+    rowsPerPageItems: [5, 10, 30, 50, 100],
+    pagination: {
+      rowsPerPage: 50
+    }
   }),
 
   computed: {
     ...mapState({
       'notificationsUnread': s => s.Notifications.countUnread,
       'darkTheme': s => s.App.darkTheme,
-      'navigationShowing': s => s.App.navigationShowing
+      'navigationShowing': s => s.App.navigationShowing,
+
+      'searchQuery': s => s.Searching.query,
+      'searchResults': s => s.Searching.Engine.results,
+      'searchCount': s => s.Searching.Engine.count,
+      'searchLoading': s => s.Searching.Engine.loading,
+      'searchLoaded': s => s.Searching.Engine.loaded,
+      'isSearchingAdvanced': s => s.Searching.isSearchingAdvanced
     }),
     ...mapGetters({
-      'notificationsUnreadMsg': 'Notifications/countUnread'
+      'notificationsUnreadMsg': 'Notifications/countUnread',
+
+      'searchNotFound': 'Searching/Engine/isNotFound'
     }),
     toolbarColor () {
       return this.darkTheme ? '' : 'blue darken-3'
@@ -123,15 +193,37 @@ export default {
     }
   },
 
+  watch: {
+    searchQuery () {
+      this.search()
+    },
+    pagination (value, oldValue) {
+      if (value.rowsPerPage !== oldValue.rowsPerPage) {
+        this.setLimit(value.rowsPerPage)
+      }
+      this.search(value.page)
+    }
+  },
+
   methods: {
     ...mapMutations({
       'toggleDarkTheme': 'App/toggleDarkTheme',
       'toggleNavigationShowing': 'App/toggleNavigationShowing',
-      'toggleNotifications': 'Notifications/toggleShowing'
+      'toggleNotifications': 'Notifications/toggleShowing',
+
+      'setQuery': 'Searching/setQuery',
+      'setLimit': 'Searching/Engine/setLimit',
+      'setAdvansedSearching': 'Searching/setAdvansedSearching'
     }),
     ...mapActions({
-      'logoutAction': 'Account/logout'
+      'logoutAction': 'Account/logout',
+
+      'search': 'Searching/run'
     }),
+
+    limitFive (list) {
+      return _.take(list, 5)
+    },
 
     logout () {
       this.logoutAction().then(() => {

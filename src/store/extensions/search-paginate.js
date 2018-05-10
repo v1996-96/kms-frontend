@@ -14,7 +14,8 @@ const createState = () => ({
   page: 1,
   count: 0,
   results: [],
-  loaded: false
+  loaded: false,
+  loading: false
 })
 
 export default ({
@@ -70,6 +71,7 @@ export default ({
       state.count = newState.count
       state.results = newState.results
       state.loaded = newState.loaded
+      state.loading = newState.loading
       state.filters = newState.filters
     },
     setFilters (state, filters) {
@@ -85,7 +87,7 @@ export default ({
       state.limit = limit
     },
     setForwardLoading (state) {
-      if (state.page < getters.totalPages(state)) {
+      if (state.page < Math.ceil(state.count / state.limit)) {
         state.page = state.page + 1
       }
     },
@@ -105,12 +107,16 @@ export default ({
     },
     setLoaded (state) {
       state.loaded = true
+    },
+    setLoading (state, value) {
+      state.loading = value
     }
   },
 
   actions: {
     async search (context, { filters = {}, direction = null, page = null } = {}) {
       context.commit('clearResults')
+      context.commit('setLoading', true)
 
       if (!_.isEqual(context.state.filters, filters)) {
         context.commit('reset')
@@ -139,6 +145,8 @@ export default ({
       var response = await endpoint(queryData)
       var data = new model(response.data) // eslint-disable-line new-cap
       var parsedData = data.toJSON()
+
+      context.commit('setLoading', false)
 
       context.commit('setCount', parsedData.count)
       context.commit('setResults', parsedData.results)

@@ -34,7 +34,7 @@
                 <p>You can place there some links to the project entries or assets in order to highlight important project features, team thoughts and other important stuff.</p> -->
                 <div v-html="introTemplate.content"></div>
               </v-card-text>
-              <v-card-actions v-if="introTemplate">
+              <v-card-actions v-if="introTemplate && introTemplate.slug">
                 <v-spacer></v-spacer>
                 <v-btn depressed :to="{ name: 'Template-edit', params: { templateslug: introTemplate.slug } }">Edit intro</v-btn>
               </v-card-actions>
