@@ -9,6 +9,7 @@
 
     <v-menu v-model="showFastSearching" offset-y min-width="500" attach=".toolbar-search-input">
       <v-text-field
+        clearable
         :value="searchQuery"
         @input="setQuery"
         flat

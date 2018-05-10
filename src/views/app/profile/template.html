@@ -1,3 +1,46 @@
-<div>
-  Profile here
-</div>
+<v-container fluid>
+  <div v-if="isUserLoading" class="text-xs-center mt-4">
+    <v-progress-circular indeterminate :size="50" color="primary"></v-progress-circular>
+  </div>
+
+  <v-layout row wrap class="mt-4" v-if="!isUserLoading && userCache">
+    <v-flex lg6 offset-lg3>
+
+      <v-card>
+        <v-card-title>
+          <v-avatar class="mr-2" size="40" :color="userCache.avatar ? '' : 'grey'">
+            <img v-if="userCache.avatar" :src="userCache.avatar" />
+            <span v-else class="white--text headline">{{ userCache.name | firstLetterFilter }}</span>
+          </v-avatar>
+          <h4 class="subheading">{{ userCache.name }} {{ userCache.surname }}</h4>
+
+          <v-spacer></v-spacer>
+
+          <v-btn flat small class="mr-0">Edit</v-btn>
+        </v-card-title>
+        <v-card-text>
+
+          <p>
+            <label>Email: </label> {{ userCache.email }}
+          </p>
+
+          <p>
+            <label>Date registered: </label> {{ userCache.date_registered | dateFilter }}
+          </p>
+
+          <div class="mb-2">
+            <h4 class="subtitle">Roles</h4>
+            <v-chip v-for="role in userCache.roles" :key="role.role_id">{{ role.name }}</v-chip>
+          </div>
+
+          <div class="mb-2">
+            <h4 class="subtitle">Competences</h4>
+            <v-chip v-for="competence in userCache.competences" :key="competence.competence_id">{{ competence.name }}</v-chip>
+          </div>
+
+        </v-card-text>
+      </v-card>
+
+    </v-flex>
+  </v-layout>
+</v-container>
