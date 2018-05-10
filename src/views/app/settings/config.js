@@ -17,3 +17,8 @@ export const USERS_TABLE_HEADERS = [
   { text: 'Date registered', value: 'date_registered', sortable: false },
   { text: 'Actions', value: 'actions', sortable: false }
 ]
+
+export const TEMPLATES_TABLE_HEADERS = [
+  { text: 'Title', value: 'title', sortable: false },
+  { text: 'Actions', value: 'actions', sortable: false, width: 180 }
+]

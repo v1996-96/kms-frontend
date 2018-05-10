@@ -19,6 +19,8 @@ import ProjectSettingsView from '@/views/app/project-views/settings'
 import DocumentEditor from '@/views/app/project-views/editor'
 import DocumentView from '@/views/app/project-views/document'
 
+import TemplateEditor from '@/views/app/template-editor'
+
 Vue.use(Router)
 
 const routes = {
@@ -65,6 +67,19 @@ const routes = {
           meta: { navigation: 'common' }
         },
         {
+          path: 'template/new',
+          name: 'Template-create',
+          component: TemplateEditor,
+          meta: { navigation: 'common', navigationHidden: true, editorMode: 'create' }
+        },
+        {
+          path: 'template/:templateslug',
+          props: true,
+          name: 'Template-edit',
+          component: TemplateEditor,
+          meta: { navigation: 'common', navigationHidden: true, editorMode: 'edit' }
+        },
+        {
           path: 'projects',
           name: 'Projects',
           component: ProjectsSearchView,
@@ -100,6 +115,19 @@ const routes = {
               name: 'Document-create',
               component: DocumentEditor,
               meta: { navigation: 'project', navigationHidden: true, editorMode: 'create' }
+            },
+            {
+              path: 'template/new',
+              name: 'Project-template-create',
+              component: TemplateEditor,
+              meta: { navigation: 'common', navigationHidden: true, editorMode: 'create' }
+            },
+            {
+              path: 'template/:templateslug',
+              props: true,
+              name: 'Project-template-editor',
+              component: TemplateEditor,
+              meta: { navigation: 'common', navigationHidden: true, editorMode: 'edit' }
             },
             {
               path: ':documentslug',

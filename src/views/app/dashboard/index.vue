@@ -15,7 +15,7 @@ export default {
       namespace: 'introTemplate',
       model: TemplateModel,
       endpoint: Api.templates.getSingleByType,
-      options: { type: 'a1' },
+      options: { type: 'system_intro' },
       onError: info => Vue.notify.error('Error occured while loading template')
     })
   ],

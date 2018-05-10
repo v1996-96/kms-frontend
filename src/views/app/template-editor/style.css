@@ -1,0 +1,13 @@
+.title-input.input-group--text-field label,
+.subtitle-input.input-group--text-field label {
+  top: 0;
+  margin-left: 0;
+}
+
+.title-input.input-group--text-field label,
+.title-input.input-group--text-field input {
+  font-size: 24px!important;
+  font-weight: 400;
+  line-height: 32px!important;
+  letter-spacing: normal!important;
+}

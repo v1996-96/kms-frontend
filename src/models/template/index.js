@@ -11,6 +11,7 @@ export default State.extend({
     'title': 'string',
     'description': 'string',
     'content': 'string',
+    'quill_delta': 'string',
     'date_created': 'string'
   },
   children: {

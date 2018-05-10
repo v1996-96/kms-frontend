@@ -1,0 +1,63 @@
+<div>
+  <v-container :class="containerClass" class="mb-2 pa-0 elevation-2" fluid>
+    <v-layout row wrap class="pa-3">
+      <v-flex md8>
+        <v-breadcrumbs class="pa-0 mb-2" divider="/">
+          <v-breadcrumbs-item :to="{ name: 'Dashboard' }" exact>Dashboard</v-breadcrumbs-item>
+          <!-- <v-breadcrumbs-item :to="{ name: 'Project-intro' }" exact>{{ project.name | textLimitFilter(25) }}</v-breadcrumbs-item> -->
+          <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.CREATE" disabled>New template</v-breadcrumbs-item>
+          <v-breadcrumbs-item
+            v-if="editorMode == EDITOR_MODE.EDIT && template"
+            exact>{{ template.title | textLimitFilter(25) }}</v-breadcrumbs-item>
+          <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.EDIT && template" disabled>Edit</v-breadcrumbs-item>
+        </v-breadcrumbs>
+
+        <v-text-field
+          v-model="templateCache.title"
+          label="Awesome template title here"
+          :error-messages="titleErrors"
+          @input="$v.templateCache.title.$touch()"
+          @blur="$v.templateCache.title.$touch()"
+          single-line
+          full-width
+          :hide-details="titleErrors.length == 0"
+          class="pa-0 title-input"></v-text-field>
+
+        <v-text-field
+          v-model="templateCache.description"
+          label="Short descriptive description"
+          :error-messages="descriptionErrors"
+          @input="$v.templateCache.description.$touch()"
+          @blur="$v.templateCache.description.$touch()"
+          single-line
+          full-width
+          :hide-details="descriptionErrors.length == 0"
+          class="pa-0 subtitle-input"></v-text-field>
+      </v-flex>
+
+      <v-flex class="text-md-right">
+        <v-btn
+          color="primary"
+          :flat="!templateChanged"
+          class="mr-0"
+          :disabled="isTemplateSaving || $v.$invalid"
+          :loading="isTemplateSaving"
+          @click="save">Save</v-btn>
+      </v-flex>
+    </v-layout>
+
+    <v-layout>
+      <v-flex xs12>
+        <kms-quill-toolbar class="elevation-0" :value="selectionFormats" @input="setFormat" @clearFormat="clearFormat">
+          <v-spacer></v-spacer>
+          <small class="grey--text" v-if="lastSaveTime && !templateChanged">Saved {{ lastSaveTime | timeAgoFilter }}</small>
+          <small class="grey--text" v-if="templateChanged">Template was changed</small>
+        </kms-quill-toolbar>
+      </v-flex>
+    </v-layout>
+  </v-container>
+
+  <v-container>
+    <div ref="editor" class="body-2"></div>
+  </v-container>
+</div>

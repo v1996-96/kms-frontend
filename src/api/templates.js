@@ -7,7 +7,7 @@ export default {
 
   getSingleByType: ({ type }) => http.get('templates/type/' + type),
 
-  getSingle: ({ id }) => http.get('templates/' + id),
+  getSingle: ({ id, quill }) => http.get('templates/' + id, { params: { quill } }),
 
   create: (model) => http.post('templates', model),
 
