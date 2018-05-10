@@ -9,6 +9,7 @@
       <v-tab>Project info</v-tab>
       <v-tab>Documents</v-tab>
       <v-tab>Team</v-tab>
+      <v-tab>Templates</v-tab>
       <v-tab>Advanced</v-tab>
     </v-tabs>
   </kms-heading>
@@ -28,6 +29,10 @@
 
           <v-tab-item>
             <kms-team-tab :projectId="project.project_id"></kms-team-tab>
+          </v-tab-item>
+
+          <v-tab-item>
+            <kms-templates-tab :projectId="project.project_id"></kms-templates-tab>
           </v-tab-item>
 
           <v-tab-item>

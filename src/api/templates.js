@@ -3,9 +3,9 @@ import { http } from './index'
 export default {
   getTypes: () => http.get('templates/types'),
 
-  getList: ({ limit, offset, query, type }) => http.get('templates', { params: { limit, offset, query, type } }),
+  getList: ({ limit, offset, query, type, project }) => http.get('templates', { params: { limit, offset, query, type, project } }),
 
-  getSingleByType: ({ type }) => http.get('templates/type/' + type),
+  getSingleByType: ({ type, project }) => http.get('templates/type/' + type, { params: { project } }),
 
   getSingle: ({ id, quill }) => http.get('templates/' + id, { params: { quill } }),
 

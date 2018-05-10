@@ -30,12 +30,13 @@
           <v-tab-item>
             <v-card flat>
               <v-card-text>
-                <h2>Awesome article that introduces users to the insights of the project</h2>
-                <p>You can place there some links to the project entries or assets in order to highlight important project features, team thoughts and other important stuff.</p>
+                <!-- <h2>Awesome article that introduces users to the insights of the project</h2>
+                <p>You can place there some links to the project entries or assets in order to highlight important project features, team thoughts and other important stuff.</p> -->
+                <div v-html="introTemplate.content"></div>
               </v-card-text>
-              <v-card-actions>
+              <v-card-actions v-if="introTemplate">
                 <v-spacer></v-spacer>
-                <v-btn depressed>Edit intro</v-btn>
+                <v-btn depressed :to="{ name: 'Template-edit', params: { templateslug: introTemplate.slug } }">Edit intro</v-btn>
               </v-card-actions>
             </v-card>
           </v-tab-item>

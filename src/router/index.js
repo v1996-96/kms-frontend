@@ -117,19 +117,6 @@ const routes = {
               meta: { navigation: 'project', navigationHidden: true, editorMode: 'create' }
             },
             {
-              path: 'template/new',
-              name: 'Project-template-create',
-              component: TemplateEditor,
-              meta: { navigation: 'common', navigationHidden: true, editorMode: 'create' }
-            },
-            {
-              path: 'template/:templateslug',
-              props: true,
-              name: 'Project-template-editor',
-              component: TemplateEditor,
-              meta: { navigation: 'common', navigationHidden: true, editorMode: 'edit' }
-            },
-            {
               path: ':documentslug',
               name: 'Document',
               props: true,

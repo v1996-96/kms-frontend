@@ -21,7 +21,7 @@ const EMPTY_DOCUMENT = {
   quill_delta: {},
   is_draft: false
 }
-const FIELDS_TO_TRACK = ['title', 'description', 'content', 'is_draft']
+const FIELDS_TO_TRACK = ['title', 'description', 'content']
 const DEBOUNCE_TIME = 10000 // Save changes after 10 seconds of typing
 const DEBOUNCE_OPTIONS = { maxWait: 120000 } // Ensure that saving is being performed every 2 minutes
 

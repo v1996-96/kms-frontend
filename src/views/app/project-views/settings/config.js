@@ -11,3 +11,8 @@ export const DOCUMENTS_TABLE_HEADERS = [
   { text: 'Parent', value: 'parent', sortable: false },
   { text: 'Actions', value: 'actions', sortable: false, width: 180 }
 ]
+
+export const TEMPLATES_TABLE_HEADERS = [
+  { text: 'Title', value: 'title', sortable: false },
+  { text: 'Actions', value: 'actions', sortable: false, width: 180 }
+]

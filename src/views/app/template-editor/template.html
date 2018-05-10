@@ -8,8 +8,7 @@
           <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.CREATE" disabled>New template</v-breadcrumbs-item>
           <v-breadcrumbs-item
             v-if="editorMode == EDITOR_MODE.EDIT && template"
-            exact>{{ template.title | textLimitFilter(25) }}</v-breadcrumbs-item>
-          <v-breadcrumbs-item v-if="editorMode == EDITOR_MODE.EDIT && template" disabled>Edit</v-breadcrumbs-item>
+            disabled>{{ template.title | textLimitFilter(25) }}</v-breadcrumbs-item>
         </v-breadcrumbs>
 
         <v-text-field
