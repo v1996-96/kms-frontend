@@ -1,4 +1,4 @@
-import { http } from './index'
+import http from './http'
 
 export default {
   signin: ({ email, password }) => http.post('auth/signin', { email, password }, { intercept: false }),

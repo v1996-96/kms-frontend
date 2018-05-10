@@ -1,4 +1,4 @@
-import { http } from './index'
+import http from './http'
 
 export default {
   getList: ({ limit, offset, query }) => http.get('competences', { params: { limit, offset, query } }),

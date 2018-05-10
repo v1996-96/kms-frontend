@@ -1,4 +1,4 @@
-import { http } from './index'
+import http from './http'
 
 export default {
   invite: ({ email }) => http.post('users/invite', { email }),

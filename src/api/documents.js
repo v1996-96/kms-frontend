@@ -1,4 +1,6 @@
-import { http } from './index'
+import _ from 'lodash'
+import http from './http'
+import join from 'join-path'
 
 export default {
   // CRUD
@@ -27,5 +29,8 @@ export default {
   addAttachment: ({ id, model }) => http.post('documents/' + id + '/attachments', model),
   updateAttachment: ({ id, attachmentId, model }) => http.put('documents/' + id + '/attachments/' + attachmentId, model),
   removeAttachment: ({ id, attachmentId }) => http.delete('documents/' + id + '/attachments/' + attachmentId),
-  removeAttachmentsMultiple: ({ id, ids }) => http.delete('documents/' + id + '/attachments', { params: { ids } })
+  removeAttachmentsMultiple: ({ id, ids }) => http.delete('documents/' + id + '/attachments', { params: { ids } }),
+
+  attachmentsEndpoint: ({ id }) => join(process.env.API_HOSTNAME, 'documents/' + id + '/attachments'),
+  attachmentsHeaders: () => _.assign({}, http.defaults.headers.common)
 }

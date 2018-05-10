@@ -1,4 +1,4 @@
-import { http } from './index'
+import http from './http'
 
 export default {
   getList: ({ limit, offset }) => http.get('notifications', { params: { limit, offset } }),

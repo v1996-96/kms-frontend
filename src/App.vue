@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+import 'uppy/dist/uppy.min.css'
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
 import Notifier from '@/utils/notifier'

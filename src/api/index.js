@@ -1,4 +1,4 @@
-import axios from 'axios'
+import http from './http'
 import auth from './auth'
 import notifications from './notifications'
 import activity from './activity'
@@ -13,10 +13,6 @@ import settings from './settings'
 import templates from './templates'
 import users from './users'
 import search from './search'
-
-export const http = axios.create({
-  baseURL: process.env.API_HOSTNAME
-})
 
 export default {
   setJWT (token) {

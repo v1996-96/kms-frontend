@@ -1,4 +1,4 @@
-import { http } from './index'
+import http from './http'
 
 export default {
   get: ({ id = null } = {}) => http.get('profile', { params: { id } })

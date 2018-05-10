@@ -9,6 +9,7 @@ import ToolbarComponent from './toolbar'
 import Quill from 'quill'
 import DocumentModel from '@/models/document'
 import { required, maxLength, minLength } from 'vuelidate/lib/validators'
+import Attachments from './attachments'
 
 const EDITOR_MODE = {
   CREATE: 'create',
@@ -32,12 +33,14 @@ export default {
   },
   mixins: [TextFiltersMixin, DateFiltersMixin],
   components: {
-    'kms-quill-toolbar': ToolbarComponent
+    'kms-quill-toolbar': ToolbarComponent,
+    'kms-attachments': Attachments
   },
   data: () => ({
     EDITOR_MODE,
     editorInstance: null,
     selectionFormats: null,
+    attachmentsDialog: null,
 
     isDocumentLoading: false,
     isDocumentSaving: false,
