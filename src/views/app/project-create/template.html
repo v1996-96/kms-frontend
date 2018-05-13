@@ -19,9 +19,29 @@
           <v-card>
             <v-card-text>
               <v-form>
-                <v-text-field :error-messages="nameErrors" @input="$v.name.$touch()" @blur="$v.name.$touch()" v-model="name" label="Project name" :counter="$v.name.$params.maxLength.max" required></v-text-field>
-                <v-text-field :error-messages="descriptionErrors" @input="$v.description.$touch()" @blur="$v.description.$touch()" v-model="description" label="Description" multi-line rows="3" :counter="$v.description.$params.maxLength.max"></v-text-field>
-                <v-text-field :error-messages="goalErrors" @input="$v.goal.$touch()" @blur="$v.goal.$touch()" v-model="goal" label="Main goal" :counter="$v.goal.$params.maxLength.max"></v-text-field>
+                <v-text-field
+                  :error-messages="nameErrors"
+                  @input="$v.name.$touch()"
+                  @blur="$v.name.$touch()"
+                  v-model="name"
+                  label="Project name"
+                  counter="$v.name.$params.maxLength.max"
+                  required></v-text-field>
+                <v-text-field
+                  :error-messages="descriptionErrors"
+                  @input="$v.description.$touch()"
+                  @blur="$v.description.$touch()"
+                  v-model="description"
+                  label="Description"
+                  multi-line rows="3"
+                  :counter="$v.description.$params.maxLength.max"></v-text-field>
+                <v-text-field
+                  :error-messages="goalErrors"
+                  @input="$v.goal.$touch()"
+                  @blur="$v.goal.$touch()"
+                  v-model="goal"
+                  label="Main goal"
+                  :counter="$v.goal.$params.maxLength.max"></v-text-field>
 
                 <!-- Dates -->
                 <v-container fluid grid-list-lg class="pa-0">
