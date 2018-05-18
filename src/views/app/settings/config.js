@@ -22,3 +22,8 @@ export const TEMPLATES_TABLE_HEADERS = [
   { text: 'Title', value: 'title', sortable: false },
   { text: 'Actions', value: 'actions', sortable: false, width: 180 }
 ]
+
+export const ROLES_TABLE_HEADERS = [
+  { text: 'Name', value: 'name', sortable: false },
+  { text: 'Actions', value: 'actions', sortable: false, width: 260 }
+]

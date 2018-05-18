@@ -1,17 +1,17 @@
 import http from './http'
 
 export default {
-  getPermissions: () => http.get('permissions'),
+  getPermissions: () => http.get('settings/permissions'),
 
-  getRolesList: ({ limit, offset }) => http.get('roles', { params: { limit, offset } }),
+  getRolesList: ({ limit, offset, query }) => http.get('settings/roles', { params: { limit, offset, query } }),
 
-  getRole: ({ id }) => http.get('roles/' + id),
+  getRole: ({ id }) => http.get('settings/roles/' + id),
 
-  createRole: (model) => http.post('roles', model),
+  createRole: (model) => http.post('settings/roles', model),
 
-  updateRole: ({ id, model }) => http.put('roles/' + id, model),
+  updateRole: ({ id, model }) => http.put('settings/roles/' + id, model),
 
-  removeRole: ({ id }) => http.delete('roles/' + id),
+  removeRole: ({ id }) => http.delete('settings/roles/' + id),
 
-  removeMultipleRoles: ({ ids }) => http.delete('roles', { params: { ids } })
+  removeMultipleRoles: ({ ids }) => http.delete('settings/roles', { params: { ids } })
 }
