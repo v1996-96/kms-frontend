@@ -1,7 +1,7 @@
 import Collection from 'ampersand-collection'
 import State from 'ampersand-state'
 
-import PermissionModel from '../permission'
+import PermissionModel from '../project-permission'
 
 export default State.extend({
   props: {

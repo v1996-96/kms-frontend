@@ -13,7 +13,7 @@ export default {
   // Access
   //
   getPermissions: () => http.get('projects/permissions'),
-  getRolesList: ({ limit, offset }) => http.get('projects/roles', { params: { limit, offset } }),
+  getRolesList: ({ limit, offset, query }) => http.get('projects/roles', { params: { limit, offset, query } }),
   getRole: ({ id }) => http.get('projects/roles/' + id),
   createRole: (model) => http.post('projects/roles', model),
   updateRole: ({ id, model }) => http.put('projects/roles/' + id, model),
