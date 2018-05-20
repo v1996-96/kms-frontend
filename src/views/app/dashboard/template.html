@@ -15,7 +15,7 @@
         <p class="subheading">
           Start using KMS to speed up project workflow
         </p>
-        <v-btn color="primary" large :to="{ name: 'Project-create' }">Create project</v-btn>
+        <v-btn v-if="hasPermission('create_projects')" color="primary" large :to="{ name: 'Project-create' }">Create project</v-btn>
       </div>
 
       <v-list v-if="activityLoaded && !activityNotFound" two-line subheader class="elevation-1">

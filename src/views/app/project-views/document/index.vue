@@ -3,6 +3,7 @@
 import TextFiltersMixin from '@/mixins/filters/text'
 import { STATE, GETTERS, MUTATIONS, ACTIONS } from './config'
 import CommentsSection from './comments'
+import Bookmark from './bookmark'
 
 export default {
   name: 'kms-app-project-document-page',
@@ -11,7 +12,8 @@ export default {
   },
   mixins: [TextFiltersMixin],
   components: {
-    'kms-coomments': CommentsSection
+    'kms-coomments': CommentsSection,
+    'kms-bookmark': Bookmark
   },
   data: () => ({}),
   computed: {
@@ -21,17 +23,22 @@ export default {
 
   watch: {
     documentslug () {
-      this.fetchAction(this.documentslug)
+      this.fetch()
     }
   },
 
   methods: {
     ...MUTATIONS,
-    ...ACTIONS
+    ...ACTIONS,
+
+    async fetch () {
+      await this.fetchAction(this.documentslug)
+      await this.markSeenAction()
+    }
   },
 
   created () {
-    this.fetchAction(this.documentslug)
+    this.fetch()
   }
 }
 </script>

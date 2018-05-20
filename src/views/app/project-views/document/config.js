@@ -12,5 +12,6 @@ export const MUTATIONS = mapMutations({
 })
 
 export const ACTIONS = mapActions({
-  'fetchAction': 'fetch'
+  'fetchAction': 'fetch',
+  'markSeenAction': 'markSeen'
 })

@@ -8,12 +8,14 @@ import 'uppy/dist/uppy.min.css'
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
 import Notifier from '@/utils/notifier'
+import Access from '@/utils/access'
 import Navigation from '@/components/template/navigation'
 import Toolbar from '@/components/template/toolbar'
 import Notifications from '@/components/template/notifications'
 import NotifierComponent from '@/components/template/notifier'
 import HeadingComponent from '@/components/ui/heading'
 
+Vue.use(Access)
 Vue.use(Notifier)
 Vue.use(Vuelidate)
 

@@ -24,9 +24,7 @@
           <v-btn icon ripple flat>
             <v-icon>favorite_border</v-icon>
           </v-btn>
-          <v-btn icon ripple flat>
-            <v-icon>bookmark_border</v-icon>
-          </v-btn>
+          <kms-bookmark :document-id="document.document_id" v-if="document"></kms-bookmark>
           <v-btn icon ripple flat color="primary" class="mr-0" :to="{ name: 'Document-edit', params: { documentslug } }">
             <v-icon>edit</v-icon>
           </v-btn>

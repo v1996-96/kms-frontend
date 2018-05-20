@@ -5,7 +5,7 @@
       <h3 class="subheading mb-4">The common store for your company knowledge</h3>
     </v-flex>
     <v-flex lg6 class="text-lg-right">
-      <v-btn color="primary" :to="{ name: 'Project-create' }">Create</v-btn>
+      <v-btn v-if="hasPermission('create_projects')" color="primary" :to="{ name: 'Project-create' }">Create</v-btn>
     </v-flex>
   </v-layout>
 

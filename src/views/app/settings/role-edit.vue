@@ -9,7 +9,7 @@
 
       <v-card-text v-if="!isRoleFetching && !isRoleUpdating && role" class="text-xs-center">
         <v-text-field
-          :disabled="roleCache.system"
+          :disabled="roleCache.system || !hasPermission('update_role')"
           v-model="roleCache.name"
           :error-messages="nameErrors"
           @input="$v.roleCache.name.$touch()"
@@ -22,13 +22,13 @@
           :error-messages="permissionsErrors"
           @input="$v.roleCache.permissions.$touch()"
           @blur="$v.roleCache.permissions.$touch()"
-          :disabled="roleCache.system"></kms-permissions>
+          :disabled="roleCache.system || !hasPermission('update_role')"></kms-permissions>
       </v-card-text>
 
       <v-card-actions v-if="role">
         <v-btn flat @click.native="setModalState(false)">Cancel</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="primary" depressed @click="saveChanges" :loading="isRoleUpdating" :disabled="isRoleUpdating || roleCache.system || !roleChanged || $v.$error">Save</v-btn>
+        <v-btn color="primary" depressed @click="saveChanges" :loading="isRoleUpdating" :disabled="isRoleUpdating || roleCache.system || !roleChanged || $v.$error || !hasPermission('update_role')">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

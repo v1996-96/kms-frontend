@@ -3,7 +3,7 @@
     <v-card-title class="pt-2">
       <v-text-field hide-details prepend-icon="search" class="mb-3" clearable label="Type search request here..." v-model="searchQuery"></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" class="mr-0" :to="{ name: 'Project-create' }">Create project</v-btn>
+      <v-btn v-if="hasPermission('create_projects')" color="primary" class="mr-0" :to="{ name: 'Project-create' }">Create project</v-btn>
     </v-card-title>
 
     <v-data-table
@@ -26,7 +26,7 @@
           <v-btn fab flat icon small color="info" class="mr-1" :to="{ name: 'Project-intro', params: { projectslug: props.item.slug } }">
             <v-icon>store</v-icon>
           </v-btn>
-          <v-btn fab flat icon small color="error" @click="showDeleteProject(props.item)">
+          <v-btn v-if="hasPermission('delete_projects')" fab flat icon small color="error" @click="showDeleteProject(props.item)">
             <v-icon>delete</v-icon>
           </v-btn>
         </td>

@@ -107,6 +107,7 @@ const mutations = {
   },
   setProfile (state, profile) {
     state.profile = profile
+    console.log(profile)
   },
   setInvitation (state, data) {
     state.invitation = data

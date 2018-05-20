@@ -3,7 +3,7 @@
     <v-card-title class="pt-2">
       <v-text-field hide-details prepend-icon="search" class="mb-3" clearable label="Type search request here..." v-model="searchQuery"></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" class="mr-0" @click="showCreateModal = true">Create role</v-btn>
+      <v-btn v-if="hasPermission('create_role')" color="primary" class="mr-0" @click="showCreateModal = true">Create role</v-btn>
     </v-card-title>
 
     <v-data-table
@@ -17,7 +17,7 @@
       class="elevation-1">
       <template slot="items" slot-scope="props">
         <td>
-          <v-edit-dialog lazy v-if="!props.item.system">
+          <v-edit-dialog lazy v-if="!props.item.system && hasPermission('update_role')">
             <span v-if="props.item.name !== ''">{{ props.item.name }}</span>
             <span v-else>Click here to enter role name</span>
             <v-text-field
@@ -31,9 +31,9 @@
           <span v-else>{{ props.item.name }}</span>
         </td>
         <td>
-          <v-btn flat small color="primary" v-if="!props.item.system" @click="setRoleEditing(props.item.role_id)">Edit</v-btn>
-          <v-btn flat small color="info" v-if="props.item.system" @click="setRoleEditing(props.item.role_id)">Info</v-btn>
-          <v-btn v-if="!props.item.system" flat small color="error" @click="showDeleteRole(props.item)">
+          <v-btn flat small color="primary" v-if="!props.item.system && hasPermission('update_role')" @click="setRoleEditing(props.item.role_id)">Edit</v-btn>
+          <v-btn flat small color="info" v-if="props.item.system || !hasPermission('update_role')" @click="setRoleEditing(props.item.role_id)">Info</v-btn>
+          <v-btn v-if="!props.item.system && hasPermission('delete_role')" flat small color="error" @click="showDeleteRole(props.item)">
             Delete
           </v-btn>
         </td>

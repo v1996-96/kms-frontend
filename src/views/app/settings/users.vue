@@ -37,7 +37,19 @@
           {{ props.item.name }} {{ props.item.surname }}
         </td>
         <td>{{ props.item.email }}</td>
-        <td>{{ props.item.date_registered | dateFilter }}</td>
+        <td>
+          <v-edit-dialog lazy>
+            <div v-if="props.item.roles">
+              <v-chip small v-for="role in props.item.roles" :key="role.role_id">{{ role.name }}</v-chip>
+            </div>
+            <span v-else>Click here to enter roles</span>
+            <kms-roles-search
+              slot="input"
+              multiple
+              v-model="props.item.roles"
+              @input="updateUser(props.item)"></kms-roles-search>
+          </v-edit-dialog>
+        </td>
         <td>
           <v-btn flat small color="error" @click="showDeleteUser(props.item)">
             Delete
@@ -71,6 +83,7 @@ import DateFiltersMixin from '@/mixins/filters/date'
 import UserListModel from '@/models/user/list'
 import { USERS_TABLE_HEADERS } from './config'
 import { required, email } from 'vuelidate/lib/validators'
+import RolesSearch from '@/components/active/roles-search'
 
 export default {
   name: 'kms-user-settings-users-tab',
@@ -84,6 +97,9 @@ export default {
     TextFiltersMixin,
     DateFiltersMixin
   ],
+  components: {
+    'kms-roles-search': RolesSearch
+  },
   data: () => ({
     USERS_TABLE_HEADERS,
     showDeletionPrompt: false,

@@ -14,7 +14,7 @@ export const COMPETENCES_TABLE_HEADERS = [
 export const USERS_TABLE_HEADERS = [
   { text: 'Name', value: 'name', sortable: false },
   { text: 'Email', value: 'email', sortable: false },
-  { text: 'Date registered', value: 'date_registered', sortable: false },
+  { text: 'Roles', value: 'roles', sortable: false },
   { text: 'Actions', value: 'actions', sortable: false }
 ]
 

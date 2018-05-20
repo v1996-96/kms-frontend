@@ -44,6 +44,14 @@ const actions = {
         ? { project: projectId, root: true }
         : { project: projectId, children: context.state.document.document_id }
     })
+  },
+
+  markSeen (context) {
+    if (!context.state.document) {
+      return
+    }
+
+    return Api.lastseen.create({ document_id: context.state.document.document_id })
   }
 }
 

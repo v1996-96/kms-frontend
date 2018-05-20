@@ -1,11 +1,11 @@
 <div>
   <kms-heading heading="Settings" subheading="Configure the system for your needs" :dark="darkTheme">
     <v-tabs centered v-model="tabs" color="transparent">
-      <v-tab>Projects</v-tab>
-      <v-tab>Users</v-tab>
-      <v-tab>Competences</v-tab>
-      <v-tab>Templates</v-tab>
-      <v-tab>Access</v-tab>
+      <v-tab v-if="hasPermission('read_projects')">Projects</v-tab>
+      <v-tab v-if="hasPermission('read_users')">Users</v-tab>
+      <v-tab v-if="hasPermission('read_competences')">Competences</v-tab>
+      <v-tab v-if="hasPermission('read_templates')">Templates</v-tab>
+      <v-tab v-if="hasPermission('read_roles')">Access</v-tab>
     </v-tabs>
   </kms-heading>
 
@@ -14,23 +14,23 @@
       <v-flex lg8 offset-lg2>
 
         <v-tabs-items v-model="tabs" class="elevation-1">
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('read_projects')">
             <kms-projects></kms-projects>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('read_users')">
             <kms-users></kms-users>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('read_competences')">
             <kms-competences></kms-competences>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('read_templates')">
             <kms-templates></kms-templates>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('read_roles')">
             <kms-access></kms-access>
           </v-tab-item>
         </v-tabs-items>

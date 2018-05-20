@@ -1,4 +1,7 @@
+import Collection from 'ampersand-collection'
 import State from 'ampersand-state'
+
+import RoleShortModel from '../role/short'
 
 export default State.extend({
   props: {
@@ -8,5 +11,8 @@ export default State.extend({
     'email': 'string',
     'avatar': 'string',
     'date_registered': 'string'
+  },
+  collections: {
+    'roles': Collection.extend({ model: RoleShortModel })
   }
 })

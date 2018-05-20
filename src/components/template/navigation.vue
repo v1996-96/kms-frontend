@@ -18,7 +18,7 @@
           <v-list-tile-action><v-icon>people</v-icon></v-list-tile-action>
           <v-list-tile-content><v-list-tile-title>Users</v-list-tile-title></v-list-tile-content>
         </v-list-tile>
-        <v-list-tile :to="{ name: 'Settings' }" exact>
+        <v-list-tile v-if="hasPermission('read_settings')" :to="{ name: 'Settings' }" exact>
           <v-list-tile-action><v-icon>settings</v-icon></v-list-tile-action>
           <v-list-tile-content><v-list-tile-title>Settings</v-list-tile-title></v-list-tile-content>
         </v-list-tile>
@@ -29,8 +29,12 @@
           My projects
         </v-subheader>
 
-        <p v-if="myProjectsNotFound" class="text-xs-center mt-2">
+        <p v-if="myProjectsNotFound && hasPermission('create_projects')" class="text-xs-center mt-2">
           <v-btn outline color="primary" :to="{ name: 'Project-create' }" :active-class="''">Create project</v-btn>
+        </p>
+
+        <p v-if="myProjectsNotFound && !hasPermission('create_projects')" class="text-xs-center mt-2">
+          <span>You have not projects yet</span>
         </p>
 
         <div v-if="!myProjectsLoaded && myProjectsLoading" class="text-xs-center">
