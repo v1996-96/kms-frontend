@@ -13,7 +13,8 @@ export const STATE = mapState({
 
 export const GETTERS = mapGetters({
   'activityDisplayingCount': 'Activity/List/displayingCount',
-  'activityNotFound': 'Activity/List/notFound'
+  'activityNotFound': 'Activity/List/notFound',
+  'activityCanLoadMore': 'Activity/List/canLoadMore'
 })
 
 export const MUTATIONS = mapMutations({

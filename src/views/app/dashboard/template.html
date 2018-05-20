@@ -42,7 +42,7 @@
           </v-list-tile-action>
         </v-list-tile>
 
-        <div class="text-xs-center">
+        <div class="text-xs-center" v-if="activityCanLoadMore">
           <v-btn depressed @click="activityLoadMore" :loading="activityLoading">Load more</v-btn>
         </div>
       </v-list>
