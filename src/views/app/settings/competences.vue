@@ -3,7 +3,7 @@
     <v-card-title class="pt-2">
       <v-text-field hide-details prepend-icon="search" class="mb-3" clearable label="Type search request here..." v-model="searchQuery"></v-text-field>
       <v-spacer></v-spacer>
-      <v-dialog v-model="creationDialog" max-width="310">
+      <v-dialog v-model="creationDialog" max-width="310" v-if="hasPermission('create_competences')">
         <v-btn slot="activator" color="primary" class="mr-0">Create competence</v-btn>
         <v-card>
           <v-card-title class="headline">Create new competence</v-card-title>
@@ -30,7 +30,7 @@
       class="elevation-1">
       <template slot="items" slot-scope="props">
         <td>
-          <v-edit-dialog lazy>
+          <v-edit-dialog lazy v-if="hasPermission('update_competences')">
             <span v-if="props.item.name !== ''">{{ props.item.name }}</span>
             <span v-else>Click here to enter competence name</span>
             <v-text-field
@@ -41,9 +41,10 @@
               single-line
               autofocus></v-text-field>
           </v-edit-dialog>
+          <span v-else>{{ props.item.name }}</span>
         </td>
         <td>
-          <v-btn flat small color="error" @click="showDeleteCompetence(props.item)">
+          <v-btn flat small color="error" @click="showDeleteCompetence(props.item)" v-if="hasPermission('delete_competences')">
             Delete
           </v-btn>
         </td>

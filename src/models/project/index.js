@@ -14,7 +14,8 @@ export default State.extend({
     'avatar': 'string',
     'members_count': 'number',
     'is_open': 'boolean',
-    'is_active': 'boolean'
+    'is_active': 'boolean',
+    'permissions': 'array'
   },
   collections: {
     'quick_links': Collection.extend({

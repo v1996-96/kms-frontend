@@ -6,11 +6,11 @@
       <v-breadcrumbs-item disabled>Settings</v-breadcrumbs-item>
     </v-breadcrumbs>
     <v-tabs centered v-model="tabs" color="transparent">
-      <v-tab>Project info</v-tab>
-      <v-tab>Documents</v-tab>
-      <v-tab>Team</v-tab>
-      <v-tab>Templates</v-tab>
-      <v-tab>Advanced</v-tab>
+      <v-tab v-if="hasPermission('update_projects')">Project info</v-tab>
+      <v-tab v-if="hasProjectPermission('read_documents')">Documents</v-tab>
+      <v-tab v-if="hasProjectPermission('read_project_team')">Team</v-tab>
+      <v-tab v-if="hasPermission('read_templates')">Templates</v-tab>
+      <v-tab v-if="hasPermission('delete_projects') || hasProjectPermission('read_project_roles')">Advanced</v-tab>
     </v-tabs>
   </kms-heading>
 
@@ -19,23 +19,23 @@
       <v-flex lg8 offset-lg2>
 
         <v-tabs-items v-model="tabs" class="elevation-1">
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('update_projects')">
             <kms-project-info-tab></kms-project-info-tab>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasProjectPermission('read_documents')">
             <kms-documents-tab></kms-documents-tab>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasProjectPermission('read_project_team')">
             <kms-team-tab :projectId="project.project_id"></kms-team-tab>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('read_templates')">
             <kms-templates-tab :projectId="project.project_id"></kms-templates-tab>
           </v-tab-item>
 
-          <v-tab-item>
+          <v-tab-item v-if="hasPermission('delete_projects') || hasProjectPermission('read_project_roles')">
             <kms-advanced-tab></kms-advanced-tab>
           </v-tab-item>
         </v-tabs-items>

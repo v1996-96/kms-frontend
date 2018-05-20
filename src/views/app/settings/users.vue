@@ -3,7 +3,7 @@
     <v-card-title class="pt-2">
       <v-text-field hide-details prepend-icon="search" class="mb-3" clearable label="Type search request here..." v-model="searchQuery"></v-text-field>
       <v-spacer></v-spacer>
-      <v-dialog v-model="inviteDialog" max-width="290">
+      <v-dialog v-model="inviteDialog" max-width="290" v-if="hasPermission('invite_users')">
         <v-btn slot="activator" color="primary" class="mr-0">Invite</v-btn>
         <v-card>
           <v-card-title class="headline">Invite new user</v-card-title>
@@ -38,7 +38,7 @@
         </td>
         <td>{{ props.item.email }}</td>
         <td>
-          <v-edit-dialog lazy>
+          <v-edit-dialog lazy v-if="hasPermission('update_users')">
             <div v-if="props.item.roles">
               <v-chip small v-for="role in props.item.roles" :key="role.role_id">{{ role.name }}</v-chip>
             </div>
@@ -49,9 +49,12 @@
               v-model="props.item.roles"
               @input="updateUser(props.item)"></kms-roles-search>
           </v-edit-dialog>
+          <div v-if="props.item.roles && !hasPermission('update_users')">
+            <v-chip small v-for="role in props.item.roles" :key="role.role_id">{{ role.name }}</v-chip>
+          </div>
         </td>
         <td>
-          <v-btn flat small color="error" @click="showDeleteUser(props.item)">
+          <v-btn flat small color="error" @click="showDeleteUser(props.item)" v-if="hasPermission('delete_users')">
             Delete
           </v-btn>
         </td>

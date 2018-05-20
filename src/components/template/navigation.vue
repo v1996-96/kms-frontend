@@ -109,7 +109,7 @@
           </v-list-tile>
         </v-list-group>
 
-        <v-list-tile :to="{ name: 'Project-settings', params: { projectslug: selectedProject.slug } }" exact>
+        <v-list-tile v-if="hasProjectPermission('access_settings')" :to="{ name: 'Project-settings', params: { projectslug: selectedProject.slug } }" exact>
           <v-list-tile-avatar>
             <v-icon>settings</v-icon>
           </v-list-tile-avatar>
